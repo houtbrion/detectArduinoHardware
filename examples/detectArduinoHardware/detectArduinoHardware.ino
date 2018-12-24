@@ -1,9 +1,3 @@
-# detectArduinoHardware
-Arduinoの機種を区別し，特徴をdefineする．
-
-
-## 使い方
-```
 
 #include "detectArduinoHardware.h"
 
@@ -11,9 +5,8 @@ Arduinoの機種を区別し，特徴をdefineする．
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  waitForSerial();  <== 一部の機種で，シリアルをオープンした時にリセットされない作りに対応．
+  waitForSerial();
 
-  /*  以下の部分にコンパイルした対象の機種の特徴をコンソールに出力 */
   Serial.print("Name           : ");Serial.println(HARDWARE_NAME);
   Serial.print("CPU ARCH       : ");Serial.println(CPU_ARCH);
   Serial.print("CHIPSET        : ");Serial.println(CHIPSET);
@@ -36,4 +29,3 @@ void loop() {
   // put your main code here, to run repeatedly:
 
 }
-```
