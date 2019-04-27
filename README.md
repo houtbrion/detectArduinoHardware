@@ -97,8 +97,7 @@ Arduino IDEのボードマネージャから確認した手元の環境．
 上の環境でIDEがサポートしている機種の大部分
 (ごく一部のESP32の機種以外)は機種判定はできます．
 詳細は以下の表に記載しますが，表の「対応状況」が
-「○」の機種はピン番号等まで定義しますが，「×」の機種は
-それは対応しません(詳細不明なため)．
+「○」の機種はピン番号等まで定義しますが，他の機種は対応しません(詳細不明なため)．
 
 古い機種やESP8266/ESP32はぱっと検索したぐらいではわからないものが
 ほとんどなので諦めています． (情報をだれかがくれれば追加しますけど．)
@@ -124,23 +123,23 @@ Arduino IDEのボードマネージャから確認した手元の環境．
 |AVR_FIO|Arduino Fio|○||
 |AVR_BT_328P|Arduino BT (ATmega328P)|○||
 |AVR_BT_168|Arduino BT (ATmega168)|○||
-|AVR_LILYPAD_USB|LilyPad Arduino USB|×||
-|AVR_LILYPAD_328P|LilyPad Arduino (ATmega328P)|×||
-|AVR_LILYPAD_168|LilyPad Arduino (ATmega168)|×||
+|AVR_LILYPAD_USB|LilyPad Arduino USB|||
+|AVR_LILYPAD_328P|LilyPad Arduino (ATmega328P)|||
+|AVR_LILYPAD_168|LilyPad Arduino (ATmega168)|||
 |AVR_PRO_328P_5V|Arduino Pro or Pro Mini (ATmega328P 5V)|○|ピン等はPro miniに合わせてます|
 |AVR_PRO_328P_3_3V|Arduino Pro or Pro Mini (ATmega328P 3.3V)|○|同上|
 |AVR_PRO_168_5V|Arduino Pro or Pro Mini (ATmega168 5V)|○|同上|
 |AVR_PRO_168_3_3V|Arduino Pro or Pro Mini (ATmega168 3.3V)|○|同上|
-|AVR_NG_168|Arduino NG (ATmega168)|×||
-|AVR_NG_8|Arduino NG (ATmega8)|×||
-|AVR_ROBOT_CONTROL|Arduino Robot Control|×||
-|AVR_ROBOT_MOTOR|Arduino Robot Motor|×||
+|AVR_NG_168|Arduino NG (ATmega168)|||
+|AVR_NG_8|Arduino NG (ATmega8)|||
+|AVR_ROBOT_CONTROL|Arduino Robot Control|||
+|AVR_ROBOT_MOTOR|Arduino Robot Motor|||
 |AVR_GEMMA|Arduino Gemma|○||
-|AVR_CIRCUITPLAY|Arduino Circuit play|×||
-|AVR_YUNMINI|Arduino Yun Mini|×||
-|AVR_INDUSTRIAL101|Arduino Industrial101|×||
-|AVR_LININO_ONE|Arduino Lilino One|×||
-|AVR_UNO_WIFI_DEV_ED|Arduino Uno Wifi Developer Edition|×||
+|AVR_CIRCUITPLAY|Arduino Circuit play|||
+|AVR_YUNMINI|Arduino Yun Mini|||
+|AVR_INDUSTRIAL101|Arduino Industrial101|||
+|AVR_LININO_ONE|Arduino Lilino One|||
+|AVR_UNO_WIFI_DEV_ED|Arduino Uno Wifi Developer Edition|||
 
 ### SAM系統
 |定義される定数|機種|対応状況|
