@@ -73,7 +73,9 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   //delay(5000);
-  waitForSerial();
+  while (!Serial) {       // wait to open serial port.
+    ;
+  }
 
   Serial.print("Name                      : ");Serial.println(HARDWARE_NAME);
   Serial.print("Voltage                   : ");Serial.println(HARDWARE_VDD);

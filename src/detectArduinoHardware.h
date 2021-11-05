@@ -2,756 +2,221 @@
 #define __DETECT_ARDUINO_HARDWARE_H__
 
 #include <Arduino.h>
+
+/* チップセットの種別 */
+#define AVR_ARCH          1
+#define SAM_ARCH          2
+#define SAMD_ARCH         3
+#define XTENSA_LX106_ARCH 4 /* ESP8266 */
+#define XTENSA_LX6_ARCH   5 /* ESP32 */
+
+#define TYPE_ATmega32U4  1
+#define TYPE_ATmega328P  2
+#define TYPE_ATmega168   3
+#define TYPE_ATmega2560  4
+#define TYPE_ATmega1280  5
+#define TYPE_ATmega8     6
+#define TYPE_ATtimy85    7
+#define TYPE_SAM3X8E     8
+#define TYPE_SAMD21G18A  9
+#define TYPE_ESP8266    10
+#define TYPE_ESP32      11
+
+
 /* AVR系統 */
-#define AVR_YUN        1 /* Arduino Yun */
-#define AVR_UNO       2 /* Arduino Uno */
-#define AVR_DUEMILANOVE_328P    3 /* Arduino Duemilanove */
-#define AVR_DUEMILANOVE_168   4
-#define AVR_NANO_328P     5 /* Arduino Nano系統 */
-#define AVR_NANO_168      6
-#define AVR_MEGA2560      7 /* Arduino Mega2560 */
-#define AVR_MEGA      8 /* Arduino Mega */
-#define AVR_ADK       9 /* Arduino ADK */
-#define AVR_LEONARDO      10 /* Arduino Leonardo */
-#define AVR_LEONARDO_ETH    11 /* Arduino Leonardo Ethernet */
-#define AVR_MICRO     12 /* Arduino Micro */
-#define AVR_ESPLORA     13 /* Arduino Esplora */
-#define AVR_MINI_328P     14 /* Arduino Mini */
-#define AVR_MINI_168      15
-#define AVR_ETHERNET      16 /* Arduino Ethernet */
-#define AVR_FIO       17 /* Arduino Fio */
-#define AVR_BT_328P     18 /* Arduino BT (ATmega328P/ATmega168) */
-#define AVR_BT_168      19
-#define AVR_LILYPAD_USB     20 /* LilyPad Arduino USB */
-#define AVR_LILYPAD_328P    21 /* LilyPad Arduino (ATmega328P/ATmega168) */
-#define AVR_LILYPAD_168     22
-#define AVR_PRO_328P_5V     23 /* Arduino Pro or Pro Mini */
-#define AVR_PRO_328P_3_3V   24
-#define AVR_PRO_168_5V      25
-#define AVR_PRO_168_3_3V    26
-#define AVR_NG_168      27 /* Arduino NG */
-#define AVR_NG_8      28
-#define AVR_ROBOT_CONTROL   29 /* Arduino Robot Control */
-#define AVR_ROBOT_MOTOR     30 /* Arduino Robot Motor */
-#define AVR_GEMMA     31 /* Arduino Gemma */
-#define AVR_CIRCUITPLAY     32 /* Arduino Circuit play */
-#define AVR_YUNMINI     33 /* Arduino Yun Mini */
-#define AVR_INDUSTRIAL101   34 /* Arduino Industrial101 */
-#define AVR_LININO_ONE      35 /* Arduino Lilino One */
-#define AVR_UNO_WIFI_DEV_ED   36 /* Arduino Uno Wifi Developer Edition */
+#define ARDUINO_YUN                         1 /* Arduino Yun                           */
+#define ARDUINO_UNO                         2 /* Arduino Uno                           */
+#define ARDUINO_DUEMILANOVE_328P            3 /* Arduino Duemilanove or Diecimila 328P */
+#define ARDUINO_DUEMILANOVE_168             4 /* Arduino Duemilanove or Diecimila 168  */
+#define ARDUINO_NANO_328P                   5 /* Arduino Nano 328P                     */
+#define ARDUINO_NANO_168                    6 /* Arduino Nano 168                      */
+#define ARDUINO_MEGA2560                    7 /* Arduino Mega 2560                     */
+#define ARDUINO_MEGA                        8 /* Arduino Mega                          */
+#define ARDUINO_MEGA_ADK                    9 /* Arduino Mega ADK                      */
+#define ARDUINO_LEONARDO                   10 /* Arduino Leonardo                      */
+#define ARDUINO_LEONARDO_ETH               11 /* Arduino Leonardo ETH                  */
+#define ARDUINO_MICRO                      12 /* Arduino Micro                         */
+#define ARDUINO_ESPLORA                    13 /* Arduino Esplora                       */
+#define ARDUINO_MINI_328P                  14 /* Arduino Mini 328P                     */
+#define ARDUINO_MINI_168                   15 /* Arduino Mini 168                      */
+#define ARDUINO_ETHERNET                   16 /* Arduino Ethernet                      */
+#define ARDUINO_FIO                        17 /* Arduino Fio                           */
+#define ARDUINO_BT_328P                    18 /* Arduino BT 328P                       */
+#define ARDUINO_BT_168                     19 /* Arduino BT 168                        */
+#define ARDUINO_LILYPAD_USB                20 /* LilyPad Arduino USB                   */
+#define ARDUINO_LILYPAD_328P               21 /* LilyPad Arduino 328P                  */
+#define ARDUINO_LILYPAD_168                22 /* LilyPad Arduino 168                   */
+#define ARDUINO_NG_168                     23 /* Arduino NG or older 168               */
+#define ARDUINO_NG_8                       24 /* Arduino NG or older 8                 */
+#define ARDUINO_ROBOT_CONTROL              25 /* Arduino Robot Control                 */
+#define ARDUINO_ROBOT_MOTOR                26 /* Arduino Robot Motor                   */
+#define ARDUINO_GEMMA                      27 /* Arduino Gemma                         */
+#define ARDUINO_CIRCUIT_PLAY               28 /* Adafruit Circuit Playground           */
+#define ARDUINO_YUN_MINI                   29 /* Arduino Yun Mini                      */
+#define ARDUINO_INDUSTRIAL101              30 /* Arduino Industrial 101                */
+#define ARDUINO_LININO_ONE                 31 /* Linino One                            */
+#define ARDUINO_UNO_WIFI_DEV_ED            32 /* Arduino Uno WiFi                      */
+#define ARDUINO_PRO_328P_5V                33 /* Arduino Pro or Pro Mini 328P 5V       */
+#define ARDUINO_PRO_328P_3_3V              34 /* Arduino Pro or Pro Mini 328P 3.3V     */
+#define ARDUINO_PRO_168_5V                 35 /* Arduino Pro or Pro Mini 168 5V        */
+#define ARDUINO_PRO_168_3_3V               36 /* Arduino Pro or Pro Mini 168 3.3V      */
+
 
 /*  SAM系統  */
-#define SAM_DUE       101 /* Arduino Due */
+#define ARDUINO_DUE                       101 /* Arduino Due                           */
 
 /*  SAMD系統  */
-#define SAMD_ZERO     201 /* Arduino Zero */
-#define SAMD_MKR1000      202 /* Arduino/Genuino MKR1000 */
-#define SAMD_MKRZERO      203 /* Arduino MKRZero */
-#define SAMD_MKRFox1200     204 /* Arduino MKRFox1200 */
-#define SAMD_MKRGSM1400     205 /* Arduino MKR GSM 1400 */
-#define SAMD_MKRWAN1300     206 /* Arduino MKR WAN 1300 */
-#define SAMD_MKRWIFI1010    207 /* Arduino MKR WiFi 1010 */
-#define SAMD_CIRCUITPLAYGROUND_EXPRESS  208 /* Adafruit Circuit Playground M0 */
-#define SAM_ZERO      209 /* M0 pro / M0 */
-#define SAMD_TIAN     210 /* Arduino Tian */
-
-/* ESP8266系統 v2.5.0 */
-#define ESP8266_GENERIC     301 /* ESP8266 Generic / Invent One / XinaBox CW01 */
-#define ESP8285_GENERIC     302 /* Generic ESP8265 */
-#define ESP8266_ESPDUINO    303 /* ESPDuino (ESP-13 Module) / ThaiEasyElec's ESPino */
-#define ESP8266_ESPINO      304 /* Adafruit Feather HUZZAH ESP8266 /ESPino (ESP-12 Module) / WifInfo */
-#define ESP8266_WIFINFO     305
-#define ESP8266_WIFINFO2    306
-#define ESP8266_ESPRESSO_LITE_V1  307 /* ESPresso Lite 1.0 */
-#define ESP8266_ESPRESSO_LITE_V2  308 /* ESPresso Lite 2.0 */
-#define ESP8266_PHOENIX_V1    309 /* Phoenix 1.0 */
-#define ESP8266_PHOENIX_V2    310 /* Phoenix 2.0 */
-#define ESP8266_NODEMCU     311 /* NodeMCU 0.9 (ESP-12 Module) / NodeMCU 1.0 (ESP-12E Module) / nodemcuv2 */
-#define ESP8266_MOD_WIFI    312 /* Olimex MOD-WIFI-ESP8266(-DEV) */
-#define ESP8266_THING     313 /* SparkFun ESP8266 Thing */
-#define ESP8266_THING_DEV   314 /* SparkFun ESP8266 Thing Dev */
-#define ESP8266_ESP210      315 /* SweetPea ESP-210 */
-#define ESP8266_WEMOS_D1MINI    316 /* LOLIN(WEMOS) D1 R2 & mini */
-#define ESP8266_WEMOS_D1MINIPRO   317 /* LOLIN(WEMOS) D1 mini Pro */
-#define ESP8266_WEMOS_D1MINILITE  318 /* LOLIN(WEMOS) D1 mini Lite */
-#define ESP8266_WEMOS_D1R1    319 /* WeMos D1 R1 */
-#define ESP8266_STAR_OTTO   320 /* Arduino (esp8266) */
-#define ESP8266_UNOWIFI     321 
-#define ESP8266_ARDUINO     322
-#define ESP8266_PRIMO     323
-#define ESP8266_GEN4_IOD    324 /* 4D Systems gen4 IoD Range */
-#define ESP8266_OAK     325 /* Digistump Oak */
-#define ESP8266_WIFIDUINO   326 /* WiFiduino */
-#define ESP8266_AMPERKA_WIFI_SLOT 327 /* Amperka WiFi Slot */
-#define ESP8266_WIO_LINK    328 /* Seeed Wio Link */
-#define ESP8266_ESPECTRO_CORE   329 /* ESPectro Core */
-
-/*  ESP32系統 v1.0.2 */
-#define ESP32_GENERIC     401 /* ESP32 Generic (ESP32 Dev Module / Wrover Module / XinaBox CW02 / FireBeetle-ESP32 / DOIT ESP32 DEVKIT V1 */
-#define ESP32_PICO      402 /* Pico Kit / Turta IoT Node */
-#define ESP32_TTGO_LoRa32_V1    403 /* TTGO LoRa32-OLED V1 */
-#define ESP32_THING     404 /* SparkFun ESP32 Thing */
-#define ESP32_UBLOX_NINA_W10    405 /* u-blox NINA-W10 */
-#define ESP32_WIDORA_AIR    406 /* Widora AIR */
-#define ESP32_ESP320      407 /* Electronic SweetPeas - ESP320 */
-#define ESP32_NANO32      408 /* Nano320 */
-#define ESP32_LOLIN_D32     409 /* Lolin D32 */
-#define ESP32_LOLIN_D32_PRO   410 /* Lolin D32 Pro */
-#define ESP32_LOLIN32     411 /* Wemos Lolin32 */
-#define ESP32_Pocket32      412 /* Dongsen Tech Pocket 32 / WeMos WiFi&Bluetooth Battery */
-#define ESP32_ESPea32     413 /* ESPea32 */
-#define ESP32_QUANTUM     414 /* Noduino Quantum */
-#define ESP32_Node32s     415 /* Node32s */
-#define ESP32_HORNBILL_DEV    416 /* Hornbill32dev */
-#define ESP32_HORNBILL_MINIMA   417 /* Hornbill ESP32 Minima */
-#define ESP32_INTOROBOT_DEV   418 /* IntoRobot Fig */
-#define ESP32_ONEHORSE_DEV    419 /* Onehorse ESP32 Dev Module */
-#define ESP32_FEATHER     420 /* Adafruit ESP32 Feather */
-#define ESP32_NodeMCU_32S   421 /* NodeMCU-32S */
-#define ESP32_MH_ET_LIVE_DEVKIT   422 /* MH ET LIVE ESP32DevKIT */
-#define ESP32_MH_ET_LIVE_MINIKIT  423 /* MH ET LIVE ESP32MiniKit */
-#define ESP32_vn_iot_uno    424 /* ESP32vn IoT Uno */
-#define ESP32_EVB     425 /* OLIMEX ESP32-EVB */
-#define ESP32_GATEWAY     426 /* OLIMEX ESP32-GATEWAY */
-#define ESP32_POE     427 /* OLIMEX ESP32-PoE */
-#define ESP32_ESPino32      428 /* ThaiEasyElec's ESPino32 */
-#define ESP32_M5Stack_Core    429 /* M5Stack-Core-ESP32 */
-#define ESP32_M5STACK_FIRE    430 /* M5Stack-FIRE */
-#define ESP32_M5Stick_C     431 /* M5Stick-C */
-#define ESP32_ODROID      432 /* ODROID ESP32 */
-#define ESP32_HELTEC_WIFI_KIT_32  433 /* Heltec WiFi Kit 32 */
-#define ESP32_Heltec_WIFI_LoRa_32 434 /* Heltec WiFi LoRa 32 */
-#define ESP32_Heltec_WIFI_LoRa_32_V2  435 /* Heltec Wireless Stick */
-#define ESP32_ESPECTRO32    436 /* ESPectro32 */
-#define ESP32_CoreESP32     437 /* Microduino-CoreESP32 */
-#define ESP32_ALKS      438 /* ALKS ESP32 */
-#define ESP32_WIPY3     439 /* WiPy3 */
-/*#define ESP32_BPI-BIT 440  BPI-BIT */
-#define ESP32_WESP32      441 /* Silicognition wESP32 */
-/*#define ESP32_T-Beam      442  T-Beam */
-/*#define ESP32_D-duino-32    443 d-duino-32 */
-#define ESP32_LoPy      444 /* lopy */
-#define ESP32_LoPy4     445 /* lopy4 */
-#define ESP32_OROCA_EDUBOT    446 /* oroca_edubot */
-/*#define ESP32_fm-devkit     447  ESP32 FM devkit */
-#define ESP32_FROG_BOARD    448 /*Frog Board ESP32 */
-
-/* Arduino Yun */
-#if defined(ARDUINO_AVR_YUN) && defined(__AVR_ATmega32U4__)
-#define HARDWARE_TYPE AVR_YUN
-#endif /* defined(ARDUINO_AVR_YUN) && defined(__AVR_ATmega32U4__) */
-
-/* Arduino Uno */
-#if defined(ARDUINO_AVR_UNO) && defined(__AVR_ATmega328P__)
-#define HARDWARE_TYPE AVR_UNO
-#endif /* defined(ARDUINO_AVR_UNO) && defined(__AVR_ATmega328P__) */
-
-/* Arduino Duemilanove */
-#ifdef ARDUINO_AVR_DUEMILANOVE
-#ifdef __AVR_ATmega328P__
-#define HARDWARE_TYPE AVR_DUEMILANOVE_328P
-#else /* __AVR_ATmega328P__ */
-#ifdef __AVR_ATmega168__
-#define HARDWARE_TYPE AVR_DUEMILANOVE_168
-#endif /* __AVR_ATmega168__ */
-#endif /* __AVR_ATmega328P__ */
-#endif /* ARDUINO_AVR_DUEMILANOVE */
-
-/* Arduino Nano系統 */
-#ifdef ARDUINO_AVR_NANO
-#ifdef __AVR_ATmega328P__
-#define HARDWARE_TYPE AVR_NANO_328P
-#else /* __AVR_ATmega328P__ */
-#ifdef __AVR_ATmega168__
-#define HARDWARE_TYPE AVR_NANO_168
-#endif /* __AVR_ATmega168__ */
-#endif /* __AVR_ATmega328P__ */
-#endif /* ARDUINO_AVR_NANO */
-
-/* Arduino Mega2560 */
-#if defined(ARDUINO_AVR_MEGA2560) && defined(__AVR_ATmega2560__)
-#define HARDWARE_TYPE AVR_MEGA2560
-#endif /* defined(ARDUINO_AVR_MEGA2560) && defined(__AVR_ATmega2560__) */
-
-/* Arduino Mega */
-#if defined(ARDUINO_AVR_MEGA) && defined(__AVR_ATmega1280__)
-#define HARDWARE_TYPE AVR_MEGA
-#endif /* defined(ARDUINO_AVR_MEGA) && defined(__AVR_ATmega1280__) */
-
-/* Arduino ADK */
-#if defined(ARDUINO_AVR_ADK) && defined(__AVR_ATmega2560__)
-#define HARDWARE_TYPE AVR_ADK
-#endif /* defined(ARDUINO_AVR_ADK) && defined(__AVR_ATmega2560__) */
-
-/* Arduino Leonardo */
-#if defined(ARDUINO_AVR_LEONARDO) && defined(__AVR_ATmega32U4__)
-#define HARDWARE_TYPE AVR_LEONARDO
-#endif /* defined(ARDUINO_AVR_LEONARDO) && defined(__AVR_ATmega32U4__) */
-
-/* Arduino Leonardo Ethernet */
-#if defined(ARDUINO_AVR_LEONARDO_ETH) && defined(__AVR_ATmega32U4__)
-#define HARDWARE_TYPE AVR_LEONARDO_ETH
-#endif /* defined(ARDUINO_AVR_LEONARDO_ETH) && defined(__AVR_ATmega32U4__) */
-
-/* Arduino Micro */
-#if defined(ARDUINO_AVR_MICRO) && defined(__AVR_ATmega32U4__)
-#define HARDWARE_TYPE AVR_MICRO
-#endif /* defined(ARDUINO_AVR_MICRO) && defined(__AVR_ATmega32U4__) */
-
-/* Arduino Esplora */
-#if defined(ARDUINO_AVR_ESPLORA) && defined(__AVR_ATmega32U4__)
-#define HARDWARE_TYPE AVR_ESPLORA
-#endif /* defined(ARDUINO_AVR_ESPLORA) && defined(__AVR_ATmega32U4__) */
-
-/* Arduino Mini */
-#ifdef ARDUINO_AVR_MINI
-#ifdef __AVR_ATmega328P__
-#define HARDWARE_TYPE AVR_MINI_328P
-#else /* __AVR_ATmega328P__ */
-#ifdef __AVR_ATmega168__
-#define HARDWARE_TYPE AVR_MINI_168
-#endif /* __AVR_ATmega168__ */
-#endif /* __AVR_ATmega328P__ */
-#endif /* ARDUINO_AVR_MINI */
-
-/* Arduino Ethernet */
-#if defined(ARDUINO_AVR_ETHERNET) && defined(__AVR_ATmega328P__)
-#define HARDWARE_TYPE AVR_ETHERNET
-#endif /* defined(ARDUINO_AVR_ETHERNET) && defined(__AVR_ATmega328P__) */
-
-/* Arduino Fio */
-#if defined(ARDUINO_AVR_FIO) && defined(__AVR_ATmega328P__)
-#define HARDWARE_TYPE AVR_FIO
-#endif /* defined(ARDUINO_AVR_FIO) && defined(__AVR_ATmega328P__) */
-
-/* Arduino BT (ATmega328P/ATmega168) */
-#if defined(ARDUINO_AVR_BT) && defined(__AVR_ATmega328P__)
-#define HARDWARE_TYPE AVR_BT_328P
-#endif /* defined(ARDUINO_AVR_BT) && defined(__AVR_ATmega328P__) */
-#if defined(ARDUINO_AVR_BT) && defined(__AVR_ATmega168__)
-#define HARDWARE_TYPE AVR_BT_168
-#endif /* defined(ARDUINO_AVR_BT) && defined(__AVR_ATmega168__) */
-
-/* LilyPad Arduino USB */
-#if defined(ARDUINO_AVR_LILYPAD_USB) && defined(__AVR_ATmega32U4__)
-#define HARDWARE_TYPE AVR_LILYPAD_USB
-#endif /* defined(ARDUINO_AVR_LILYPAD_USB) && defined(__AVR_ATmega32U4__) */
-
-/* LilyPad Arduino (ATmega328P/ATmega168) */
-#if defined(ARDUINO_AVR_LILYPAD) && defined(__AVR_ATmega328P__)
-#define HARDWARE_TYPE AVR_LILYPAD_328P
-#endif /* defined(ARDUINO_AVR_LILYPAD) && defined(__AVR_ATmega328P__) */
-#if defined(ARDUINO_AVR_LILYPAD) && defined(__AVR_ATmega168__)
-#define HARDWARE_TYPE AVR_LILYPAD_168
-#endif /* defined(ARDUINO_AVR_LILYPAD) && defined(__AVR_ATmega168__) */
-
-/* Arduino Pro or Pro Mini */
-#if defined(ARDUINO_AVR_PRO) && defined(__AVR_ATmega328P__) && F_CPU==16000000L
-#define HARDWARE_TYPE AVR_PRO_328P_5V
-#endif /* defined(ARDUINO_AVR_PRO) && defined(__AVR_ATmega328P__) && F_CPU==16000000L */
-#if defined(ARDUINO_AVR_PRO) && defined(__AVR_ATmega328P__) && F_CPU==8000000L
-#define HARDWARE_TYPE AVR_PRO_328P_3_3V
-#endif /* defined(ARDUINO_AVR_PRO) && defined(__AVR_ATmega328P__) && F_CPU==8000000L */
-#if defined(ARDUINO_AVR_PRO) && defined(__AVR_ATmega168__) && F_CPU==16000000L
-#define HARDWARE_TYPE AVR_PRO_168_5V
-#endif /* defined(ARDUINO_AVR_PRO) && defined(__AVR_ATmega168__) && F_CPU==16000000L */
-#if defined(ARDUINO_AVR_PRO) && defined(__AVR_ATmega168__) && F_CPU==8000000L
-#define HARDWARE_TYPE AVR_PRO_168_3_3V
-#endif /* defined(ARDUINO_AVR_PRO) && defined(__AVR_ATmega168__) && F_CPU==8000000L */
-
-/* Arduino NG */
-#if defined(ARDUINO_AVR_NG) && defined(__AVR_ATmega168__)
-#define HARDWARE_TYPE AVR_NG_168
-#endif /* defined(ARDUINO_AVR_NG) && defined(__AVR_ATmega168__) */
-#if defined(ARDUINO_AVR_NG) && defined(__AVR_ATmega8__)
-#define HARDWARE_TYPE AVR_NG_8
-#endif /* defined(ARDUINO_AVR_NG) && defined(__AVR_ATmega8__) */
-
-/* Arduino Robot Control */
-#if defined(ARDUINO_AVR_ROBOT_CONTROL) && defined(__AVR_ATmega32U4__)
-#define HARDWARE_TYPE AVR_ROBOT_CONTROL
-#endif /* defined(ARDUINO_AVR_ROBOT_CONTROL) && defined(__AVR_ATmega32U4__) */
-
-/* Arduino Robot Motor */
-#if defined(ARDUINO_AVR_ROBOT_MOTOR) && defined(__AVR_ATmega32U4__)
-#define HARDWARE_TYPE AVR_ROBOT_MOTOR
-#endif /* defined(ARDUINO_AVR_ROBOT_MOTOR) && defined(__AVR_ATmega32U4__) */
-
-/* Arduino Gemma */
-#if defined(ARDUINO_AVR_GEMMA) && defined(__AVR_ATtimy85__)
-#define HARDWARE_TYPE AVR_GEMMA
-#endif /* defined(ARDUINO_AVR_GEMMA) && defined(__AVR_ATtimy85__) */
-
-/* Arduino Circuit play */
-#if defined(ARDUINO_AVR_CIRCUITPLAY) && defined(__AVR_ATmega32U4__)
-#define HARDWARE_TYPE AVR_CIRCUITPLAY
-#endif /* defined(ARDUINO_AVR_CIRCUITPLAY) && defined(__AVR_ATmega32U4__) */
-
-/* Arduino Yun Mini */
-#if defined(ARDUINO_AVR_YUNMINI) && defined(__AVR_ATmega32U4__)
-#define HARDWARE_TYPE AVR_YUNMINI
-#endif /* defined(ARDUINO_AVR_YUNMINI) && defined(__AVR_ATmega32U4__) */
-
-/* Arduino Industrial101 */
-#if defined(ARDUINO_AVR_INDUSTRIAL101) && defined(__AVR_ATmega32U4__)
-#define HARDWARE_TYPE AVR_INDUSTRIAL101
-#endif /* defined(ARDUINO_AVR_INDUSTRIAL101) && defined(__AVR_ATmega32U4__) */
-
-/* Arduino Lilino One */
-#if defined(ARDUINO_AVR_LININO_ONE) && defined(__AVR_ATmega32U4__)
-#define HARDWARE_TYPE AVR_LININO_ONE
-#endif /* defined(ARDUINO_AVR_LININO_ONE) && defined(__AVR_ATmega32U4__) */
-
-/* Arduino Uno Wifi Developer Edition */
-#if defined(ARDUINO_AVR_UNO_WIFI_DEV_ED) && defined(__AVR_ATmega328P__)
-#define HARDWARE_TYPE AVR_UNO_WIFI_DEV_ED
-#endif /* defined(ARDUINO_AVR_UNO_WIFI_DEV_ED) && defined(__AVR_ATmega328P__) */
-
-/*  SAM系統  */
-
-/* Arduino Due */
-#if defined(ARDUINO_SAM_DUE) && defined(__SAM3X8E__)
-#define HARDWARE_TYPE SAM_DUE
-#endif /* defined(ARDUINO_SAM_DUE) && defined(__SAM3X8E__) */
-
-/*  SAMD系統  */
-/* Arduino Zero */
-#if defined(ARDUINO_SAMD_ZERO) && defined(__SAMD21G18A__)
-#define HARDWARE_TYPE SAMD_ZERO
-#endif /* defined(ARDUINO_SAMD_ZERO) && defined(__SAMD21G18A__) */
-
-/* Arduino/Genuino MKR1000 */
-#if defined(ARDUINO_SAMD_MKR1000) && defined(__SAMD21G18A__)
-#define HARDWARE_TYPE SAMD_MKR1000
-#endif /* defined(ARDUINO_SAMD_MKR1000) && defined(__SAMD21G18A__) */
-
-/* Arduino MKRZero */
-#if defined(ARDUINO_SAMD_MKRZERO) && defined(__SAMD21G18A__)
-#define HARDWARE_TYPE SAMD_MKRZERO
-#endif /* defined(ARDUINO_SAMD_MKRZERO) && defined(__SAMD21G18A__) */
-
-/* Arduino MKRFox1200 */
-#if defined(ARDUINO_SAMD_MKRFox1200) && defined(__SAMD21G18A__)
-#define HARDWARE_TYPE SAMD_MKRFox1200
-#endif /* defined(ARDUINO_SAMD_MKRFox1200) && defined(__SAMD21G18A__) */
-
-/* Arduino MKR GSM 1400 */
-#if defined(ARDUINO_SAMD_MKRGSM1400) && defined(__SAMD21G18A__)
-#define HARDWARE_TYPE SAMD_MKRGSM1400
-#endif /* define(ARDUINO_SAMD_MKRGSM1400) && defined(__SAMD21G18A__) */
-
-/* Arduino MKR WAN 1300 */
-#if defined(ARDUINO_SAMD_MKRWAN1300) && defined(__SAMD21G18A__)
-#define HARDWARE_TYPE SAMD_MKRWAN1300
-#endif /* defined(ARDUINO_SAMD_MKRWAN1300) && defined(__SAMD21G18A__) */
-
-/* Arduino MKR WiFi 1010 */
-#if defined(ARDUINO_SAMD_MKRWIFI1010) && defined(__SAMD21G18A__)
-#define HARDWARE_TYPE SAMD_MKRWIFI1010
-#endif /* defined(ARDUINO_SAMD_MKRWIFI1010) && defined(__SAMD21G18A__) */
-
-/* Adafruit Circuit Playground M0 */
-#if defined(ARDUINO_SAMD_CIRCUITPLAYGROUND_EXPRESS) && defined(__SAMD21G18A__)
-#define HARDWARE_TYPE SAMD_CIRCUITPLAYGROUND_EXPRESS
-#endif /* defined(ARDUINO_SAMD_CIRCUITPLAYGROUND_EXPRESS) && defined(__SAMD21G18A__) */
-
-/* M0 pro / M0 */
-#if defined(ARDUINO_SAM_ZERO) && defined(__SAMD21G18A__)
-#define HARDWARE_TYPE SAM_ZERO
-#endif /* defined(ARDUINO_SAM_ZERO) && defined(__SAMD21G18A__) */
-
-/* Arduino Tian */
-#if defined(ARDUINO_SAMD_TIAN) && defined(__SAMD21G18A__)
-#define HARDWARE_TYPE SAMD_TIAN
-#endif /* defined(ARDUINO_SAMD_TIAN) && defined(__SAMD21G18A__) */
-
-/* ESP8266系統 v2.5.0 */
-/* ESP8266 Generic / Invent One / XinaBox CW01 */
-#ifdef ARDUINO_ESP8266_GENERIC
-#define HARDWARE_TYPE ESP8266_GENERIC
-#endif /* ARDUINO_ESP8266_GENERIC*/
-
-/* Generic ESP8265 */
-#ifdef ARDUINO_ESP8266_ESP01
-#define HARDWARE_TYPE ESP8285_GENERIC
-#endif /* ARDUINO_ESP8266_ESP01 */
-
-/* ESPDuino (ESP-13 Module) / ThaiEasyElec's ESPino */
-#ifdef ARDUINO_ESP8266_ESP13
-#define HARDWARE_TYPE ESP8266_ESPDUINO
-#endif /* ARDUINO_ESP8266_ESP13 */
-
-/* Adafruit Feather HUZZAH ESP8266 /ESPino (ESP-12 Module) / WifInfo */
-#ifdef ARDUINO_ESP8266_ESP12
-#define HARDWARE_TYPE ESP8266_ESPINO
-#endif /* ARDUINO_ESP8266_ESP12 */
-#ifdef ARDUINO_ESP8266_ESP07
-#define HARDWARE_TYPE ESP8266_WIFINFO
-#endif /* ARDUINO_ESP8266_ESP07 */
-#ifdef ARDUINO_WIFINFO
-#define HARDWARE_TYPE ESP8266_WIFINFO2
-#endif /* ARDUINO_WIFINFO */
-
-/* ESPresso Lite 1.0 */
-#ifdef ARDUINO_ESP8266_ESPRESSO_LITE_V1
-#define HARDWARE_TYPE ESP8266_ESPRESSO_LITE_V1
-#endif /* ARDUINO_ESP8266_ESPRESSO_LITE_V1 */
-
-/* ESPresso Lite 2.0 */
-#ifdef ARDUINO_ESP8266_ESPRESSO_LITE_V2
-#define HARDWARE_TYPE ESP8266_ESPRESSO_LITE_V2
-#endif /* ARDUINO_ESP8266_ESPRESSO_LITE_V2 */
-
-/* Phoenix 1.0 */
-#ifdef ARDUINO_ESP8266_PHOENIX_V1
-#define HARDWARE_TYPE ESP8266_PHOENIX_V1
-#endif /* ARDUINO_ESP8266_PHOENIX_V1 */
-
-/* Phoenix 2.0 */
-#ifdef ARDUINO_ESP8266_PHOENIX_V2
-#define HARDWARE_TYPE ESP8266_PHOENIX_V2
-#endif /* ARDUINO_ESP8266_PHOENIX_V2 */
-
-/* NodeMCU 0.9 (ESP-12 Module) / NodeMCU 1.0 (ESP-12E Module) / nodemcuv2 */
-#ifdef ARDUINO_ESP8266_NODEMCU
-#define HARDWARE_TYPE ESP8266_NODEMCU
-#endif /* ARDUINO_ESP8266_NODEMCU */
-
-/* Olimex MOD-WIFI-ESP8266(-DEV) */
-#ifdef ARDUINO_MOD_WIFI_ESP8266
-#define HARDWARE_TYPE ESP8266_MOD_WIFI
-#endif /* ARDUINO_MOD_WIFI_ESP8266 */
-
-/* SparkFun ESP8266 Thing */
-#ifdef ARDUINO_ESP8266_THING
-#define HARDWARE_TYPE ESP8266_THING
-#endif /* ARDUINO_ESP8266_THING */
-
-/* SparkFun ESP8266 Thing Dev */
-#ifdef ARDUINO_ESP8266_THING_DEV
-#define HARDWARE_TYPE ESP8266_THING_DEV
-#endif /* ARDUINO_ESP8266_THING_DEV */
-
-/* SweetPea ESP-210 */
-#ifdef ARDUINO_ESP8266_ESP210
-#define HARDWARE_TYPE ESP8266_ESP210
-#endif /* ARDUINO_ESP8266_ESP210 */
-
-/* LOLIN(WEMOS) D1 R2 & mini */
-#ifdef ARDUINO_ESP8266_WEMOS_D1MINI
-#define HARDWARE_TYPE ESP8266_WEMOS_D1MINI
-#endif /* ARDUINO_ESP8266_WEMOS_D1MINI */
-
-/* LOLIN(WEMOS) D1 mini Pro */
-#ifdef ARDUINO_ESP8266_WEMOS_D1MINIPRO
-#define HARDWARE_TYPE ESP8266_WEMOS_D1MINIPRO
-#endif /* ARDUINO_ESP8266_WEMOS_D1MINIPRO */
-
-/* LOLIN(WEMOS) D1 mini Lite */
-#ifdef ARDUINO_ESP8266_WEMOS_D1MINILITE
-#define HARDWARE_TYPE ESP8266_WEMOS_D1MINILITE
-#endif /* ARDUINO_ESP8266_WEMOS_D1MINILITE */
-
-/* WeMos D1 R1 */
-#ifdef ARDUINO_ESP8266_WEMOS_D1R1
-#define HARDWARE_TYPE ESP8266_WEMOS_D1R1
-#endif /* ARDUINO_ESP8266_WEMOS_D1R1 */
-
-/* Arduino (esp8266) */
-#ifdef ARDUINO_ESP8266_ARDUINO_STAR_OTTO
-#define HARDWARE_TYPE ESP8266_STAR_OTTO
-#endif /* ARDUINO_ESP8266_ARDUINO_STAR_OTTO */
-
-#ifdef ARDUINO_ESP8266_ARDUINO_UNOWIFI
-#define HARDWARE_TYPE ESP8266_UNOWIFI
-#endif /* ARDUINO_ESP8266_ARDUINO_UNOWIFI */
-
-#ifdef ARDUINO_ESP8266_ARDUINO
-#define HARDWARE_TYPE ESP8266_ARDUINO
-#endif /* ARDUINO_ESP8266_ARDUINO */
-
-
-#ifdef ARDUINO_ESP8266_ARDUINO_PRIMO
-#define HARDWARE_TYPE ESP8266_PRIMO
-#endif /* ARDUINO_ESP8266_ARDUINO_PRIMO */
-
-/* 4D Systems gen4 IoD Range */
-#ifdef ARDUINO_GEN4_IOD
-#define HARDWARE_TYPE ESP8266_GEN4_IOD
-#endif /* ARDUINO_GEN4_IOD */
-
-/* Digistump Oak */
-#ifdef ARDUINO_ESP8266_OAK
-#define HARDWARE_TYPE ESP8266_OAK
-#endif /* ARDUINO_ESP8266_OAK */
-
-/* WiFiduino */
-#ifdef ARDUINO_WIFIDUINO_ESP8266
-#define HARDWARE_TYPE ESP8266_WIFIDUINO
-#endif /* ARDUINO_WIFIDUINO_ESP8266 */
-
-/* Amperka WiFi Slot */
-#ifdef ARDUINO_AMPERKA_WIFI_SLOT
-#define HARDWARE_TYPE ESP8266_AMPERKA_WIFI_SLOT
-#endif /* ARDUINO_AMPERKA_WIFI_SLOT */
-
-/* Seeed Wio Link */
-#ifdef ARDUINO_ESP8266_WIO_LINK
-#define HARDWARE_TYPE ESP8266_WIO_LINK
-#endif /* ARDUINO_ESP8266_WIO_LINK */
-
-/* ESPectro Core */
-#ifdef ARDUINO_ESP8266_ESPECTRO_CORE
-#define HARDWARE_TYPE ESP8266_ESPECTRO_CORE
-#endif /* ARDUINO_ESP8266_ESPECTRO_CORE */
-
-/*  ESP32系統 v1.0.2 */
-/* ESP32 Generic (ESP32 Dev Module / Wrover Module / XinaBox CW02 / FireBeetle-ESP32 / DOIT ESP32 DEVKIT V1 */
-#ifdef ARDUINO_ESP32_DEV
-#define HARDWARE_TYPE ESP32_GENERIC
-#endif /* ARDUINO_ESP32_DEV */
-
-/* Pico Kit / Turta IoT Node */
-#ifdef ARDUINO_ESP32_PICO
-#define HARDWARE_TYPE ESP32_PICO
-#endif /* ARDUINO_ESP32_PICO */
-
-/* TTGO LoRa32-OLED V1 */
-#ifdef ARDUINO_TTGO_LoRa32_V1
-#define HARDWARE_TYPE ESP32_TTGO_LoRa32_V1
-#endif /* ARDUINO_TTGO_LoRa32_V1 */
-
-/* SparkFun ESP32 Thing */
-#ifdef ARDUINO_ESP32_THING
-#define HARDWARE_TYPE ESP32_THING
-#endif /* ARDUINO_ESP32_THING */
-
-/* u-blox NINA-W10 */
-#ifdef ARDUINO_UBLOX_NINA_W10
-#define HARDWARE_TYPE ESP32_UBLOX_NINA_W10
-#endif /* ARDUINO_UBLOX_NINA_W10 */
-
-/* Widora AIR */
-#ifdef ARDUINO_WIDORA_AIR
-#define HARDWARE_TYPE ESP32_WIDORA_AIR
-#endif /* ARDUINO_WIDORA_AIR */
-
-/* Electronic SweetPeas - ESP320 */
-#ifdef ARDUINO_ESP320
-#define HARDWARE_TYPE ESP32_ESP320
-#endif /* ARDUINO_ESP320 */
-
-/* Nano320 */
-#ifdef ARDUINO_NANO32
-#define HARDWARE_TYPE ESP32_NANO32
-#endif /* ARDUINO_NANO32 */
-
-/* Lolin D32 */
-#ifdef ARDUINO_LOLIN_D32
-#define HARDWARE_TYPE ESP32_LOLIN_D32
-#endif /* ARDUINO_LOLIN_D32 */
-
-/* Lolin D32 Pro */
-#ifdef ARDUINO_LOLIN_D32_PRO
-#define HARDWARE_TYPE ESP32_LOLIN_D32_PRO
-#endif /* ARDUINO_LOLIN_D32_PRO */
-
-/* Wemos Lolin32 */
-#ifdef ARDUINO_LOLIN32
-#define HARDWARE_TYPE ESP32_LOLIN32
-#endif /* ARDUINO_LOLIN32 */
-
-/* Dongsen Tech Pocket 32 / WeMos WiFi&Bluetooth Battery */
-#ifdef ARDUINO_Pocket32
-#define HARDWARE_TYPE ESP32_Pocket32
-#endif /* ARDUINO_Pocket32 */
-
-/* ESPea32 */
-#ifdef ARDUINO_ESPea32
-#define HARDWARE_TYPE ESP32_ESPea32
-#endif /* ARDUINO_ESPea32 */
-
-/* Noduino Quantum */
-#ifdef ARDUINO_QUANTUM
-#define HARDWARE_TYPE ESP32_QUANTUM
-#endif /* ARDUINO_QUANTUM */
-
-/* Node32s */
-#ifdef ARDUINO_Node32s
-#define HARDWARE_TYPE ESP32_Node32s
-#endif /* ARDUINO_Node32s */
-
-/* Hornbill32dev */
-#ifdef ARDUINO_HORNBILL_ESP32_DEV
-#define HARDWARE_TYPE ESP32_HORNBILL_DEV
-#endif /* ARDUINO_HORNBILL_ESP32_DEV */
-
-/* Hornbill ESP32 Minima */
-#ifdef ARDUINO_HORNBILL_ESP32_MINIMA
-#define HARDWARE_TYPE ESP32_HORNBILL_MINIMA
-#endif /* ARDUINO_HORNBILL_ESP32_MINIMA */
-
-/* IntoRobot Fig */
-#ifdef ARDUINO_INTOROBOT_ESP32_DEV
-#define HARDWARE_TYPE ESP32_INTOROBOT_DEV
-#endif /* ARDUINO_INTOROBOT_ESP32_DEV */
-
-/* Onehorse ESP32 Dev Module */
-#ifdef ARDUINO_ONEHORSE_ESP32_DEV
-#define HARDWARE_TYPE ESP32_ONEHORSE_DEV
-#endif /* ARDUINO_ONEHORSE_ESP32_DEV */
-
-/* Adafruit ESP32 Feather */
-#ifdef ARDUINO_FEATHER_ESP32
-#define HARDWARE_TYPE ESP32_FEATHER
-#endif /* ARDUINO_FEATHER_ESP32 */
-
-/* NodeMCU-32S */
-#ifdef ARDUINO_NodeMCU_32S
-#define HARDWARE_TYPE ESP32_NodeMCU_32S
-#endif /* ARDUINO_NodeMCU_32S */
-
-/* MH ET LIVE ESP32DevKIT */
-#ifdef ARDUINO_MH_ET_LIVE_ESP32DEVKIT
-#define HARDWARE_TYPE ESP32_MH_ET_LIVE_DEVKIT
-#endif /* ARDUINO_MH_ET_LIVE_ESP32DEVKIT */
-
-/* MH ET LIVE ESP32MiniKit */
-#ifdef ARDUINO_MH_ET_LIVE_ESP32MINIKIT
-#define HARDWARE_TYPE ESP32_MH_ET_LIVE_MINIKIT
-#endif /* ARDUINO_MH_ET_LIVE_ESP32MINIKIT */
-
-/* ESP32vn IoT Uno */
-#ifdef ARDUINO_esp32vn_iot_uno
-#define HARDWARE_TYPE ESP32_vn_iot_uno
-#endif /* ARDUINO_esp32vn_iot_uno */
-
-/* OLIMEX ESP32-EVB */
-#ifdef ARDUINO_ESP32_EVB
-#define HARDWARE_TYPE ESP32_EVB
-#endif /* ARDUINO_ESP32_EVB */
-
-/* OLIMEX ESP32-GATEWAY */
-#ifdef ARDUINO_ESP32_GATEWAY
-#define HARDWARE_TYPE ESP32_GATEWAY
-#endif /* ARDUINO_ESP32_GATEWAY */
-
-/* OLIMEX ESP32-PoE */
-#ifdef ARDUINO_ESP32_POE
-#define HARDWARE_TYPE ESP32_POE
-#endif /* ARDUINO_ESP32_POE */
-
-/* ThaiEasyElec's ESPino32 */
-#ifdef ARDUINO_ESPino32
-#define HARDWARE_TYPE ESP32_ESPino32
-#endif /* ARDUINO_ESPino32 */
-
-/* M5Stack-Core-ESP32 */
-#ifdef ARDUINO_M5Stack_Core_ESP32
-#define HARDWARE_TYPE ESP32_M5Stack_Core
-#endif /* ARDUINO_M5Stack_Core_ESP32 */
-
-/* M5Stack-FIRE */
-#ifdef ARDUINO_M5STACK_FIRE
-#define HARDWARE_TYPE ESP32_M5STACK_FIRE
-#endif /* ARDUINO_M5STACK_FIRE */
-
-/* M5Stick-C */
-#ifdef ARDUINO_M5Stick_C
-#define HARDWARE_TYPE ESP32_M5Stick_C
-#endif /* ARDUINO_M5Stick-C */
-
-/* ODROID ESP32 */
-#ifdef ARDUINO_ODROID_ESP32
-#define HARDWARE_TYPE ESP32_ODROID
-#endif /* ARDUINO_ODROID_ESP32 */
-
-
-/* Heltec WiFi Kit 32 */
-#ifdef ARDUINO_HELTEC_WIFI_KIT_32
-#define HARDWARE_TYPE ESP32_HELTEC_WIFI_KIT_32
-#endif /* ARDUINO_HELTEC_WIFI_KIT_32 */
-
-/* Heltec WiFi LoRa 32 */
-#ifdef ARDUINO_HELTEC_WIFI_LORA_32
-#define HARDWARE_TYPE ESP32_Heltec_WIFI_LoRa_32
-#endif /* ARDUINO_HELTEC_WIFI_LORA_32 */
-
-/* Heltec WiFi LoRa 32 v2 */
-#ifdef ARDUINO_HELTEC_WIFI_LORA_32_V2
-#define HARDWARE_TYPE HELTEC_WIFI_LORA_32_V2
-#endif /* ARDUINO_HELTEC_WIFI_LORA_32_V2 */
-
-/* Heltec Wireless Stick */
-#ifdef ARDUINO_HELTEC_WIRELESS_STICK
-#define HARDWARE_TYPE ESP32_Heltec_WIFI_LoRa_32_V2
-#endif /* ARDUINO_HELTEC_WIRELESS_STICK */
-
-/* ESPectro32 */
-#ifdef ARDUINO_ESPECTRO32
-#define HARDWARE_TYPE ESP32_ESPECTRO32
-#endif /* ARDUINO_ESPECTRO32 */
-
-/* Microduino-CoreESP32 */
-#ifdef ARDUINO_CoreESP32
-#define HARDWARE_TYPE ESP32_CoreESP32
-#endif /* ARDUINO_CoreESP32 */
-
-/* ALKS ESP32 */
-#ifdef ARDUINO_ALKS
-#define HARDWARE_TYPE ESP32_ALKS
-#endif /* ARDUINO_ALKS */
-
-/* WiPy3 */
-#ifdef ARDUINO_WIPY3
-#define HARDWARE_TYPE ESP32_WIPY3
-#endif /* ARDUINO_WIPY3 */
-
-/* BPI-BIT */
-#ifdef ARDUINO_BPI
-#define HARDWARE_TYPE ESP32_BPI_BIT
-#endif /* ARDUINO_BPI */
-
-
-/* Silicognition wESP32 */
-#ifdef ARDUINO_WESP32
-#define HARDWARE_TYPE ESP32_WESP32
-#endif /* ARDUINO_WESP32 */
-
-/* T-Beam */
-/*#ifdef ARDUINO_T_BEAM
-#define HARDWARE_TYPE ESP32_T_Beam
-#endif*/ /* ARDUINO_T-Beam */
-
-/* d-duino-32 */
-/*#ifdef ARDUINO_D-duino-32
-#define HARDWARE_TYPE ESP32_D-duino-32
-#endif *//* ARDUINO_D-duino-32 */
-
-/* lopy */
-#ifdef ARDUINO_LoPy
-#define HARDWARE_TYPE ESP32_LoPy
-#endif /* ARDUINO_LoPy */
-
-/* lopy4 */
-#ifdef ARDUINO_LoPy4
-#define HARDWARE_TYPE ESP32_LoPy4
-#endif /* ARDUINO_LoPy4 */
-
-/* oroca_edubot */
-#ifdef ARDUINO_OROCA_EDUBOT
-#define HARDWARE_TYPE ESP32_OROCA_EDUBOT
-#endif /* ARDUINO_OROCA_EDUBOT */
-
-/* ESP32 FM devkit */
-/*#ifdef ARDUINO_fm-devkit
-#define HARDWARE_TYPE ESP32_fm-devkit
-#endif*/ /* ARDUINO_fm-devkit */
-
-/*Frog Board ESP32 */
-#ifdef ARDUINO_FROG_ESP32
-#define HARDWARE_TYPE ESP32_FROG_BOARD
-#endif /* ARDUINO_FROG_ESP32 */
+#define ARDUINO_ZERO                      201 /* Arduino Zero                          */
+#define ARDUINO_MKR1000                   202 /* Arduino MKR1000                       */
+#define ARDUINO_MKRZERO                   203 /* Arduino MKRZero                       */
+#define ARDUINO_MKRWIFI1010               204 /* Arduino MKR WiFi 1010                 */
+#define ARDUINO_NANO_33_IOT               205 /* Arduino NANO 33 IoT                   */
+#define ARDUINO_MKRFOX1200                206 /* Arduino MKR FOX 1200                  */
+#define ARDUINO_MKRWAN1300                207 /* Arduino MKR WAN 1300                  */
+#define ARDUINO_MKRWAN1310                208 /* Arduino MKR WAN 1310                  */
+#define ARDUINO_MKRGSM1400                209 /* Arduino MKR GSM 1400                  */
+#define ARDUINO_MKRNB1500                 210 /* Arduino MKR NB 1500                   */
+#define ARDUINO_MKRVIDOR4000              211 /* Arduino MKR Vidor 4000                */
+#define ARDUINO_CIRCUITPLAYGROUND_EXPRESS 212 /* Adafruit Circuit Playground M0        */
+#define ARDUINO_TIAN                      213 /* Arduino Tian                          */
+#define ARDUINO_M0                        214 /* Arduino M0 / M0 Pro                   */
+
+/* ESP8266系統 */
+#define  AMPERKA_WIFI_SLOT               301 /*  Amperka WiFi Slot                            */
+#define  ESP8266_ADAFRUIT_HUZZAH         302 /*  Adafruit Feather HUZZAH ESP8266              */
+#define  ESP8266_AGRUMINO_LEMON_V4       303 /*  Lifely Agrumino Lemon v4                     */
+#define  ESP8285_GENERIC                 304 /*  Generic ESP8285 Module                       */
+#define  DOIT_ESP_MX_DEV_KIT             305 /*  DOIT ESP-Mx DevKit (ESP8285)                 */
+#define  ESP8266_ESPDUINO                306 /*  ESPDuino (ESP-13 Module)                     */
+#define  ESP8266_ESP210                  307 /*  SweetPea ESP-210                             */
+#define  ESP8266_ESPECTRO_CORE           308 /*  ESPectro Core                                */
+#define  ESP8266_ESPINO_ESP12            309 /*  ESPino (ESP-12 Module)                       */
+#define  ESP8266_ESPINO_ESP13            310 /*  ThaiEasyElec's ESPino                        */
+#define  ESP8266_ESPRESSO_LITE_V1        311 /*  ESPresso Lite 1.0                            */
+#define  ESP8266_ESPRESSO_LITE_V2        312 /*  ESPresso Lite 2.0                            */
+#define  ESP8266_GENERIC                 313 /*  Generic ESP8266 Module                       */
+#define  ESP8266_INVENT_ONE              314 /*  Invent One                                   */
+#define  ESP8266_NODEMCU_ESP12           315 /*  NodeMCU 0.9 (ESP-12 Module)                  */
+#define  ESP8266_NODEMCU_ESP12E          316 /*  NodeMCU 1.0 (ESP-12E Module)                 */
+#define  ESP8266_OAK                     317 /*  Digistump Oak                                */
+#define  ESP8266_PHOENIX_V1              318 /*  Phoenix 1.0                                  */
+#define  ESP8266_PHOENIX_V2              319 /*  Phoenix 2.0                                  */
+#define  ESP8266_SCHIRMILABS_EDUINO_WIFI 320 /*  Schirmilabs Eduino WiFi                      */
+#define  ESP8266_THING_DEV               321 /*  SparkFun ESP8266 Thing Dev                   */
+#define  ESP8266_WEMOS_D1MINILITE        322 /*  LOLIN(WEMOS) D1 mini Lite                    */
+#define  ESP8266_WEMOS_D1MINIPRO         323 /*  LOLIN(WEMOS) D1 mini Pro                     */
+#define  ESP8266_WEMOS_D1R1              324 /*  LOLIN(WeMos) D1 R1                           */
+#define  ESP8266_XINABOX_CW01            325 /*  XinaBox CW01                                 */
+#define  ESP8266_GEN4_IOD                326 /*  4D Systems gen4 IoD Range                    */
+#define  MOD_WIFI_ESP8266                327 /*  Olimex MOD-WIFI-ESP8266(-DEV)                */
+#define  WIFI_KIT_8                      328 /*  WiFi Kit 8                                   */
+#define  WIFIDUINO_ESP8266               329 /*  WiFiduino                                    */
+#define  ESP8266_THING                   330 /*  SparkFun ESP8266 Thing / Blynk Board         */
+#define  ESP8266_WEMOS_D1MINI            331 /*  LOLIN(WEMOS) D1 R2 & mini / D1 mini (clone)  */
+
+/*  ESP32系統 */
+#define ADAFRUIT_FEATHER_ESP32S2_NOPSRAM         401  /* Adafruit Feather ESP32-S2 (no PSRAM)                  */
+#define ALKS                                     402  /* ALKS ESP32                                            */
+#define ATMEGA_ZERO_ESP32_S2                     403  /* ATMegaZero ESP32-S2                                   */
+#define BPI_BIT                                  404  /* BPI-BIT                                               */
+#define MICRODUINO_CORE_ESP32                    405  /* Microduino-CoreESP32                                  */
+#define D_DUINO_32                               406  /* D-duino-32                                            */
+#define WEMOS_D1_MINI32                          407  /* WEMOS D1 MINI ESP32                                   */
+#define DYDK                                     408  /* Deneyap Kart                                          */
+#define DYM                                      409  /* Deneyap Mini                                          */
+#define ESP32_DEVKIT_LIPO                        410  /* OLIMEX ESP32-DevKit-LiPo                              */
+#define ESP32_EVB                                411  /* OLIMEX ESP32-EVB                                      */
+#define ESP32_GATEWAY                            412  /* OLIMEX ESP32-GATEWAY                                  */
+#define ESP32_POE                                413  /* OLIMEX ESP32-PoE                                      */
+#define ESP32_POE_ISO                            414  /* OLIMEX ESP32-PoE-ISO                                  */
+#define ESP32_THING                              415  /* SparkFun ESP32 Thing                                  */
+#define ESP32_THING_PLUS                         416  /* SparkFun ESP32 Thing Plus                             */
+#define ESP32_WROVER_KIT                         417  /* ESP32 Wrover Kit (all versions)                       */
+#define ESP320                                   418  /* Electronic SweetPeas - ESP320                         */
+#define ESP32C3_DEV                              419  /* ESP32C3 Dev Module                                    */
+#define ESP32S2_DEV                              420  /* ESP32S2 Dev Module                                    */
+#define ESP32S2_THING_PLUS                       421  /* SparkFun ESP32-S2 Thing Plus                          */
+#define ESP32S2_USB                              422  /* ESP32S2 Native USB                                    */
+#define ESP32VN_IOT_UNO                          423  /* ESP32vn IoT Uno                                       */
+#define ESPEA32                                  424  /* ESPea32                                               */
+#define ESPECTRO32                               425  /* ESPectro32                                            */
+#define ESPINO32                                 426  /* ThaiEasyElec's ESPino32                               */
+#define FEATHER_ESP32                            427  /* Adafruit ESP32 Feather                                */
+#define FEATHER_S2                               428  /* UM FeatherS2                                          */
+#define FEATHER_S2_NEO                           429  /* UM FeatherS2 Neo                                      */
+#define FM_DEV_KIT                               430  /* ESP32 FM DevKit                                       */
+#define FRANZININHO_WIFI                         431  /* Franzininho WiFi                                      */
+#define FRANZININHO_WIFI_MSC                     432  /* Franzininho WiFi MSC                                  */
+#define FROG_ESP32                               433  /* Frog Board ESP32                                      */
+#define FUNHOUSE_ESP32S2                         434  /* Adafruit FunHouse                                     */
+#define HEALTHYPI_4                              435  /* ProtoCentral HealthyPi 4                              */
+#define HELTEC_WIFI_KIT_32                       436  /* Heltec WiFi Kit 32                                    */
+#define HELTEC_WIFI_LORA_32                      437  /* Heltec WiFi LoRa 32                                   */
+#define HELTEC_WIFI_LORA_32_V2                   438  /* Heltec WiFi LoRa 32(V2)                               */
+#define HELTEC_WIRELESS_STICK                    439  /* Heltec Wireless Stick                                 */
+#define HELTEC_WIRELESS_STICK_LITE               440  /* Heltec Wireless Stick Lite                            */
+#define HONEY_LEMON                              441  /* HONEYLemon                                            */
+#define HORNBILL_ESP32_DEV                       442  /* Hornbill ESP32 Dev                                    */
+#define HORNBILL_ESP32_MINIMA                    443  /* Hornbill ESP32 Minima                                 */
+#define IMBRIOS_LOGSENS_V1P1                     444  /* IMBRIOS LOGSENS_V1P1                                  */
+#define INTOROBOT_ESP32_DEV                      445  /* IntoRobot Fig                                         */
+#define LOLIN_D32                                446  /* LOLIN D32                                             */
+#define LOLIN_D32_PRO                            447  /* LOLIN D32 PRO                                         */
+#define LOLIN32                                  448  /* WEMOS LOLIN32                                         */
+#define LOLIN32_LITE                             449  /* WEMOS LOLIN32 Lite                                    */
+#define LOPY                                     450  /* LoPy                                                  */
+#define LOPY4                                    451  /* LoPy4                                                 */
+#define M5STACK_ATOM                             452  /* M5Stack-ATOM                                          */
+#define M5STACK_CORE_ESP32                       453  /* M5Stack-Core-ESP32                                    */
+#define M5STACK_CORE2                            454  /* M5Stack-Core2                                         */
+#define M5STACK_CORE_INK                         455  /* M5Stack-CoreInk                                       */
+#define M5STACK_FIRE                             456  /* M5Stack-FIRE                                          */
+#define M5STACK_C                                457  /* M5Stick-C                                             */
+#define MAG_TAG29_ESP32_S2                       458  /* Adafruit MagTag 2.9                                   */
+#define METRO_ESP32                              459  /* Metro ESP-32                                          */
+#define METRO_ESP32_S2                           460  /* Adafruit Metro ESP32-S2                               */
+#define MGBOT_IOTIK32A                           461  /* MGBOT IOTIK 32A                                       */
+#define MGBOT_IOTIK32B                           462  /* MGBOT IOTIK 32B                                       */
+#define MH_ET_LIVE_ESP32_DEV_KIT                 463  /* MH ET LIVE ESP32DevKIT                                */
+#define MH_ET_LIVE_ESP32_MINI_KIT                464  /* MH ET LIVE ESP32MiniKit                               */
+#define MICRO_S2                                 465  /* microS2                                               */
+#define NANO32                                   466  /* Nano32                                                */
+#define NODE_32S                                 467  /* Node32s                                               */
+#define NODE_MCU_32S                             468  /* NodeMCU-32S                                           */
+#define ODROID_ESP32                             469  /* ODROID ESP32                                          */
+#define ONEHORSE_ESP32_DEV                       470  /* Onehorse ESP32 Dev Module                             */
+#define OPEN_KB                                  471  /* INEX OpenKB                                           */
+#define OROCA_EDUBOT                             472  /* OROCA EduBot                                          */
+#define PIRANHA                                  473  /* Piranha ESP-32                                        */
+#define PYCOM_GPY                                474  /* Pycom GPy                                             */
+#define NODUINO_QUANTUM                          475  /* Noduino Quantum                                       */
+#define SENSES_IOT_WEIZEN                        476  /* Senses's WEIZEN                                       */
+#define T_BEAM                                   477  /* T-Beam                                                */
+#define TINY_PICO                                478  /* UM TinyPICO                                           */
+#define TINY_S2                                  479  /* UM TinyS2                                             */
+#define TRUEVERIT_ESP32_UNIVERSAL_IOT_DRIVER     480  /* Trueverit ESP32 Universal IoT Driver                  */
+#define TRUEVERIT_ESP32_UNIVERSAL_IOT_DRIVER_MK2 481  /* Trueverit ESP32 Universal IoT Driver MK II            */
+#define TTGO_LORA32_V1                           482  /* TTGO LoRa32-OLED V1                                   */
+#define TTGO_LORA32_V21_NEW                      483  /* TTGO LoRa32-OLED v2.1.6                               */
+#define TTGO_T1                                  484  /* TTGO T1                                               */
+#define TTGO_T7_V13_MINI_32                      485  /* TTGO T7 V1.3 Mini32                                   */
+#define TTGO_T7_V14_MINI_32                      486  /* TTGO T7 V1.4 Mini32                                   */
+#define TWATCH                                   487  /* TTGO T-Watch                                          */
+#define UBLOX_NINA_W10                           488  /* u-blox NINA-W10 series (ESP32)                        */
+#define UPESY_WROOM                              489  /* uPesy ESP32 Wroom DevKit                              */
+#define UPESY_WROVER                             490  /* uPesy ESP32 Wrover DevKit                             */
+#define WESP32                                   491  /* Silicognition wESP32                                  */
+#define WIDORA_AIR                               492  /* Widora AIR                                            */
+#define WIFIDUINO_32                             493  /* WiFiduino32                                           */
+#define WIPY3                                    494  /* WiPy 3.0                                              */
+#define POCKET_32                                495  /* Dongsen Tech Pocket 32 / WeMos WiFi&Bluetooth Battery */
+#define ESP32_PICO                               496  /* ESP32_PICO ( three kinds of board)                    */
+#define ESP32_DEV                                497  /* ESP32 Dev Modules (eleven kinds of board)             */
+
+
+
+
+/* AVR系統 */
 
 /*
  * Yun
@@ -770,9 +235,12 @@
  * 内蔵LED            : D13
  * IDEのシリアルコンソールでリセットするか : 不明(暫定値 true)
  */
-#if HARDWARE_TYPE == AVR_YUN
+#if defined( ARDUINO_AVR_YUN ) && defined( __AVR_ATmega32U4__ )
+#define HARDWARE_TYPE ARDUINO_YUN
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega32U4
 #define HARDWARE_NAME "ARDUINO Yun"
-#define HARDWARE_VDD 5
+#define HARDWARE_VDD 50
 #define HARDWARE_AREF HARDWARE_VDD
 #define MAX_SERIAL 1
 #define MAX_DIGITAL 20
@@ -782,7 +250,7 @@
 #define I2C_SCL 3
 #define ONBOARD_LED 13
 #define SERIAL_RESET true
-#endif /* AVR_YUN */
+#endif /* Arduino Yun */
 
 /*
  * UNO (Rev.3をベースに定義しています)
@@ -801,9 +269,12 @@
  * 内蔵LED            : D13
  * IDEのシリアルコンソールでリセットするか : true
  */
-#if HARDWARE_TYPE == AVR_UNO
+#if defined( ARDUINO_AVR_UNO ) && defined( __AVR_ATmega328P__ )
+#define HARDWARE_TYPE ARDUINO_UNO
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega328P
 #define HARDWARE_NAME "ARDUINO UNO"
-#define HARDWARE_VDD 5
+#define HARDWARE_VDD 50
 #define HARDWARE_AREF HARDWARE_VDD
 #define MAX_SERIAL 1
 #define MAX_DIGITAL 20
@@ -817,7 +288,7 @@
 #define SPI_SS 10
 #define ONBOARD_LED 13
 #define SERIAL_RESET true
-#endif /* AVR_UNO */
+#endif /* Arduino Uno */
 
 /*
  * Duemilanove
@@ -836,9 +307,12 @@
  * 内蔵LED            : D13
  * IDEのシリアルコンソールでリセットするか : true
  */
-
-#if (HARDWARE_TYPE == AVR_DUEMILANOVE_328P) || (HARDWARE_TYPE == AVR_DUEMILANOVE_168)
-#define HARDWARE_VDD 5
+#if defined( ARDUINO_AVR_DUEMILANOVE ) && defined( __AVR_ATmega328P__ )
+#define HARDWARE_TYPE ARDUINO_DUEMILANOVE_328P
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega328P
+#define HARDWARE_NAME "ARDUINO Duemilanove 328P"
+#define HARDWARE_VDD 50
 #define HARDWARE_AREF HARDWARE_VDD
 #define MAX_SERIAL 1
 #define MAX_DIGITAL 14
@@ -852,13 +326,28 @@
 #define SPI_SS 10
 #define ONBOARD_LED 13
 #define SERIAL_RESET true
-#endif /* AVR_DUEMILANOVE_328P || AVR_DUEMILANOVE_168 */
-#if HARDWARE_TYPE == AVR_DUEMILANOVE_328P
-#define HARDWARE_NAME "ARDUINO Duemilanove 328P"
-#endif /* AVR_DUEMILANOVE_328P */
-#if HARDWARE_TYPE == AVR_DUEMILANOVE_168
+#endif /* Arduino Duemilanove or Diecimila 328P */
+
+#if defined( ARDUINO_AVR_DUEMILANOVE ) && defined( __AVR_ATmega168__ )
+#define HARDWARE_TYPE ARDUINO_DUEMILANOVE_168
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega168
 #define HARDWARE_NAME "ARDUINO Duemilanove 168"
-#endif /* AVR_DUEMILANOVE_168 */
+#define HARDWARE_VDD 50
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 1
+#define MAX_DIGITAL 14
+#define MAX_ANALOG 6
+#define PMW_PORTS {3,5,6,9,10,11}
+#define I2C_SDA A4
+#define I2C_SCL A5
+#define SPI_MOSI 11
+#define SPI_MISO 12
+#define SPI_SCK 13
+#define SPI_SS 10
+#define ONBOARD_LED 13
+#define SERIAL_RESET true
+#endif /* Arduino Duemilanove or Diecimila 168 */
 
 /*
  * Nano
@@ -875,8 +364,12 @@
  * SPI SS      : D10
  * 内蔵LED     : なし → D13
  */
-#if (HARDWARE_TYPE == AVR_NANO_328P) || (HARDWARE_TYPE == AVR_NANO_168)
-#define HARDWARE_VDD 5
+#if defined( ARDUINO_AVR_NANO ) && defined( __AVR_ATmega328P__ )
+#define HARDWARE_TYPE ARDUINO_NANO_328P
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega328P
+#define HARDWARE_NAME "ARDUINO Nano 328P"
+#define HARDWARE_VDD 50
 #define HARDWARE_AREF HARDWARE_VDD
 #define MAX_SERIAL 1
 #define MAX_DIGITAL 20
@@ -890,13 +383,28 @@
 #define SPI_SS 10
 #define ONBOARD_LED 13
 #define SERIAL_RESET true
-#endif /* AVR_NANO_328P || AVR_NANO_168 */
-#if HARDWARE_TYPE == AVR_NANO_328P
-#define HARDWARE_NAME "ARDUINO Nano 328P"
-#endif /* AVR_NANO_328P */
-#if HARDWARE_TYPE == AVR_NANO_168
+#endif /* Arduino Nano 328P */
+
+#if defined( ARDUINO_AVR_NANO ) && defined( __AVR_ATmega168__ )
+#define HARDWARE_TYPE ARDUINO_NANO_168
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega168
 #define HARDWARE_NAME "ARDUINO Nano 168"
-#endif /* AVR_NANO_168 */
+#define HARDWARE_VDD 50
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 1
+#define MAX_DIGITAL 20
+#define MAX_ANALOG 8
+#define PMW_PORTS {3,5,6,9,10,11}
+#define I2C_SDA A4
+#define I2C_SCL A5
+#define SPI_MOSI 11
+#define SPI_MISO 12
+#define SPI_SCK 13
+#define SPI_SS 10
+#define ONBOARD_LED 13
+#define SERIAL_RESET true
+#endif /* Arduino Nano 168 */
 
 /*
  * Mega (Rev.3をベースに定義しています)
@@ -915,9 +423,12 @@
  * 内蔵LED            : D13
  * IDEのシリアルコンソールでリセットするか : true
  */
-/* Arduino Mega2560 , Mega , ADK*/
-#if ( HARDWARE_TYPE == AVR_MEGA2560 ) || (HARDWARE_TYPE == AVR_MEGA) || (HARDWARE_TYPE == AVR_ADK)
-#define HARDWARE_VDD 5
+#if defined( ARDUINO_AVR_MEGA2560 ) && defined( __AVR_ATmega2560__ )
+#define HARDWARE_TYPE ARDUINO_MEGA2560
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega2560
+#define HARDWARE_NAME "ARDUINO MEGA 2560"
+#define HARDWARE_VDD 50
 #define HARDWARE_AREF HARDWARE_VDD
 #define MAX_SERIAL 4
 #define MAX_DIGITAL 54
@@ -931,19 +442,49 @@
 #define SPI_SS 53
 #define ONBOARD_LED 13
 #define SERIAL_RESET true
-#endif /* AVR_MEGA2560 || AVR_MEGA  || AVR_ADK */
-/* Arduino Mega2560 */
-#if HARDWARE_TYPE == AVR_MEGA2560
-#define HARDWARE_NAME "ARDUINO MEGA 2560"
-#endif /* AVR_MEGA2560 */
-/* Arduino Mega1280 */
-#if HARDWARE_TYPE == AVR_MEGA
+#endif /* Arduino Mega 2560 */
+
+#if defined( ARDUINO_AVR_MEGA ) && defined( __AVR_ATmega1280__ )
+#define HARDWARE_TYPE ARDUINO_MEGA
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega1280
 #define HARDWARE_NAME "ARDUINO MEGA 1280"
-#endif /* AVR_MEGA */
-/* Arduino ADK */
-#if HARDWARE_TYPE == AVR_ADK
+#define HARDWARE_VDD 50
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 4
+#define MAX_DIGITAL 54
+#define MAX_ANALOG 16
+#define PMW_PORTS {2,3,4,5,6,7,8,9,10,11,12,13,44,45,46}
+#define I2C_SDA 20
+#define I2C_SCL 21
+#define SPI_MOSI 51
+#define SPI_MISO 50
+#define SPI_SCK 52
+#define SPI_SS 53
+#define ONBOARD_LED 13
+#define SERIAL_RESET true
+#endif /* Arduino Mega */
+
+#if defined( ARDUINO_AVR_ADK ) && defined( __AVR_ATmega2560__ )
+#define HARDWARE_TYPE ARDUINO_MEGA_ADK
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega2560
 #define HARDWARE_NAME "ARDUINO ADK"
-#endif /* AVR_ADK */
+#define HARDWARE_VDD 50
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 4
+#define MAX_DIGITAL 54
+#define MAX_ANALOG 16
+#define PMW_PORTS {2,3,4,5,6,7,8,9,10,11,12,13,44,45,46}
+#define I2C_SDA 20
+#define I2C_SCL 21
+#define SPI_MOSI 51
+#define SPI_MISO 50
+#define SPI_SCK 52
+#define SPI_SS 53
+#define ONBOARD_LED 13
+#define SERIAL_RESET true
+#endif /* Arduino Mega ADK */
 
 /*
  * Leonardo
@@ -962,8 +503,12 @@
  * 内蔵LED            : SPIは他のピンとのかぶりはなし
  * IDEのシリアルコンソールでリセットするか : false
  */
-#if (HARDWARE_TYPE == AVR_LEONARDO) || (HARDWARE_TYPE == AVR_LEONARDO_ETH)
-#define HARDWARE_VDD 5
+#if defined( ARDUINO_AVR_LEONARDO ) && defined( __AVR_ATmega32U4__ )
+#define HARDWARE_TYPE ARDUINO_LEONARDO
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega32U4
+#define HARDWARE_NAME "ARDUINO Leonardo"
+#define HARDWARE_VDD 50
 #define HARDWARE_AREF HARDWARE_VDD
 #define MAX_SERIAL 1
 #define MAX_DIGITAL 20
@@ -973,15 +518,24 @@
 #define I2C_SCL 3
 #define ONBOARD_LED 13
 #define SERIAL_RESET false
-#endif /* AVR_LEONARDO || AVR_LEONARDO_ETH */
-/* Arduino Leonardo */
-#if HARDWARE_TYPE == AVR_LEONARDO
-#define HARDWARE_NAME "ARDUINO Leonardo"
-#endif /* AVR_LEONARDO */
-/* Arduino Leonardo Ethernet */
-#if HARDWARE_TYPE == AVR_LEONARDO_ETH
+#endif /* Arduino Leonardo */
+
+#if defined( ARDUINO_AVR_LEONARDO_ETH ) && defined( __AVR_ATmega32U4__ )
+#define HARDWARE_TYPE ARDUINO_LEONARDO_ETH
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega32U4
 #define HARDWARE_NAME "ARDUINO Leonardo Ethernet"
-#endif /* AVR_LEONARDO_ETH */
+#define HARDWARE_VDD 50
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 1
+#define MAX_DIGITAL 20
+#define MAX_ANALOG 12
+#define PMW_PORTS {3,5,6,9,13}
+#define I2C_SDA 2
+#define I2C_SCL 3
+#define ONBOARD_LED 13
+#define SERIAL_RESET false
+#endif /* Arduino Leonardo ETH */
 
 /*
  * Micro
@@ -1000,10 +554,12 @@
  * 内蔵LED            : D13
  * IDEのシリアルコンソールでリセットするか : 不明 (暫定値 true)
  */
-/* Arduino Micro */
-#if HARDWARE_TYPE == AVR_MICRO
+#if defined( ARDUINO_AVR_MICRO ) && defined( __AVR_ATmega32U4__ )
+#define HARDWARE_TYPE ARDUINO_MICRO
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega32U4
 #define HARDWARE_NAME "ARDUINO Micro"
-#define HARDWARE_VDD 5
+#define HARDWARE_VDD 50
 #define HARDWARE_AREF HARDWARE_VDD
 #define MAX_SERIAL 1
 #define MAX_DIGITAL 14
@@ -1013,7 +569,7 @@
 #define I2C_SCL 3
 #define ONBOARD_LED 13
 #define SERIAL_RESET true
-#endif /* AVR_MICRO */
+#endif /* Arduino Micro */
 
 /*
  * Esplora
@@ -1032,9 +588,12 @@
  * 内蔵LED            : D13
  * IDEのシリアルコンソールでリセットするか : 不明(暫定値 true)
  */
-#if HARDWARE_TYPE == AVR_ESPLORA
+#if defined( ARDUINO_AVR_ESPLORA ) && defined( __AVR_ATmega32U4__ )
+#define HARDWARE_TYPE ARDUINO_ESPLORA
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega32U4
 #define HARDWARE_NAME "ARDUINO Esplora"
-#define HARDWARE_VDD 5
+#define HARDWARE_VDD 50
 #define HARDWARE_AREF HARDWARE_VDD
 #define MAX_SERIAL 1
 #define MAX_DIGITAL 9
@@ -1047,7 +606,7 @@
 #define SPI_SCK 15
 #define ONBOARD_LED 13
 #define SERIAL_RESET true
-#endif /* AVR_ESPLORA */
+#endif /* Arduino Esplora */
 
 /*
  * Mini
@@ -1066,8 +625,12 @@
  * 内蔵LED            : 不明 (暫定値 なし=-1)
  * IDEのシリアルコンソールでリセットするか : 不明 (暫定値 true)
  */
-#if (HARDWARE_TYPE == AVR_MINI_328P) || (HARDWARE_TYPE == AVR_MINI_168)
-#define HARDWARE_VDD 5
+#if defined( ARDUINO_AVR_MINI ) && defined( __AVR_ATmega328P__ )
+#define HARDWARE_TYPE ARDUINO_MINI_328P
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega328P
+#define HARDWARE_NAME "ARDUINO MINI 328P"
+#define HARDWARE_VDD 50
 #define HARDWARE_AREF HARDWARE_VDD
 #define MAX_SERIAL 1
 #define MAX_DIGITAL 20
@@ -1080,15 +643,27 @@
 #define SPI_SCK 13
 #define SPI_SS 10
 #define SERIAL_RESET true
-#endif /* AVR_MINI_328P || AVR_MINI_168 */
-/* Arduino Mini 328P */
-#if HARDWARE_TYPE == AVR_MINI_328P
-#define HARDWARE_NAME "ARDUINO MINI 328P"
-#endif /* AVR_MINI_328P */
-/* Arduino Mini 168 */
-#if HARDWARE_TYPE == AVR_MINI_168
+#endif /* Arduino Mini 328P */
+
+#if defined( ARDUINO_AVR_MINI ) && defined( __AVR_ATmega168__ )
+#define HARDWARE_TYPE ARDUINO_MINI_168
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega168
 #define HARDWARE_NAME "ARDUINO MINI 168"
-#endif /* AVR_MINI_168 */
+#define HARDWARE_VDD 50
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 1
+#define MAX_DIGITAL 20
+#define MAX_ANALOG 8
+#define PMW_PORTS {3,5,6,9,10,12}
+#define I2C_SDA A4
+#define I2C_SCL A5
+#define SPI_MOSI 11
+#define SPI_MISO 12
+#define SPI_SCK 13
+#define SPI_SS 10
+#define SERIAL_RESET true
+#endif /* Arduino Mini 168 */
 
 /*
  * Arduino Ethernet
@@ -1107,9 +682,12 @@
  * 内蔵LED            : D13
  * IDEのシリアルコンソールでリセットするか : 不明 (暫定値 true)
  */
-#if HARDWARE_TYPE == AVR_ETHERNET
+#if defined( ARDUINO_AVR_ETHERNET ) && defined( __AVR_ATmega328P__ )
+#define HARDWARE_TYPE ARDUINO_ETHERNET
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega328P
 #define HARDWARE_NAME "ARDUINO Ethernet"
-#define HARDWARE_VDD 5
+#define HARDWARE_VDD 50
 #define HARDWARE_AREF HARDWARE_VDD
 #define MAX_SERIAL 1
 #define MAX_DIGITAL 20
@@ -1123,7 +701,7 @@
 #define SPI_SS 10
 #define ONBOARD_LED 13
 #define SERIAL_RESET true
-#endif /* AVR_ETHERNET */
+#endif /* Arduino Ethernet */
 
 /*
  * Fio
@@ -1142,9 +720,12 @@
  * 内蔵LED            : なし?
  * IDEのシリアルコンソールでリセットするか : 不明 (暫定値 true)
  */
-#if HARDWARE_TYPE == AVR_FIO
+#if defined( ARDUINO_AVR_FIO ) && defined( __AVR_ATmega328P__ )
+#define HARDWARE_TYPE ARDUINO_FIO
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega328P
 #define HARDWARE_NAME "ARDUINO Fio"
-#define HARDWARE_VDD 3.3
+#define HARDWARE_VDD 33
 #define HARDWARE_AREF HARDWARE_VDD
 #define MAX_SERIAL 1
 #define MAX_DIGITAL 20
@@ -1157,7 +738,7 @@
 #define SPI_SCK 10
 #define SPI_SS 13
 #define SERIAL_RESET true
-#endif /* AVR_FIO */
+#endif /* Arduino Fio */
 
 /*
  * Arduino BT (ATmega328P/ATmega168)
@@ -1177,8 +758,12 @@
  * IDEのシリアルコンソールでリセットするか : 不明 (暫定値 true)
  * Bluetoothモジュールのリセット端子 : D7 (不明確)
  */
-#if (HARDWARE_TYPE == AVR_BT_328P) || (HARDWARE_TYPE == AVR_BT_168)
-#define HARDWARE_VDD 5
+#if defined( ARDUINO_AVR_BT ) && defined( __AVR_ATmega328P__ )
+#define HARDWARE_TYPE ARDUINO_BT_328P
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega328P
+#define HARDWARE_NAME "ARDUINO BT 328P"
+#define HARDWARE_VDD 50
 #define HARDWARE_AREF HARDWARE_VDD
 #define MAX_SERIAL 1
 #define MAX_DIGITAL 20
@@ -1193,45 +778,18 @@
 #define ONBOARD_LED 13
 #define SERIAL_RESET true
 #define PERIPHERAL_RESET 7
-#endif /* AVR_BT_328P || AVR_BT_168 */
-#if HARDWARE_TYPE == AVR_BT_328P
-#define HARDWARE_NAME "ARDUINO BT 328P"
-#endif /* AVR_BT_328P */
-#if HARDWARE_TYPE == AVR_BT_168
+#endif /* Arduino BT 328P */
+
+#if defined( ARDUINO_AVR_BT ) && defined( __AVR_ATmega168__ )
+#define HARDWARE_TYPE ARDUINO_BT_168
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega168
 #define HARDWARE_NAME "ARDUINO BT 168"
-#endif /* AVR_BT_168 */
-
-
-/* LilyPad Arduino USB */
-#if HARDWARE_TYPE == AVR_LILYPAD_USB
-#endif /* AVR_LILYPAD_USB */
-
-/* LilyPad Arduino (ATmega328P/ATmega168) */
-#if HARDWARE_TYPE == AVR_LILYPAD_328P
-#endif /* AVR_LILYPAD_328P */
-#if HARDWARE_TYPE == AVR_LILYPAD_168
-#endif /* AVR_LILYPAD_168 */
-
-/*
- * Pro/Pro Mini (proとprominiは自動で識別できないので，pro miniにあわせる)
- * 動作電圧    : 3.3と5と両方ある
- * MAX_SERIAL  : 1
- * MAX_DIGITAL : 20
- * MAX_ANALOG  : 8
- * PMW         : D3,D5,D6,D9,D10,D11
- * I2C SDA     : A4
- * I2C SCL     : A5
- * SPI MOSI    : D11
- * SPI MISO    : D12
- * SPI SCK     : D13
- * SPI SS      : D10
- * 内蔵LED     : D13
- * IDEのシリアルコンソールでリセットするか : 不明 (暫定値 true)
- */
-#if (HARDWARE_TYPE == AVR_PRO_328P_5V) || (HARDWARE_TYPE == AVR_PRO_328P_3_3V) || (HARDWARE_TYPE == AVR_PRO_168_5V) || (HARDWARE_TYPE == AVR_PRO_168_3_3V)
+#define HARDWARE_VDD 50
+#define HARDWARE_AREF HARDWARE_VDD
 #define MAX_SERIAL 1
 #define MAX_DIGITAL 20
-#define MAX_ANALOG 8
+#define MAX_ANALOG 6
 #define PMW_PORTS {3,5,6,9,10,11}
 #define I2C_SDA A4
 #define I2C_SCL A5
@@ -1241,43 +799,59 @@
 #define SPI_SS 10
 #define ONBOARD_LED 13
 #define SERIAL_RESET true
-#endif /* AVR_PRO_328P_5V || AVR_PRO_328P_3_3V || AVR_PRO_168_5V || AVR_PRO_168_3_3V */
-/* Arduino Pro or Pro Mini */
-#if HARDWARE_TYPE == AVR_PRO_328P_5V
-#define HARDWARE_NAME "ARDUINO Pro mini 328P 5V"
-#define HARDWARE_VOLTAGE 5
-#define HARDWARE_AREF HARDWARE_VDD
-#endif /* AVR_PRO_328P_5V */
-#if HARDWARE_TYPE == AVR_PRO_328P_3_3V
-#define HARDWARE_NAME "ARDUINO Pro mini 328P 3.3V"
-#define HARDWARE_VOLTAGE 3.3
-#define HARDWARE_AREF HARDWARE_VDD
-#endif /* AVR_PRO_328P_3_3V */
-#if HARDWARE_TYPE == AVR_PRO_168_5V
-#define HARDWARE_NAME "ARDUINO Pro mini 168 5V"
-#define HARDWARE_VOLTAGE 5
-#define HARDWARE_AREF HARDWARE_VDD
-#endif /* AVR_PRO_168_5V */
-#if HARDWARE_TYPE == AVR_PRO_168_3_3V
-#define HARDWARE_NAME "ARDUINO Pro mini 168 3.3V"
-#define HARDWARE_VOLTAGE 3.3
-#define HARDWARE_AREF HARDWARE_VDD
-#endif /* AVR_PRO_168_3_3V */
+#define PERIPHERAL_RESET 7
+#endif /* Arduino BT 168 */
 
-/* Arduino NG */
-#if HARDWARE_TYPE == AVR_NG_168
-#endif /* AVR_NG_168 */
-#if HARDWARE_TYPE == AVR_NG_8
-#endif /* AVR_NG_8 */
+/* LilyPad Arduino USB */
 
-/* Arduino Robot Control */
-#if HARDWARE_TYPE == AVR_ROBOT_CONTROL
-#endif /* AVR_ROBOT_CONTROL */
+#if defined( ARDUINO_AVR_LILYPAD_USB ) && defined( __AVR_ATmega32U4__ )
+#define HARDWARE_TYPE ARDUINO_LILYPAD_USB
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega32U4
+#define HARDWARE_NAME "LilyPad Arduino USB"
+#endif /* LilyPad Arduino USB */
 
-/* Arduino Robot Motor */
-#if HARDWARE_TYPE == AVR_ROBOT_MOTOR
-#endif /* AVR_ROBOT_MOTOR */
+#if defined( ARDUINO_AVR_LILYPAD ) && defined( __AVR_ATmega328P__ )
+#define HARDWARE_TYPE ARDUINO_LILYPAD_328P
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega328P
+#define HARDWARE_NAME "LilyPad Arduino 328P"
+#endif /* LilyPad Arduino 328P */
 
+#if defined( ARDUINO_AVR_LILYPAD ) && defined( __AVR_ATmega168__ )
+#define HARDWARE_TYPE ARDUINO_LILYPAD_168
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega168
+#define HARDWARE_NAME "LilyPad Arduino 168"
+#endif /* LilyPad Arduino 168 */
+
+#if defined( ARDUINO_AVR_NG ) && defined( __AVR_ATmega168__ )
+#define HARDWARE_TYPE ARDUINO_NG_168
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega168
+#define HARDWARE_NAME "Arduino NG or older 168"
+#endif /* Arduino NG or older 168 */
+
+#if defined( ARDUINO_AVR_NG ) && defined( __AVR_ATmega8__ )
+#define HARDWARE_TYPE ARDUINO_NG_8
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega8
+#define HARDWARE_NAME "Arduino NG or older 8"
+#endif /* Arduino NG or older 8 */
+
+#if defined( ARDUINO_AVR_ROBOT_CONTROL ) && defined( __AVR_ATmega32U4__ )
+#define HARDWARE_TYPE ARDUINO_ROBOT_CONTROL
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega32U4
+#define HARDWARE_NAME "Arduino Robot Control"
+#endif /* Arduino Robot Control */
+
+#if defined( ARDUINO_AVR_ROBOT_MOTOR ) && defined( __AVR_ATmega32U4__ )
+#define HARDWARE_TYPE ARDUINO_ROBOT_MOTOR
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega32U4
+#define HARDWARE_NAME "Arduino Robot Motor"
+#endif /* Arduino Robot Motor */
 
 /*
  * Arduino Gemma
@@ -1296,9 +870,12 @@
  * 内蔵LED            : D1
  * IDEのシリアルコンソールでリセットするか : 不明 (暫定値 true)
  */
-#if HARDWARE_TYPE == AVR_GEMMA
+#if defined( ARDUINO_AVR_GEMMA ) && defined( __AVR_ATtimy85__ )
+#define HARDWARE_TYPE ARDUINO_GEMMA
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATtimy85
 #define HARDWARE_NAME "ARDUINO Gemma"
-#define HARDWARE_VDD 3.3
+#define HARDWARE_VDD 33
 #define HARDWARE_AREF HARDWARE_VDD
 #define MAX_SERIAL 1
 #define MAX_DIGITAL 3
@@ -1311,27 +888,142 @@
 #define SPI_SCK 2
 #define ONBOARD_LED 1
 #define SERIAL_RESET true
-#endif /* AVR_GEMMA */
+#endif /* Arduino Gemma */
 
-/* Arduino Circuit play */
-#if HARDWARE_TYPE == AVR_CIRCUITPLAY
-#endif /* AVR_CIRCUITPLAY */
+#if defined( ARDUINO_AVR_CIRCUITPLAY ) && defined( __AVR_ATmega32U4__ )
+#define HARDWARE_TYPE ARDUINO_CIRCUIT_PLAY
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega32U4
+#define HARDWARE_NAME "Adafruit Circuit Playground"
+#endif /* Adafruit Circuit Playground */
 
-/* Arduino Yun Mini */
-#if HARDWARE_TYPE == AVR_YUNMINI
-#endif /* AVR_YUNMINI */
+#if defined( ARDUINO_AVR_YUNMINI ) && defined( __AVR_ATmega32U4__ )
+#define HARDWARE_TYPE ARDUINO_YUN_MINI
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega32U4
+#define HARDWARE_NAME "Arduino Yun Mini"
+#endif /* Arduino Yun Mini */
 
-/* Arduino Industrial101 */
-#if HARDWARE_TYPE == AVR_INDUSTRIAL101
-#endif /* AVR_INDUSTRIAL101 */
+#if defined( ARDUINO_AVR_INDUSTRIAL101 ) && defined( __AVR_ATmega32U4__ )
+#define HARDWARE_TYPE ARDUINO_INDUSTRIAL101
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega32U4
+#define HARDWARE_NAME "Arduino Industrial 101"
+#endif /* Arduino Industrial 101 */
 
-/* Arduino Lilino One */
-#if HARDWARE_TYPE == AVR_LININO_ONE
-#endif /* AVR_LININO_ONE */
+#if defined( ARDUINO_AVR_LININO_ONE ) && defined( __AVR_ATmega32U4__ )
+#define HARDWARE_TYPE ARDUINO_LININO_ONE
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega32U4
+#define HARDWARE_NAME "Linino One"
+#endif /* Linino One */
 
-/* Arduino Uno Wifi Developer Edition */
-#if HARDWARE_TYPE == AVR_UNO_WIFI_DEV_ED
-#endif /* AVR_UNO_WIFI_DEV_ED */
+#if defined( ARDUINO_AVR_UNO_WIFI_DEV_ED ) && defined( __AVR_ATmega328P__ )
+#define HARDWARE_TYPE ARDUINO_UNO_WIFI_DEV_ED
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega328P
+#define HARDWARE_NAME "Arduino Uno WiFi"
+#endif /* Arduino Uno WiFi */
+
+/*
+ * Pro/Pro Mini (proとprominiは自動で識別できないので，pro miniにあわせる)
+ * 動作電圧    : 3.3と5と両方ある
+ * MAX_SERIAL  : 1
+ * MAX_DIGITAL : 20
+ * MAX_ANALOG  : 8
+ * PMW         : D3,D5,D6,D9,D10,D11
+ * I2C SDA     : A4
+ * I2C SCL     : A5
+ * SPI MOSI    : D11
+ * SPI MISO    : D12
+ * SPI SCK     : D13
+ * SPI SS      : D10
+ * 内蔵LED     : D13
+ * IDEのシリアルコンソールでリセットするか : 不明 (暫定値 true)
+ */
+#if defined( ARDUINO_AVR_PRO ) && defined( __AVR_ATmega328P__ ) && F_CPU==16000000L
+#define HARDWARE_TYPE ARDUINO_PRO_328P_5V
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega328P
+#define HARDWARE_NAME "ARDUINO Pro mini 328P 5V"
+#define HARDWARE_VOLTAGE 50
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 1
+#define MAX_DIGITAL 20
+#define MAX_ANALOG 8
+#define PMW_PORTS {3,5,6,9,10,11}
+#define I2C_SDA A4
+#define I2C_SCL A5
+#define SPI_MOSI 11
+#define SPI_MISO 12
+#define SPI_SCK 13
+#define SPI_SS 10
+#define ONBOARD_LED 13
+#define SERIAL_RESET true
+#endif /* Arduino Pro or Pro Mini 328P 5V */
+
+#if defined( ARDUINO_AVR_PRO ) && defined( __AVR_ATmega328P__ ) && F_CPU==8000000L
+#define HARDWARE_TYPE ARDUINO_PRO_328P_3_3V
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega328P
+#define HARDWARE_NAME "ARDUINO Pro mini 328P 3.3V"
+#define HARDWARE_VOLTAGE 33
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 1
+#define MAX_DIGITAL 20
+#define MAX_ANALOG 8
+#define PMW_PORTS {3,5,6,9,10,11}
+#define I2C_SDA A4
+#define I2C_SCL A5
+#define SPI_MOSI 11
+#define SPI_MISO 12
+#define SPI_SCK 13
+#define SPI_SS 10
+#define ONBOARD_LED 13
+#define SERIAL_RESET true
+#endif /* Arduino Pro or Pro Mini 328P 3.3V */
+
+#if defined( ARDUINO_AVR_PRO ) && defined( __AVR_ATmega168__ ) && F_CPU==16000000L
+#define HARDWARE_TYPE ARDUINO_PRO_168_5V
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega168
+#define HARDWARE_NAME "ARDUINO Pro mini 168 5V"
+#define HARDWARE_VOLTAGE 50
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 1
+#define MAX_DIGITAL 20
+#define MAX_ANALOG 8
+#define PMW_PORTS {3,5,6,9,10,11}
+#define I2C_SDA A4
+#define I2C_SCL A5
+#define SPI_MOSI 11
+#define SPI_MISO 12
+#define SPI_SCK 13
+#define SPI_SS 10
+#define ONBOARD_LED 13
+#define SERIAL_RESET true
+#endif /* Arduino Pro or Pro Mini 168 5V */
+
+#if defined( ARDUINO_AVR_PRO ) && defined( __AVR_ATmega168__ ) && F_CPU==8000000L
+#define HARDWARE_TYPE ARDUINO_PRO_168_3_3V
+#define CPU_ARCH AVR_ARCH
+#define CPU_TYPE TYPE_ATmega168
+#define HARDWARE_NAME "ARDUINO Pro mini 168 3.3V"
+#define HARDWARE_VOLTAGE 33
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 1
+#define MAX_DIGITAL 20
+#define MAX_ANALOG 8
+#define PMW_PORTS {3,5,6,9,10,11}
+#define I2C_SDA A4
+#define I2C_SCL A5
+#define SPI_MOSI 11
+#define SPI_MISO 12
+#define SPI_SCK 13
+#define SPI_SS 10
+#define ONBOARD_LED 13
+#define SERIAL_RESET true
+#endif /* Arduino Pro or Pro Mini 168 3.3V */
 
 /*  SAM系統  */
 /*
@@ -1351,7 +1043,10 @@
  * 内蔵LED            : D13
  * IDEのシリアルコンソールでリセットするか : false
  */
-#if HARDWARE_TYPE == SAM_DUE
+#if defined( ARDUINO_SAM_DUE ) && defined( __SAM3X8E__ )
+#define HARDWARE_TYPE ARDUINO_DUE
+#define CPU_ARCH SAM_ARCH
+#define CPU_TYPE TYPE_SAM3X8E
 #define HARDWARE_NAME "ARDUINO Due"
 #define HARDWARE_VDD 3.3
 #define HARDWARE_AREF HARDWARE_VDD
@@ -1363,40 +1058,99 @@
 #define I2C_SCL 71
 #define ONBOARD_LED 13
 #define SERIAL_RESET false
-#endif /* SAM_DUE */
+#endif /* Arduino Due */
 
 /*  SAMD系統  */
-/* Arduino Zero */
-#if HARDWARE_TYPE == SAMD_ZERO
-#endif /* SAMD_ZERO */
+#if defined( ARDUINO_SAMD_ZERO ) && defined( __SAMD21G18A__ )
+#define HARDWARE_TYPE ARDUINO_ZERO
+#define CPU_ARCH SAMD_ARCH
+#define CPU_TYPE TYPE_SAMD21G18A
+#define HARDWARE_NAME "Arduino Zero"
+#endif /* Arduino Zero */
 
-/* Arduino/Genuino MKR1000 */
-#if HARDWARE_TYPE == SAMD_MKR1000
-#endif /* SAMD_MKR1000 */
+#if defined( ARDUINO_SAMD_MKR1000 ) && defined( __SAMD21G18A__ )
+#define HARDWARE_TYPE ARDUINO_MKR1000
+#define CPU_ARCH SAMD_ARCH
+#define CPU_TYPE TYPE_SAMD21G18A
+#define HARDWARE_NAME "Arduino MKR1000"
+#endif /* Arduino MKR1000 */
 
-/* Arduino MKRZero */
-#if HARDWARE_TYPE == SAMD_MKRZERO
-#endif /* SAMD_MKRZERO */
+#if defined( ARDUINO_SAMD_MKRZERO ) && defined( __SAMD21G18A__ )
+#define HARDWARE_TYPE ARDUINO_MKRZERO
+#define CPU_ARCH SAMD_ARCH
+#define CPU_TYPE TYPE_SAMD21G18A
+#define HARDWARE_NAME "Arduino MKRZero"
+#endif /* Arduino MKRZero */
 
-/* Arduino MKRFox1200 */
-#if HARDWARE_TYPE == SAMD_MKRFox1200
-#endif /* SAMD_MKRFox1200 */
+#if defined( ARDUINO_SAMD_MKRWIFI1010 ) && defined( __SAMD21G18A__ )
+#define HARDWARE_TYPE ARDUINO_MKRWIFI1010
+#define CPU_ARCH SAMD_ARCH
+#define CPU_TYPE TYPE_SAMD21G18A
+#define HARDWARE_NAME "Arduino MKR WiFi 1010"
+#endif /* Arduino MKR WiFi 1010 */
 
-/* Arduino MKR GSM 1400 */
-#if HARDWARE_TYPE == SAMD_MKRGSM1400
-#endif /* SAMD_MKRGSM1400 */
+#if defined( ARDUINO_SAMD_NANO_33_IOT ) && defined( __SAMD21G18A__ )
+#define HARDWARE_TYPE ARDUINO_NANO_33_IOT
+#define CPU_ARCH SAMD_ARCH
+#define CPU_TYPE TYPE_SAMD21G18A
+#define HARDWARE_NAME "Arduino NANO 33 IoT"
+#endif /* Arduino NANO 33 IoT */
 
-/* Arduino MKR WAN 1300 */
-#if HARDWARE_TYPE == SAMD_MKRWAN1300
-#endif /* SAMD_MKRWAN1300 */
+#if defined( ARDUINO_SAMD_MKRFox1200 ) && defined( __SAMD21G18A__ )
+#define HARDWARE_TYPE ARDUINO_MKRFOX1200
+#define CPU_ARCH SAMD_ARCH
+#define CPU_TYPE TYPE_SAMD21G18A
+#define HARDWARE_NAME "Arduino MKR FOX 1200"
+#endif /* Arduino MKR FOX 1200 */
 
-/* Arduino MKR WiFi 1010 */
-#if HARDWARE_TYPE == SAMD_MKRWIFI1010
-#endif /* SAMD_MKRWIFI1010 */
+#if defined( ARDUINO_SAMD_MKRWAN1300 ) && defined( __SAMD21G18A__ )
+#define HARDWARE_TYPE ARDUINO_MKRWAN1300
+#define CPU_ARCH SAMD_ARCH
+#define CPU_TYPE TYPE_SAMD21G18A
+#define HARDWARE_NAME "Arduino MKR WAN 1300"
+#endif /* Arduino MKR WAN 1300 */
 
-/* Adafruit Circuit Playground M0 */
-#if HARDWARE_TYPE == SAMD_CIRCUITPLAYGROUND_EXPRESS
-#endif /* SAMD_CIRCUITPLAYGROUND_EXPRESS */
+#if defined( ARDUINO_SAMD_MKRWAN1310 ) && defined( __SAMD21G18A__ )
+#define HARDWARE_TYPE ARDUINO_MKRWAN1310
+#define CPU_ARCH SAMD_ARCH
+#define CPU_TYPE TYPE_SAMD21G18A
+#define HARDWARE_NAME "Arduino MKR WAN 1310"
+#endif /* Arduino MKR WAN 1310 */
+
+#if defined( ARDUINO_SAMD_MKRGSM1400 ) && defined( __SAMD21G18A__ )
+#define HARDWARE_TYPE ARDUINO_MKRGSM1400
+#define CPU_ARCH SAMD_ARCH
+#define CPU_TYPE TYPE_SAMD21G18A
+#define HARDWARE_NAME "Arduino MKR GSM 1400"
+#endif /* Arduino MKR GSM 1400 */
+
+#if defined( ARDUINO_SAMD_MKRNB1500 ) && defined( __SAMD21G18A__ )
+#define HARDWARE_TYPE ARDUINO_MKRNB1500
+#define CPU_ARCH SAMD_ARCH
+#define CPU_TYPE TYPE_SAMD21G18A
+#define HARDWARE_NAME "Arduino MKR NB 1500"
+#endif /* Arduino MKR NB 1500 */
+
+#if defined( ARDUINO_SAMD_MKRVIDOR4000 ) && defined( __SAMD21G18A__ )
+#define HARDWARE_TYPE ARDUINO_MKRVIDOR4000
+#define CPU_ARCH SAMD_ARCH
+#define CPU_TYPE TYPE_SAMD21G18A
+#define HARDWARE_NAME "Arduino MKR Vidor 4000"
+#endif /* Arduino MKR Vidor 4000 */
+
+#if defined( ARDUINO_SAMD_CIRCUITPLAYGROUND_EXPRESS ) && defined( __SAMD21G18A__ )
+#define HARDWARE_TYPE ARDUINO_CIRCUITPLAYGROUND_EXPRESS
+#define CPU_ARCH SAMD_ARCH
+#define CPU_TYPE TYPE_SAMD21G18A
+#define HARDWARE_NAME "Adafruit Circuit Playground M0"
+#endif /* Adafruit Circuit Playground M0 */
+
+#if defined( ARDUINO_SAMD_TIAN ) && defined( __SAMD21G18A__ )
+#define HARDWARE_TYPE ARDUINO_TIAN
+#define CPU_ARCH SAMD_ARCH
+#define CPU_TYPE TYPE_SAMD21G18A
+#define HARDWARE_NAME "Arduino Tian"
+#endif /* Arduino Tian */
 
 /*
  * M0/M0 Pro
@@ -1415,9 +1169,12 @@
  * 内蔵LED            : D13
  * IDEのシリアルコンソールでリセットするか : false
  */
-#if HARDWARE_TYPE == SAM_ZERO
+#if defined( ARDUINO_SAM_ZERO ) && defined( __SAMD21G18A__ )
+#define HARDWARE_TYPE ARDUINO_M0
+#define CPU_ARCH SAMD_ARCH
+#define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "ARDUINO M0/M0 Pro"
-#define HARDWARE_VDD 3.3
+#define HARDWARE_VDD 33
 #define HARDWARE_AREF HARDWARE_VDD
 #define MAX_SERIAL 1
 #define MAX_DIGITAL 16
@@ -1431,319 +1188,1055 @@
 #define SPI_SS 10
 #define ONBOARD_LED 13
 #define SERIAL_RESET false
-#endif /* SAM_ZERO */
-
-/* Arduino Tian */
-#if HARDWARE_TYPE == SAMD_TIAN
-#endif /* SAMD_TIAN */
-
-/* ESP8266系統 v2.5.0 */
-/* ESP8266 Generic / Invent One / XinaBox CW01 */
-#if HARDWARE_TYPE == ESP8266_GENERIC
-#endif /* ESP8266_GENERIC */
-
-/* Generic ESP8265 */
-#if HARDWARE_TYPE == ESP8285_GENERIC
-#endif /* ESP8285_GENERIC */
-
-/* ESPDuino (ESP-13 Module) / ThaiEasyElec's ESPino */
-#if HARDWARE_TYPE == ESP8266_ESPDUINO
-#endif /* ESP8266_ESPDUINO */
-
-/* Adafruit Feather HUZZAH ESP8266 /ESPino (ESP-12 Module) / WifInfo */
-#if HARDWARE_TYPE == ESP8266_ESPINO
-#endif /* ESP8266_ESPINO */
-#if HARDWARE_TYPE == ESP8266_WIFINFO
-#endif /* ESP8266_WIFINFO */
-#if HARDWARE_TYPE == ESP8266_WIFINFO2
-#endif /* ESP8266_WIFINFO2 */
-
-/* ESPresso Lite 1.0 */
-#if HARDWARE_TYPE == ESP8266_ESPRESSO_LITE_V1
-#endif /* ESP8266_ESPRESSO_LITE_V1 */
-
-/* ESPresso Lite 2.0 */
-#if HARDWARE_TYPE == ESP8266_ESPRESSO_LITE_V2
-#endif /* ESP8266_ESPRESSO_LITE_V2 */
-
-/* Phoenix 1.0 */
-#if HARDWARE_TYPE == ESP8266_PHOENIX_V1
-#endif /* ESP8266_PHOENIX_V1 */
-
-/* Phoenix 2.0 */
-#if HARDWARE_TYPE == ESP8266_PHOENIX_V2
-#endif /* ESP8266_PHOENIX_V2 */
-
-/* NodeMCU 0.9 (ESP-12 Module) / NodeMCU 1.0 (ESP-12E Module) / nodemcuv2 */
-#if HARDWARE_TYPE == ESP8266_NODEMCU
-#endif /* ESP8266_NODEMCU */
-
-/* Olimex MOD-WIFI-ESP8266(-DEV) */
-#if HARDWARE_TYPE == ESP8266_MOD_WIFI
-#endif /* ESP8266_MOD_WIFI */
-
-/* SparkFun ESP8266 Thing */
-#if HARDWARE_TYPE == ESP8266_THING
-#endif /* ESP8266_THING */
-
-/* SparkFun ESP8266 Thing Dev */
-#if HARDWARE_TYPE == ESP8266_THING_DEV
-#endif /* ESP8266_THING_DEV */
-
-/* SweetPea ESP-210 */
-#if HARDWARE_TYPE == ESP8266_ESP210
-#endif /* ESP8266_ESP210 */
-
-/* LOLIN(WEMOS) D1 R2 & mini */
-#if HARDWARE_TYPE == ESP8266_WEMOS_D1MINI
-#endif /* ESP8266_WEMOS_D1MINI */
-
-/* LOLIN(WEMOS) D1 mini Pro */
-#if HARDWARE_TYPE == ESP8266_WEMOS_D1MINIPRO
-#endif /* ESP8266_WEMOS_D1MINIPRO */
-
-/* LOLIN(WEMOS) D1 mini Lite */
-#if HARDWARE_TYPE == ESP8266_WEMOS_D1MINILITE
-#endif /* ESP8266_WEMOS_D1MINILITE */
-
-/* WeMos D1 R1 */
-#if HARDWARE_TYPE == ESP8266_WEMOS_D1R1
-#endif /* ESP8266_WEMOS_D1R1 */
-
-/* Arduino (esp8266) */
-#if HARDWARE_TYPE == ESP8266_STAR_OTTO
-#endif /* ESP8266_STAR_OTTO */
-
-#if HARDWARE_TYPE == ESP8266_UNOWIFI
-#endif /* ESP8266_UNOWIFI */
-
-#if HARDWARE_TYPE == ESP8266_ARDUINO
-#endif /* ESP8266_ARDUINO */
-
-#if HARDWARE_TYPE == ESP8266_PRIMO
-#endif /* ESP8266_PRIMO */
-
-/* 4D Systems gen4 IoD Range */
-#if HARDWARE_TYPE == ESP8266_GEN4_IOD
-#endif /* ESP8266_GEN4_IOD */
-
-/* Digistump Oak */
-#if HARDWARE_TYPE == ESP8266_OAK
-#endif /* ESP8266_OAK */
-
-/* WiFiduino */
-#if HARDWARE_TYPE == ESP8266_WIFIDUINO
-#endif /* ESP8266_WIFIDUINOk */
-
-/* Amperka WiFi Slot */
-#if HARDWARE_TYPE == ESP8266_AMPERKA_WIFI_SLOT
-#endif /* ESP8266_AMPERKA_WIFI_SLOT */
-
-/* Seeed Wio Link */
-#if HARDWARE_TYPE == ESP8266_WIO_LINK
-#endif /* ESP8266_WIO_LINK */
-
-/* ESPectro Core */
-#if HARDWARE_TYPE == ESP8266_ESPECTRO_CORE
-#endif /* ESP8266_ESPECTRO_CORE */
-
-/*  ESP32系統 v1.0.2 */
-/* ESP32 Generic (ESP32 Dev Module / Wrover Module / XinaBox CW02 / FireBeetle-ESP32 / DOIT ESP32 DEVKIT V1 */
-#if HARDWARE_TYPE == ESP32_GENERIC
-#endif /* ESP32_GENERIC */
-
-/* Pico Kit / Turta IoT Node */
-#if HARDWARE_TYPE == ESP32_PICO
-#endif /* ESP32_PICO */
-
-/* TTGO LoRa32-OLED V1 */
-#if HARDWARE_TYPE == ESP32_TTGO_LoRa32_V1
-#endif /* ESP32_TTGO_LoRa32_V1 */
-
-/* SparkFun ESP32 Thing */
-#if HARDWARE_TYPE == ESP32_THING
-#endif /* ESP32_THING */
-
-/* u-blox NINA-W10 */
-#if HARDWARE_TYPE == ESP32_UBLOX_NINA_W10
-#endif /* ESP32_UBLOX_NINA_W10 */
-
-/* Widora AIR */
-#if HARDWARE_TYPE == ESP32_WIDORA_AIR
-#endif /* ESP32_WIDORA_AIR */
-
-/* Electronic SweetPeas - ESP320 */
-#if HARDWARE_TYPE == ESP32_ESP320
-#endif /* ESP32_ESP320 */
-
-/* Nano320 */
-#if HARDWARE_TYPE == ESP32_NANO32
-#endif /* ESP32_NANO32 */
-
-/* Lolin D32 */
-#if HARDWARE_TYPE == ESP32_LOLIN_D32
-#endif /* ESP32_LOLIN_D32 */
-
-/* Lolin D32 Pro */
-#if HARDWARE_TYPE == ESP32_LOLIN_D32_PRO
-#endif /* ESP32_LOLIN_D32_PRO */
-
-/* Wemos Lolin32 */
-#if HARDWARE_TYPE == ESP32_LOLIN32
-#endif /* ESP32_LOLIN32 */
-
-/* Dongsen Tech Pocket 32 / WeMos WiFi&Bluetooth Battery */
-#if HARDWARE_TYPE == ESP32_Pocket32
-#endif /* ESP32_Pocket32 */
-
-/* ESPea32 */
-#if HARDWARE_TYPE == ESP32_ESPea32
-#endif /* ESP32_ESPea32 */
-
-/* Noduino Quantum */
-#if HARDWARE_TYPE == ESP32_QUANTUM
-#endif /* ESP32_QUANTUM */
-
-/* Node32s */
-#if HARDWARE_TYPE == ESP32_Node32s
-#endif /* ESP32_Node32s */
-
-/* Hornbill32dev */
-#if HARDWARE_TYPE == ESP32_HORNBILL_DEV
-#endif /* ESP32_HORNBILL_DEV */
-
-/* Hornbill ESP32 Minima */
-#if HARDWARE_TYPE == ESP32_HORNBILL_MINIMA
-#endif /* ESP32_HORNBILL_MINIMA */
-
-/* IntoRobot Fig */
-#if HARDWARE_TYPE == ESP32_INTOROBOT_DEV
-#endif /* ESP32_INTOROBOT_DEV */
-
-/* Onehorse ESP32 Dev Module */
-#if HARDWARE_TYPE == ESP32_ONEHORSE_DEV
-#endif /* ESP32_ONEHORSE_DEV */
-
-/* Adafruit ESP32 Feather */
-#if HARDWARE_TYPE == ESP32_FEATHER
-#endif /* ESP32_FEATHER */
-
-/* NodeMCU-32S */
-#if HARDWARE_TYPE == ESP32_NodeMCU_32S
-#endif /* ESP32_NodeMCU_32S */
-
-/* MH ET LIVE ESP32DevKIT */
-#if HARDWARE_TYPE == ESP32_MH_ET_LIVE_DEVKIT
-#endif /* ESP32_MH_ET_LIVE_DEVKIT */
-
-/* MH ET LIVE ESP32MiniKit */
-#if HARDWARE_TYPE == ESP32_MH_ET_LIVE_MINIKIT
-#endif /* ESP32_MH_ET_LIVE_MINIKIT */
-
-/* ESP32vn IoT Uno */
-#if HARDWARE_TYPE == ESP32_vn_iot_uno
-#endif /* ESP32_vn_iot_uno */
-
-/* OLIMEX ESP32-EVB */
-#if HARDWARE_TYPE == ESP32_EVB
-#endif /* ESP32_EVB */
-
-/* OLIMEX ESP32-GATEWAY */
-#if HARDWARE_TYPE == ESP32_GATEWAY
-#endif /* ESP32_GATEWAY */
-
-/* OLIMEX ESP32-PoE */
-#if HARDWARE_TYPE == ESP32_POE
-#endif /* ESP32_POE */
-
-/* ThaiEasyElec's ESPino32 */
-#if HARDWARE_TYPE == ESP32_ESPino32
-#endif /* ESP32_ESPino32 */
-
-/* M5Stack-Core-ESP32 */
-#if HARDWARE_TYPE == ESP32_M5Stack_Core
-#endif /* ESP32_M5Stack_Core */
-
-/* M5Stack-FIRE */
-#if HARDWARE_TYPE == ESP32_M5STACK_FIRE
-#endif /* ESP32_M5STACK_FIRE */
-
-/* M5Stick-C */
-#if HARDWARE_TYPE == ESP32_M5Stick_C
-#endif /* ESP32_M5Stick_C */
-
-/* ODROID ESP32 */
-#if HARDWARE_TYPE == ESP32_ODROID
-#endif /* ESP32_ODROID */
-
-/* Heltec WiFi Kit 32 */
-#if HARDWARE_TYPE == ESP32_HELTEC_WIFI_KIT_32
-#endif /* ESP32_HELTEC_WIFI_KIT_32 */
-
-/* Heltec WiFi LoRa 32 */
-#if HARDWARE_TYPE == ESP32_Heltec_WIFI_LoRa_32
-#endif /* ESP32_Heltec_WIFI_LoRa_32 */
-
-/* Heltec WiFi LoRa 32 v2 */
-#if HARDWARE_TYPE == HELTEC_WIFI_LORA_32_V2
-#endif /* HELTEC_WIFI_LORA_32_V2 */
-
-/* Heltec Wireless Stick */
-#if HARDWARE_TYPE == ESP32_Heltec_WIFI_LoRa_32_V2
-#endif /* ESP32_Heltec_WIFI_LoRa_32_V2 */
-
-/* ESPectro32 */
-#if HARDWARE_TYPE == ESP32_ESPECTRO32
-#endif /* ESP32_ESPECTRO32 */
-
-/* Microduino-CoreESP32 */
-#if HARDWARE_TYPE == ESP32_CoreESP32
-#endif /* ESP32_CoreESP32 */
+#endif /* Arduino M0 / M0 Pro */
+
+
+
+/*  Amperka WiFi Slot  */
+#ifdef 	ARDUINO_AMPERKA_WIFI_SLOT
+#define HARDWARE_TYPE AMPERKA_WIFI_SLOT
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "Amperka WiFi Slot"
+#endif /*  Amperka WiFi Slot  */
+
+/*  Adafruit Feather HUZZAH ESP8266  */
+#ifdef 	ARDUINO_ESP8266_ADAFRUIT_HUZZAH
+#define HARDWARE_TYPE ESP8266_ADAFRUIT_HUZZAH
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "Adafruit Feather HUZZAH ESP8266"
+#endif /*  Adafruit Feather HUZZAH ESP8266  */
+
+/*  Lifely Agrumino Lemon v4  */
+#ifdef 	ARDUINO_ESP8266_AGRUMINO_LEMON_V4
+#define HARDWARE_TYPE ESP8266_AGRUMINO_LEMON_V4
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "Lifely Agrumino Lemon v4"
+#endif /*  Lifely Agrumino Lemon v4  */
+
+/*  Generic ESP8285 Module  */
+#ifdef 	ARDUINO_ESP8266_ESP01
+#define HARDWARE_TYPE ESP8285_GENERIC
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "Generic ESP8285 Module"
+#endif /*  Generic ESP8285 Module  */
+
+/*  DOIT ESP-Mx DevKit (ESP8285)  */
+#if defined(ARDUINO_ESP8266_ESP01) && LED_BUILTIN==16
+#define HARDWARE_TYPE DOIT_ESP_MX_DEV_KIT
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "DOIT ESP-Mx DevKit (ESP8285)"
+#endif /*  DOIT ESP-Mx DevKit (ESP8285)  */
+
+/*  ESPDuino (ESP-13 Module)  */
+#ifdef 	ARDUINO_ESP8266_ESP13
+#define HARDWARE_TYPE ESP8266_ESPDUINO
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "ESPDuino (ESP-13 Module)"
+#endif /*  ESPDuino (ESP-13 Module)  */
+
+/*  SweetPea ESP-210  */
+#ifdef 	ARDUINO_ESP8266_ESP210
+#define HARDWARE_TYPE ESP8266_ESP210
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "SweetPea ESP-210"
+#endif /*  SweetPea ESP-210  */
+
+/*  ESPectro Core  */
+#ifdef 	ARDUINO_ESP8266_ESPECTRO_CORE
+#define HARDWARE_TYPE ESP8266_ESPECTRO_CORE
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "ESPectro Core"
+#endif /*  ESPectro Core  */
+
+/*  ESPino (ESP-12 Module)  */
+#ifdef 	ARDUINO_ESP8266_ESPINO_ESP12
+#define HARDWARE_TYPE ESP8266_ESPINO_ESP12
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "ESPino (ESP-12 Module)"
+#endif /*  ESPino (ESP-12 Module)  */
+
+/*  ThaiEasyElec's ESPino  */
+#ifdef 	ARDUINO_ESP8266_ESPINO_ESP13
+#define HARDWARE_TYPE ESP8266_ESPINO_ESP13
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "ThaiEasyElec's ESPino"
+#endif /*  ThaiEasyElec's ESPino  */
+
+/*  ESPresso Lite 1.0  */
+#ifdef 	ARDUINO_ESP8266_ESPRESSO_LITE_V1
+#define HARDWARE_TYPE ESP8266_ESPRESSO_LITE_V1
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "ESPresso Lite 1.0"
+#endif /*  ESPresso Lite 1.0  */
+
+/*  ESPresso Lite 2.0  */
+#ifdef 	ARDUINO_ESP8266_ESPRESSO_LITE_V2
+#define HARDWARE_TYPE ESP8266_ESPRESSO_LITE_V2
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "ESPresso Lite 2.0"
+#endif /*  ESPresso Lite 2.0  */
+
+/*  Generic ESP8266 Module  */
+#ifdef 	ARDUINO_ESP8266_GENERIC
+#define HARDWARE_TYPE ESP8266_GENERIC
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "Generic ESP8266 Module"
+#endif /*  Generic ESP8266 Module  */
+
+/*  Invent One  */
+#ifdef 	ARDUINO_ESP8266_INVENT_ONE
+#define HARDWARE_TYPE ESP8266_INVENT_ONE
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "Invent One"
+#endif /*  Invent One  */
+
+/*  NodeMCU 0.9 (ESP-12 Module)  */
+#ifdef 	ARDUINO_ESP8266_NODEMCU_ESP12
+#define HARDWARE_TYPE ESP8266_NODEMCU_ESP12
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "NodeMCU 0.9 (ESP-12 Module)"
+#endif /*  NodeMCU 0.9 (ESP-12 Module)  */
+
+/*  NodeMCU 1.0 (ESP-12E Module)  */
+#ifdef 	ARDUINO_ESP8266_NODEMCU_ESP12E
+#define HARDWARE_TYPE ESP8266_NODEMCU_ESP12E
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "NodeMCU 1.0 (ESP-12E Module)"
+#endif /*  NodeMCU 1.0 (ESP-12E Module)  */
+
+/*  Digistump Oak  */
+#ifdef 	ARDUINO_ESP8266_OAK
+#define HARDWARE_TYPE ESP8266_OAK
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "Digistump Oak"
+#endif /*  Digistump Oak  */
+
+/*  Phoenix 1.0  */
+#ifdef 	ARDUINO_ESP8266_PHOENIX_V1
+#define HARDWARE_TYPE ESP8266_PHOENIX_V1
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "Phoenix 1.0"
+#endif /*  Phoenix 1.0  */
+
+/*  Phoenix 2.0  */
+#ifdef 	ARDUINO_ESP8266_PHOENIX_V2
+#define HARDWARE_TYPE ESP8266_PHOENIX_V2
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "Phoenix 2.0"
+#endif /*  Phoenix 2.0  */
+
+/*  Schirmilabs Eduino WiFi  */
+#ifdef 	ARDUINO_ESP8266_SCHIRMILABS_EDUINO_WIFI
+#define HARDWARE_TYPE ESP8266_SCHIRMILABS_EDUINO_WIFI
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "Schirmilabs Eduino WiFi"
+#endif /*  Schirmilabs Eduino WiFi  */
+
+/*  SparkFun ESP8266 Thing Dev  */
+#ifdef 	ARDUINO_ESP8266_THING_DEV
+#define HARDWARE_TYPE ESP8266_THING_DEV
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "SparkFun ESP8266 Thing Dev"
+#endif /*  SparkFun ESP8266 Thing Dev  */
+
+/*  LOLIN(WEMOS) D1 mini Lite  */
+#ifdef 	ARDUINO_ESP8266_WEMOS_D1MINILITE
+#define HARDWARE_TYPE ESP8266_WEMOS_D1MINILITE
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "LOLIN(WEMOS) D1 mini Lite"
+#endif /*  LOLIN(WEMOS) D1 mini Lite  */
+
+/*  LOLIN(WEMOS) D1 mini Pro  */
+#ifdef 	ARDUINO_ESP8266_WEMOS_D1MINIPRO
+#define HARDWARE_TYPE ESP8266_WEMOS_D1MINIPRO
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "LOLIN(WEMOS) D1 mini Pro"
+#endif /*  LOLIN(WEMOS) D1 mini Pro  */
+
+/*  LOLIN(WeMos) D1 R1  */
+#ifdef 	ARDUINO_ESP8266_WEMOS_D1R1
+#define HARDWARE_TYPE ESP8266_WEMOS_D1R1
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "LOLIN(WeMos) D1 R1"
+#endif /*  LOLIN(WeMos) D1 R1  */
+
+/*  XinaBox CW01  */
+#ifdef 	ARDUINO_ESP8266_XINABOX_CW01
+#define HARDWARE_TYPE ESP8266_XINABOX_CW01
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "XinaBox CW01"
+#endif /*  XinaBox CW01  */
+
+/*  4D Systems gen4 IoD Range  */
+#ifdef 	ARDUINO_GEN4_IOD
+#define HARDWARE_TYPE ESP8266_GEN4_IOD
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "4D Systems gen4 IoD Range"
+#endif /*  4D Systems gen4 IoD Range  */
+
+/*  Olimex MOD-WIFI-ESP8266(-DEV)  */
+#ifdef 	ARDUINO_MOD_WIFI_ESP8266
+#define HARDWARE_TYPE MOD_WIFI_ESP8266
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "Olimex MOD-WIFI-ESP8266(-DEV)"
+#endif /*  Olimex MOD-WIFI-ESP8266(-DEV)  */
+
+/*  WiFi Kit 8  */
+#ifdef 	ARDUINO_wifi_kit_8
+#define HARDWARE_TYPE WIFI_KIT_8
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "WiFi Kit 8"
+#endif /*  WiFi Kit 8  */
+
+/*  WiFiduino  */
+#ifdef 	ARDUINO_WIFIDUINO_ESP8266
+#define HARDWARE_TYPE WIFIDUINO_ESP8266
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "WiFiduino"
+#endif /*  WiFiduino  */
+
+/*  SparkFun ESP8266 Thing / Blynk Board  */
+#ifdef 	ARDUINO_ESP8266_THING
+#define HARDWARE_TYPE ESP8266_THING
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "SparkFun ESP8266 Thing / Blynk Board"
+#endif /*  SparkFun ESP8266 Thing / Blynk Board  */
+
+/*  LOLIN(WEMOS) D1 R2 & mini / D1 mini (clone)  */
+#ifdef 	ARDUINO_ESP8266_WEMOS_D1MINI
+#define HARDWARE_TYPE ESP8266_WEMOS_D1MINI
+#define CPU_ARCH XTENSA_LX106_ARCH
+#define CPU_TYPE TYPE_ESP8266
+#define HARDWARE_NAME "LOLIN(WEMOS) D1 R2 & mini / D1 mini (clone)"
+#endif /*  LOLIN(WEMOS) D1 R2 & mini / D1 mini (clone)  */
+
+/* Adafruit Feather ESP32-S2 (no PSRAM) */
+#ifdef ARDUINO_ADAFRUIT_FEATHER_ESP32S2_NOPSRAM
+#define HARDWARE_TYPE ADAFRUIT_FEATHER_ESP32S2_NOPSRAM
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Adafruit Feather ESP32-S2 (no PSRAM)"
+#endif /* Adafruit Feather ESP32-S2 (no PSRAM) */
 
 /* ALKS ESP32 */
-#if HARDWARE_TYPE == ESP32_ALKS
-#endif /* ESP32_ALKS */
+#ifdef ARDUINO_ALKS
+#define HARDWARE_TYPE ALKS
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "ALKS ESP32"
+#endif /* ALKS ESP32 */
 
-/* WiPy3 */
-#if HARDWARE_TYPE == ESP32_WIPY3
-#endif /* ESP32_WIPY3 */
+/* ATMegaZero ESP32-S2 */
+#ifdef ARDUINO_atmegazero_esp32s2
+#define HARDWARE_TYPE ATMEGA_ZERO_ESP32_S2
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "ATMegaZero ESP32-S2"
+#endif /* ATMegaZero ESP32-S2 */
 
 /* BPI-BIT */
-#if HARDWARE_TYPE == ESP32_BPI-BIT
-#endif /* ESP32_BPI-BIT */
+#ifdef ARDUINO_BPI_BIT
+#define HARDWARE_TYPE BPI_BIT
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "BPI-BIT"
+#endif /* BPI-BIT */
 
-/* Silicognition wESP32 */
-#if HARDWARE_TYPE == ESP32_WESP32
-#endif /* ESP32_WESP32 */
+/* Microduino-CoreESP32 */
+#ifdef ARDUINO_CoreESP32
+#define HARDWARE_TYPE MICRODUINO_CORE_ESP32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Microduino-CoreESP32"
+#endif /* Microduino-CoreESP32 */
+
+/* D-duino-32 */
+#ifdef ARDUINO_D_Duino_32
+#define HARDWARE_TYPE D_DUINO_32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "D-duino-32"
+#endif /* D-duino-32 */
+
+/* WEMOS D1 MINI ESP32 */
+#ifdef ARDUINO_D1_MINI32
+#define HARDWARE_TYPE WEMOS_D1_MINI32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "WEMOS D1 MINI ESP32"
+#endif /* WEMOS D1 MINI ESP32 */
+
+/* Deneyap Kart */
+#ifdef ARDUINO_DYDK
+#define HARDWARE_TYPE DYDK
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Deneyap Kart"
+#endif /* Deneyap Kart */
+
+/* Deneyap Mini */
+#ifdef ARDUINO_DYM
+#define HARDWARE_TYPE DYM
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Deneyap Mini"
+#endif /* Deneyap Mini */
+
+/* OLIMEX ESP32-DevKit-LiPo */
+#ifdef ARDUINO_ESP32_DEVKIT_LIPO
+#define HARDWARE_TYPE ESP32_DEVKIT_LIPO
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "OLIMEX ESP32-DevKit-LiPo"
+#endif /* OLIMEX ESP32-DevKit-LiPo */
+
+/* OLIMEX ESP32-EVB */
+#ifdef ARDUINO_ESP32_EVB
+#define HARDWARE_TYPE ESP32_EVB
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "OLIMEX ESP32-EVB"
+#endif /* OLIMEX ESP32-EVB */
+
+/* OLIMEX ESP32-GATEWAY */
+#if defined(ARDUINO_ESP32_GATEWAY_C) || defined(ARDUINO_ESP32_GATEWAY_E) || defined(ARDUINO_ESP32_GATEWAY_F)
+#define HARDWARE_TYPE ESP32_GATEWAY
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "OLIMEX ESP32-GATEWAY"
+#endif /* OLIMEX ESP32-GATEWAY */
+
+/* OLIMEX ESP32-PoE */
+#ifdef ARDUINO_ESP32_POE
+#define HARDWARE_TYPE ESP32_POE
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "OLIMEX ESP32-PoE"
+#endif /* OLIMEX ESP32-PoE */
+
+/* OLIMEX ESP32-PoE-ISO */
+#ifdef ARDUINO_ESP32_POE_ISO
+#define HARDWARE_TYPE ESP32_POE_ISO
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "OLIMEX ESP32-PoE-ISO"
+#endif /* OLIMEX ESP32-PoE-ISO */
+
+/* SparkFun ESP32 Thing */
+#ifdef ARDUINO_ESP32_THING
+#define HARDWARE_TYPE ESP32_THING
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "SparkFun ESP32 Thing"
+#endif /* SparkFun ESP32 Thing */
+
+/* SparkFun ESP32 Thing Plus */
+#ifdef ARDUINO_ESP32_THING_PLUS
+#define HARDWARE_TYPE ESP32_THING_PLUS
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "SparkFun ESP32 Thing Plus"
+#endif /* SparkFun ESP32 Thing Plus */
+
+/* ESP32 Wrover Kit (all versions) */
+#ifdef ARDUINO_ESP32_WROVER_KIT
+#define HARDWARE_TYPE ESP32_WROVER_KIT
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "ESP32 Wrover Kit"
+#endif /* ESP32 Wrover Kit (all versions) */
+
+/* Electronic SweetPeas - ESP320 */
+#ifdef ARDUINO_ESP320
+#define HARDWARE_TYPE ESP320
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Electronic SweetPeas - ESP320"
+#endif /* Electronic SweetPeas - ESP320 */
+
+/* ESP32C3 Dev Module */
+#ifdef ARDUINO_ESP32C3_DEV
+#define HARDWARE_TYPE ESP32C3_DEV
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "ESP32C3 Dev Module"
+#endif /* ESP32C3 Dev Module */
+
+/* ESP32S2 Dev Module */
+#ifdef ARDUINO_ESP32S2_DEV
+#define HARDWARE_TYPE ESP32S2_DEV
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "ESP32S2 Dev Module"
+#endif /* ESP32S2 Dev Module */
+
+/* SparkFun ESP32-S2 Thing Plus */
+#ifdef ARDUINO_ESP32S2_THING_PLUS
+#define HARDWARE_TYPE ESP32S2_THING_PLUS
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "SparkFun ESP32-S2 Thing Plus"
+#endif /* SparkFun ESP32-S2 Thing Plus */
+
+/* ESP32S2 Native USB */
+#ifdef ARDUINO_ESP32S2_USB
+#define HARDWARE_TYPE ESP32S2_USB
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "ESP32S2 Native USB"
+#endif /* ESP32S2 Native USB */
+
+/* ESP32vn IoT Uno */
+#ifdef ARDUINO_esp32vn_iot_uno
+#define HARDWARE_TYPE ESP32VN_IOT_UNO
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "ESP32vn IoT Uno"
+#endif /* ESP32vn IoT Uno */
+
+/* ESPea32 */
+#ifdef ARDUINO_ESPea32
+#define HARDWARE_TYPE ESPEA32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "ESPea32"
+#endif /* ESPea32 */
+
+/* ESPectro32 */
+#ifdef ARDUINO_ESPECTRO32
+#define HARDWARE_TYPE ESPECTRO32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "ESPectro32"
+#endif /* ESPectro32 */
+
+/* ThaiEasyElec's ESPino32 */
+#ifdef ARDUINO_ESPino32
+#define HARDWARE_TYPE ESPINO32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "ThaiEasyElec ESPino32"
+#endif /* ThaiEasyElec's ESPino32 */
+
+/* Adafruit ESP32 Feather */
+#ifdef ARDUINO_FEATHER_ESP32
+#define HARDWARE_TYPE FEATHER_ESP32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Adafruit ESP32 Feather"
+#endif /* Adafruit ESP32 Feather */
+
+/* UM FeatherS2 */
+#ifdef ARDUINO_FEATHERS2
+#define HARDWARE_TYPE FEATHER_S2
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "UM FeatherS2"
+#endif /* UM FeatherS2 */
+
+/* UM FeatherS2 Neo */
+#ifdef ARDUINO_FEATHERS2NEO
+#define HARDWARE_TYPE FEATHER_S2_NEO
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "UM FeatherS2 Neo"
+#endif /* UM FeatherS2 Neo */
+
+/* ESP32 FM DevKit */
+#ifdef ARDUINO_fm_devkit
+#define HARDWARE_TYPE FM_DEV_KIT
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "ESP32 FM DevKit"
+#endif /* ESP32 FM DevKit */
+
+/* Franzininho WiFi */
+#ifdef ARDUINO_FRANZININHO_WIFI
+#define HARDWARE_TYPE FRANZININHO_WIFI
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Franzininho WiFi"
+#endif /* Franzininho WiFi */
+
+/* Franzininho WiFi MSC */
+#ifdef ARDUINO_FRANZININHO_WIFI_MSC
+#define HARDWARE_TYPE FRANZININHO_WIFI_MSC
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Franzininho WiFi MSC"
+#endif /* Franzininho WiFi MSC */
+
+/* Frog Board ESP32 */
+#ifdef ARDUINO_FROG_ESP32
+#define HARDWARE_TYPE FROG_ESP32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Frog Board ESP32"
+#endif /* Frog Board ESP32 */
+
+/* Adafruit FunHouse */
+#ifdef ARDUINO_FUNHOUSE_ESP32S2
+#define HARDWARE_TYPE FUNHOUSE_ESP32S2
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Adafruit FunHouse"
+#endif /* Adafruit FunHouse */
+
+/* ProtoCentral HealthyPi 4 */
+#ifdef ARDUINO_HEALTHYPI_4
+#define HARDWARE_TYPE HEALTHYPI_4
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "ProtoCentral HealthyPi 4"
+#endif /* ProtoCentral HealthyPi 4 */
+
+/* Heltec WiFi Kit 32 */
+#ifdef ARDUINO_heltec_wifi_kit_32
+#define HARDWARE_TYPE HELTEC_WIFI_KIT_32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Heltec WiFi Kit 32"
+#endif /* Heltec WiFi Kit 32 */
+
+/* Heltec WiFi LoRa 32 */
+#ifdef ARDUINO_heltec_wifi_lora_32
+#define HARDWARE_TYPE HELTEC_WIFI_LORA_32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Heltec WiFi LoRa 32"
+#endif /* Heltec WiFi LoRa 32 */
+
+/* Heltec WiFi LoRa 32(V2) */
+#ifdef ARDUINO_heltec_wifi_lora_32_V2
+#define HARDWARE_TYPE HELTEC_WIFI_LORA_32_V2
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Heltec WiFi LoRa 32(V2)"
+#endif /* Heltec WiFi LoRa 32(V2) */
+
+/* Heltec Wireless Stick */
+#ifdef ARDUINO_heltec_wireless_stick
+#define HARDWARE_TYPE HELTEC_WIRELESS_STICK
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Heltec Wireless Stick"
+#endif /* Heltec Wireless Stick */
+
+/* Heltec Wireless Stick Lite */
+#ifdef ARDUINO_heltec_wireless_stick_LITE
+#define HARDWARE_TYPE HELTEC_WIRELESS_STICK_LITE
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Heltec Wireless Stick Lite"
+#endif /* Heltec Wireless Stick Lite */
+
+/* HONEYLemon */
+#ifdef ARDUINO_HONEYLEMON
+#define HARDWARE_TYPE HONEY_LEMON
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "HONEYLemon"
+#endif /* HONEYLemon */
+
+/* Hornbill ESP32 Dev */
+#ifdef ARDUINO_HORNBILL_ESP32_DEV
+#define HARDWARE_TYPE HORNBILL_ESP32_DEV
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Hornbill ESP32 Dev"
+#endif /* Hornbill ESP32 Dev */
+
+/* Hornbill ESP32 Minima */
+#ifdef ARDUINO_HORNBILL_ESP32_MINIMA
+#define HARDWARE_TYPE HORNBILL_ESP32_MINIMA
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Hornbill ESP32 Minima"
+#endif /* Hornbill ESP32 Minima */
+
+/* IMBRIOS LOGSENS_V1P1 */
+#ifdef ARDUINO_IMBRIOS_LOGSENS_V1P1
+#define HARDWARE_TYPE IMBRIOS_LOGSENS_V1P1
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "IMBRIOS LOGSENS_V1P1"
+#endif /* IMBRIOS LOGSENS_V1P1 */
+
+/* IntoRobot Fig */
+#ifdef ARDUINO_INTOROBOT_ESP32_DEV
+#define HARDWARE_TYPE INTOROBOT_ESP32_DEV
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "IntoRobot Fig"
+#endif /* IntoRobot Fig */
+
+/* LOLIN D32 */
+#ifdef ARDUINO_LOLIN_D32
+#define HARDWARE_TYPE LOLIN_D32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "LOLIN D32"
+#endif /* LOLIN D32 */
+
+/* LOLIN D32 PRO */
+#ifdef ARDUINO_LOLIN_D32_PRO
+#define HARDWARE_TYPE LOLIN_D32_PRO
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "LOLIN D32 PRO"
+#endif /* LOLIN D32 PRO */
+
+/* WEMOS LOLIN32 */
+#ifdef ARDUINO_LOLIN32
+#define HARDWARE_TYPE LOLIN32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "WEMOS LOLIN32"
+#endif /* WEMOS LOLIN32 */
+
+/* WEMOS LOLIN32 Lite */
+#ifdef ARDUINO_LOLIN32_LITE
+#define HARDWARE_TYPE LOLIN32_LITE
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "WEMOS LOLIN32 Lite"
+#endif /* WEMOS LOLIN32 Lite */
+
+/* LoPy */
+#ifdef ARDUINO_LoPy
+#define HARDWARE_TYPE LOPY
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "LoPy"
+#endif /* LoPy */
+
+/* LoPy4 */
+#ifdef ARDUINO_LoPy4
+#define HARDWARE_TYPE LOPY4
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "LoPy4"
+#endif /* LoPy4 */
+
+/* M5Stack-ATOM */
+#ifdef ARDUINO_M5Stack_ATOM
+#define HARDWARE_TYPE M5STACK_ATOM
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "M5Stack-ATOM"
+#endif /* M5Stack-ATOM */
+
+/* M5Stack-Core-ESP32 */
+#ifdef ARDUINO_M5Stack_Core_ESP32
+#define HARDWARE_TYPE M5STACK_CORE_ESP32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "M5Stack-Core-ESP32"
+#endif /* M5Stack-Core-ESP32 */
+
+/* M5Stack-Core2 */
+#ifdef ARDUINO_M5STACK_Core2
+#define HARDWARE_TYPE M5STACK_CORE2
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "M5Stack-Core2"
+#endif /* M5Stack-Core2 */
+
+/* M5Stack-CoreInk */
+#ifdef ARDUINO_M5Stack_CoreInk
+#define HARDWARE_TYPE M5STACK_CORE_INK
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "M5Stack-CoreInk"
+#endif /* M5Stack-CoreInk */
+
+/* M5Stack-FIRE */
+#ifdef ARDUINO_M5STACK_FIRE
+#define HARDWARE_TYPE M5STACK_FIRE
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "M5Stack-FIRE"
+#endif /* M5Stack-FIRE */
+
+/* M5Stick-C */
+#ifdef ARDUINO_M5Stick_C
+#define HARDWARE_TYPE M5STACK_C
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "M5Stick-C"
+#endif /* M5Stick-C */
+
+/* Adafruit MagTag 2.9 */
+#ifdef ARDUINO_MAGTAG29_ESP32S2
+#define HARDWARE_TYPE MAG_TAG29_ESP32_S2
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Adafruit MagTag 2.9"
+#endif /* Adafruit MagTag 2.9 */
+
+/* Metro ESP-32 */
+#ifdef ARDUINO_Metro
+#define HARDWARE_TYPE METRO_ESP32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Metro ESP-32"
+#endif /* Metro ESP-32 */
+
+/* Adafruit Metro ESP32-S2 */
+#ifdef ARDUINO_METRO_ESP32S2
+#define HARDWARE_TYPE METRO_ESP32_S2
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Adafruit Metro ESP32-S2"
+#endif /* Adafruit Metro ESP32-S2 */
+
+/* MGBOT IOTIK 32A */
+#ifdef ARDUINO_MGBOT_IOTIK32A
+#define HARDWARE_TYPE MGBOT_IOTIK32A
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "MGBOT IOTIK 32A"
+#endif /* MGBOT IOTIK 32A */
+
+/* MGBOT IOTIK 32B */
+#ifdef ARDUINO_MGBOT_IOTIK32B
+#define HARDWARE_TYPE MGBOT_IOTIK32B
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "MGBOT IOTIK 32B"
+#endif /* MGBOT IOTIK 32B */
+
+/* MH ET LIVE ESP32DevKIT */
+#ifdef ARDUINO_MH_ET_LIVE_ESP32DEVKIT
+#define HARDWARE_TYPE MH_ET_LIVE_ESP32_DEV_KIT
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "MH ET LIVE ESP32DevKIT"
+#endif /* MH ET LIVE ESP32DevKIT */
+
+/* MH ET LIVE ESP32MiniKit */
+#ifdef ARDUINO_MH_ET_LIVE_ESP32MINIKIT
+#define HARDWARE_TYPE MH_ET_LIVE_ESP32_MINI_KIT
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "MH ET LIVE ESP32MiniKit"
+#endif /* MH ET LIVE ESP32MiniKit */
+
+/* microS2 */
+#ifdef ARDUINO_MICROS2
+#define HARDWARE_TYPE MICRO_S2
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "microS2"
+#endif /* microS2 */
+
+/* Nano32 */
+#ifdef ARDUINO_NANO32
+#define HARDWARE_TYPE NANO32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Nano32"
+#endif /* Nano32 */
+
+/* Node32s */
+#ifdef ARDUINO_Node32s
+#define HARDWARE_TYPE NODE_32S
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Node32s"
+#endif /* Node32s */
+
+/* NodeMCU-32S */
+#ifdef ARDUINO_NodeMCU_32S
+#define HARDWARE_TYPE NODE_MCU_32S
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "NodeMCU-32S"
+#endif /* NodeMCU-32S */
+
+/* ODROID ESP32 */
+#ifdef ARDUINO_ODROID_ESP32
+#define HARDWARE_TYPE ODROID_ESP32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "ODROID ESP32"
+#endif /* ODROID ESP32 */
+
+/* Onehorse ESP32 Dev Module */
+#ifdef ARDUINO_ONEHORSE_ESP32_DEV
+#define HARDWARE_TYPE ONEHORSE_ESP32_DEV
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Onehorse ESP32 Dev Module"
+#endif /* Onehorse ESP32 Dev Module */
+
+/* INEX OpenKB */
+#ifdef ARDUINO_openkb
+#define HARDWARE_TYPE OPEN_KB
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "INEX OpenKB"
+#endif /* INEX OpenKB */
+
+/* OROCA EduBot */
+#ifdef ARDUINO_OROCA_EDUBOT
+#define HARDWARE_TYPE OROCA_EDUBOT
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "OROCA EduBot"
+#endif /* OROCA EduBot */
+
+/* Piranha ESP-32 */
+#ifdef ARDUINO_Piranha
+#define HARDWARE_TYPE PIRANHA
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Piranha ESP-32"
+#endif /* Piranha ESP-32 */
+
+/* Pycom GPy */
+#ifdef ARDUINO_PYCOM_GPY
+#define HARDWARE_TYPE PYCOM_GPY
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Pycom GPy"
+#endif /* Pycom GPy */
+
+/* Noduino Quantum */
+#ifdef ARDUINO_QUANTUM
+#define HARDWARE_TYPE NODUINO_QUANTUM
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Noduino Quantum"
+#endif /* Noduino Quantum */
+
+/* Senses's WEIZEN */
+#ifdef ARDUINO_sensesiot_weizen
+#define HARDWARE_TYPE SENSES_IOT_WEIZEN
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Senses WEIZEN"
+#endif /* Senses's WEIZEN */
 
 /* T-Beam */
-#if HARDWARE_TYPE == ESP32_T-Beam
-#endif /* ESP32_T-Beam */
+#ifdef ARDUINO_TBeam
+#define HARDWARE_TYPE T_BEAM
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "T-Beam"
+#endif /* T-Beam */
 
-/* d-duino-32 */
-#if HARDWARE_TYPE == ESP32_D-duino-32
-#endif /* ESP32_D-duino-32 */
+/* UM TinyPICO */
+#ifdef ARDUINO_TINYPICO
+#define HARDWARE_TYPE TINY_PICO
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "UM TinyPICO"
+#endif /* UM TinyPICO */
 
-/* lopy */
-#if HARDWARE_TYPE == ESP32_LoPy
-#endif /* ESP32_LoPy */
+/* UM TinyS2 */
+#ifdef ARDUINO_TINYS2
+#define HARDWARE_TYPE TINY_S2
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "UM TinyS2"
+#endif /* UM TinyS2 */
 
-/* lopy4 */
-#if HARDWARE_TYPE == ESP32_LoPy4
-#endif /* ESP32_LoPy4 */
+/* Trueverit ESP32 Universal IoT Driver */
+#ifdef ARDUINO_Trueverit_ESP32_Universal_IoT_Driver
+#define HARDWARE_TYPE TRUEVERIT_ESP32_UNIVERSAL_IOT_DRIVER
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Trueverit ESP32 Universal IoT Driver"
+#endif /* Trueverit ESP32 Universal IoT Driver */
 
-/* oroca_edubot */
-#if HARDWARE_TYPE == ESP32_OROCA_EDUBOT
-#endif /* ESP32_OROCA_EDUBOT */
+/* Trueverit ESP32 Universal IoT Driver MK II */
+#ifdef ARDUINO_Trueverit_ESP32_Universal_IoT_Driver_MK_II
+#define HARDWARE_TYPE TRUEVERIT_ESP32_UNIVERSAL_IOT_DRIVER_MK2
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Trueverit ESP32 Universal IoT Driver MK II"
+#endif /* Trueverit ESP32 Universal IoT Driver MK II */
 
-/* ESP32 FM devkit */
-#if HARDWARE_TYPE == ESP32_fm-devkit
-#endif /* ESP32_fm-devkit */
+/* TTGO LoRa32-OLED V1 */
+#ifdef ARDUINO_TTGO_LoRa32_V1
+#define HARDWARE_TYPE TTGO_LORA32_V1
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "TTGO LoRa32-OLED V1"
+#endif /* TTGO LoRa32-OLED V1 */
 
-/*Frog Board ESP32 */
-#if HARDWARE_TYPE == ESP32_FROG_BOARD
-#endif /* ESP32_FROG_BOARD */
+/* TTGO LoRa32-OLED v2.1.6 */
+#ifdef ARDUINO_TTGO_LoRa32_v21new
+#define HARDWARE_TYPE TTGO_LORA32_V21_NEW
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "TTGO LoRa32-OLED v2.1.6"
+#endif /* TTGO LoRa32-OLED v2.1.6 */
 
+/* TTGO T1 */
+#ifdef ARDUINO_TTGO_T1
+#define HARDWARE_TYPE TTGO_T1
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "TTGO T1"
+#endif /* TTGO T1 */
+
+/* TTGO T7 V1.3 Mini32 */
+#ifdef ARDUINO_TTGO_T7_V13_Mini32
+#define HARDWARE_TYPE TTGO_T7_V13_MINI_32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "TTGO T7 V1.3 Mini32"
+#endif /* TTGO T7 V1.3 Mini32 */
+
+/* TTGO T7 V1.4 Mini32 */
+#ifdef ARDUINO_TTGO_T7_V14_Mini32
+#define HARDWARE_TYPE TTGO_T7_V14_MINI_32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "TTGO T7 V1.4 Mini32"
+#endif /* TTGO T7 V1.4 Mini32 */
+
+/* TTGO T-Watch */
+#if defined(ARDUINO_TWATCH_BASE) || defined(ARDUINO_TWATCH_2020_V1) ||defined(ARDUINO_TWATCH_2020_V2) || defined(ARDUINO_TWATCH_2020_V3)
+#define HARDWARE_TYPE TWATCH
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "TTGO T-Watch"
+#endif /* TTGO T-Watch */
+
+/* u-blox NINA-W10 series (ESP32) */
+#ifdef ARDUINO_UBLOX_NINA_W10
+#define HARDWARE_TYPE UBLOX_NINA_W10
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "u-blox NINA-W10 series (ESP32)"
+#endif /* u-blox NINA-W10 series (ESP32) */
+
+/* uPesy ESP32 Wroom DevKit */
+#ifdef ARDUINO_uPesy_WROOM
+#define HARDWARE_TYPE UPESY_WROOM
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "uPesy ESP32 Wroom DevKit"
+#endif /* uPesy ESP32 Wroom DevKit */
+
+/* uPesy ESP32 Wrover DevKit */
+#ifdef ARDUINO_uPesy_WROVER
+#define HARDWARE_TYPE UPESY_WROVER
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "uPesy ESP32 Wrover DevKit"
+#endif /* uPesy ESP32 Wrover DevKit */
+
+/* Silicognition wESP32 */
+#ifdef ARDUINO_WESP32
+#define HARDWARE_TYPE WESP32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Silicognition wESP32"
+#endif /* Silicognition wESP32 */
+
+/* Widora AIR */
+#ifdef ARDUINO_WIDORA_AIR
+#define HARDWARE_TYPE WIDORA_AIR
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Widora AIR"
+#endif /* Widora AIR */
+
+/* WiFiduino32 */
+#ifdef ARDUINO_Wifiduino32
+#define HARDWARE_TYPE WIFIDUINO_32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "WiFiduino32"
+#endif /* WiFiduino32 */
+
+/* WiPy 3.0 */
+#ifdef ARDUINO_WIPY3
+#define HARDWARE_TYPE WIPY3
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "WiPy 3.0"
+#endif /* WiPy 3.0 */
+
+/* Dongsen Tech Pocket 32 / WeMos WiFi&Bluetooth Battery */
+#ifdef ARDUINO_Pocket32
+#define HARDWARE_TYPE POCKET_32
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "Dongsen Tech Pocket 32 / WeMos WiFi&Bluetooth Battery"
+#endif /* Dongsen Tech Pocket 32 / WeMos WiFi&Bluetooth Battery */
+
+/* ESP32_PICO
+ESP32 PICO-D4
+Turta IoT Node
+KITS ESP32 EDU
+*/
+#ifdef ARDUINO_ESP32_PICO
+#define HARDWARE_TYPE ESP32_PICO
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "ESP32_PICO"
+#endif /* ESP32_PICO  */
+
+/* ESP32 Dev Modules
+ESP32 Wrover Module / AI Thinker ESP32-CAM
+ESP32 Dev Module
+S.ODI Ultra v1
+MagicBit
+XinaBox CW02
+SparkFun LoRa Gateway 1-Channel
+FireBeetle-ESP32
+DOIT ESP32 DEVKIT V1
+DOIT ESPduino32
+VintLabs ESP32 Devkit
+Labplus mPython
+*/
+#ifdef ARDUINO_ESP32_DEV
+#define HARDWARE_TYPE ESP32_DEV
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "ESP32 Dev Modules"
+#endif /* ESP32 Dev Modules  */
+
+
+
+/*
+ * 未定義を埋める操作
+ */
 
 #define UNKNOWN_VAL -1
 #define UNKNOWN_PMW {-1}
@@ -1812,17 +2305,6 @@
 #ifndef PERIPHERAL_RESET
 #define PERIPHERAL_RESET UNKNOWN_VAL
 #endif /* PERIPHERAL_RESET */
-
-
-
-/*
- * 便利マクロ
- */
-/*
- * シリアルポートのオープンでリセットがかからない機器への対応策
- */
-#define waitForSerial() while(!SERIAL_RESET && (!Serial))
-
 
 
 #endif /* __DETECT_ARDUINO_HARDWARE_H__ */

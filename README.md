@@ -1,13 +1,18 @@
 # detectArduinoHardware
-Arduinoの機種を区別するライブラリ．動作検証はあまいです．なにせ，手元に現物がない装置がほとんどで，コンパイルエラーの有無ぐらいしか
-確認できません．
+Arduinoの機種を区別するライブラリですが，ヘッダファイルだけでできており，バイナリサイズはまったく増えません．
 
+動作検証はあまいです．なにせ，手元に現物がない装置がほとんどで，コンパイルエラーの有無ぐらいしか
+確認できません．ただし，ヘッダファイルだけなので，機種が識別できているかどうかは確認できています．
+
+後で説明しますが，このヘッダファイルを利用した便利機能を実装したライブラリをextensionディレクトリに
+収容しています．
+
+## インストール
+そのライブラリをArduino IDEが利用するlibrariesディレクトリに本ディレクトリを置きます．
 
 ## ライセンス
 なんでもよかったんだけど，とりあえず
 BSDライセンスにしときます．詳細はLICENCEファイルを見てください．
-
-
 
 ## 使い方
 
@@ -20,33 +25,19 @@ BSDライセンスにしときます．詳細はLICENCEファイルを見てく�
 #endif
 ```
 
-あと，おまけのマクロとして，シリアルポートをオープンすると，リセットがかかる
-機種(Unoを始めとして大部分)とかからない機種(LeonardoやM0など)で処理を
-細かく「#if ...」とするのが面倒なので，「waitForSerial()」という関数を
-マクロで定義してあります．
-このマクロはsetup関数の中で使うと便利です．
-```
-setup(){
-  Serial.begin(9600);
-  waitForSerial();
-  初期化処理の続き
-}
-```
-上のようなコードを書くと，シリアルポートオープンでリセットがかかる
-機種はなにもせず，リセットがかからない機種は，シリアルポートを開けるまで
-待ち合わせをします．
-
 他にも，代表的な機種では，下のような定数を自動で定義するので活用してください．
 使われる可能性が高いのは，I2CやSPIのポート番号とAREFの電圧でしょうか．表中の
 定数のうち，わかりにくいものは下に説明を追加しておきます．
 
 |定数|内容|値の例|
 |:---|:---|:---|
-|HARDWARE_TYPE|機種|AVR_UNO(実際は整数)|
+|HARDWARE_TYPE|機種|ARDUINO_UNO(実際は整数)|
 |HARDWARE_NAME|機種名(文字列)|"ARDUINO UNO"|
-|HARDWARE_VDD|動作電圧|3.3|
-|HARDWARE_AREF|アナログ端子の基準電圧|3.3|
-|MAX_SERIAL|ハードウェアシリアルの数|1 (Megaは4)|
+|HARDWARE_VDD|動作電圧(の10倍の値)|50|
+|HARDWARE_AREF|アナログ端子の基準電圧(の10倍の値)|50|
+|CPU_ARCH|CPUアーキテクチャ|AVR_ARCH|
+|CPU_TYPE|CPUの種類|TYPE_ATmega32U4|
+|MAX_SERIAL|ハードウェアシリアルの数|1 (Megaの場合は4)|
 |MAX_DIGITAL|デジタルポートの数|20|
 |MAX_ANALOG|アナログポートの数|6|
 |PMW_PORTS|PMW出力可能なポート番号|{3,5,6,9,10,11}|
@@ -58,7 +49,6 @@ setup(){
 |SPI_SS|デフォルトのSPIチップセレクトに用いるポート番号|10|
 |ONBOARD_LED|オンボードLEDがつながっているポート番号|13|
 |SERIAL_RESET|シリアルポートをオープンした場合にリセットされるか否か|bool値(true,false)|
-|PERIPHERAL_RESET|周辺機器のリセット用ポートのポート番号|7|
 
 ### HARDWARE_AREF
 一部の機種は，アナログ端子のAREFの電圧とVDD値が一致していないので，
@@ -73,187 +63,301 @@ Uno系のボードとMega系のボードでプログラムを共有する場合�
 接続する端子を変えたい場合，機種を列挙するのは面倒なので，ピン数で
 判断する際に利用する．
 
-### マクロ
-Arduino IDEでシリアルモニタを開いた場合に自動でリセットがかかる
-機種とそれ以外で処理を変える場合に使うマクロ．
-```
-/*
- * シリアルポートのオープンでリセットがかからない機器への対応策
- */
-#define waitForSerial() while(!SERIAL_RESET && (!Serial))
-```
+### SERIAL_RESET
+DEBUG目的でSerialポートにログを出力する場合，シリアルポートを開くまで
+動作を止めたいことは多い．Arduinoの純正ボードの多くは閉じている
+シリアルポートを開くと，本体にリセットがかかり，最初からプログラムを
+実行し直すことから，特別な処理は不要であるが，一部の純正ボードや
+ESP8266, ESP32を搭載したボードはこのようなリセット機能はないため，
+下のような処理を``setup()``の中に入れることが多い．
 
+```
+while (!Serial) {       // シリアルポートが開くのを待つ
+  ;
+}
+```
+上のようなコードは機種で要/不要が異なるため，``SERIAL_RESET``を
+用いてプリプロセッサの``#if``等で上の処理を入れる/入れないを切り替える
+場合に用いる．
+
+### より高度な使い方
+
+extensionディレクトリには本ライブラリを利用するこのヘッダファイルを便利に使う機能や，
+本ヘッダの機能でCPUアーキを判別して，実装を切り替えるソフトウェアリセット(reboot)機能の
+ライブラリを収納しています．extension配下のディレクトリをArduino IDEのライブラリディレクトリに
+コピーしてください．
+
+この拡張ライブラリの詳細はextensionディレクトリの中のドキュメントを参照してください．
 
 ## 対応しているボード
 Arduino IDEのボードマネージャから確認した手元の環境．
 
 |アーキ等|開発者|バージョン|
 |:---|:---|:---|
-|Arduino AVR Boards Built-In|Arduino|1.6.23|
+|Arduino AVR Boards Built-In|Arduino|1.8.16|
 |Arduino SAM Boards (32-bits ARM Cortex-M3)|Arduino|1.6.12|
-|Arduino SAMD Boards (32-bits ARM Cortex-M0+)|Arduino|1.6.21|
-|esp32|Espressif Systems|1.0.2|
-|esp8266|ESP8266 Community|2.5.0|
+|Arduino SAMD Boards (32-bits ARM Cortex-M0+)|Arduino|1.8.11|
+|esp32|Espressif Systems|2.0.0|
+|esp8266|ESP8266 Community|3.0.2|
 
-上の環境でIDEがサポートしている機種の大部分
-(ごく一部のESP32の機種以外)は機種判定はできます．
-詳細は以下の表に記載しますが，表の「対応状況」が
-「○」の機種はピン番号等まで定義しますが，他の機種は対応しません(詳細不明なため)．
+上の環境でIDEがサポートしている機種の大部分は機種判定はできます．
+表の「対応状況」の「○,△,▲,×」の意味は以下の通り．
 
-古い機種やESP8266/ESP32はぱっと検索したぐらいではわからないものが
-ほとんどなので諦めています． (情報をだれかがくれれば追加しますけど．)
+|記号|意味|
+|:---|:---|
+|○|すべての項目の値が利用可能|
+|△|一部の項目の値が利用不可(undefとなる)|
+|▲|機種，機種名，CPUアーキ，CPUの種類は判別可能|
+|×|複数の機種のいずれかであるかはわかる程度|
 
 ### AVR系列
 |HARDWARE_TYPEの値|機種|対応状況|備考|
 |:---|:---|:---:|:---|
-|AVR_YUN|Arduino Yun|○||
-|AVR_UNO|Arduino Uno|○||
-|AVR_DUEMILANOVE_328P|Arduino Duemilanove (ATmega328P搭載)|○||
-|AVR_DUEMILANOVE_168|Arduino Duemilanove (ATmega168搭載)|○||
-|AVR_NANO_328P|Arduino Nano (ATmega328P搭載)|○||
-|AVR_NANO_168|Arduino Nano (ATmega168搭載)|○||
-|AVR_MEGA2560|Arduino Mega2560|○||
-|AVR_MEGA|Arduino Mega|○||
-|AVR_ADK|Arduino ADK|○||
-|AVR_LEONARDO|Arduino Leonardo|○||
-|AVR_LEONARDO_ETH|Arduino Leonardo Ethernet|○||
-|AVR_MICRO|Arduino Micro|○||
-|AVR_ESPLORA|Arduino Esplora|△|I2Cのピンが不明|
-|AVR_MINI_328P|Arduino Mini  (ATmega328P搭載)|○||
-|AVR_MINI_168|Arduino Mini (ATmega168搭載)|○||
-|AVR_ETHERNET|Arduino Ethernet|○||
-|AVR_FIO|Arduino Fio|○||
-|AVR_BT_328P|Arduino BT (ATmega328P)|○||
-|AVR_BT_168|Arduino BT (ATmega168)|○||
-|AVR_LILYPAD_USB|LilyPad Arduino USB|||
-|AVR_LILYPAD_328P|LilyPad Arduino (ATmega328P)|||
-|AVR_LILYPAD_168|LilyPad Arduino (ATmega168)|||
-|AVR_PRO_328P_5V|Arduino Pro or Pro Mini (ATmega328P 5V)|○|ピン等はPro miniに合わせてます|
-|AVR_PRO_328P_3_3V|Arduino Pro or Pro Mini (ATmega328P 3.3V)|○|同上|
-|AVR_PRO_168_5V|Arduino Pro or Pro Mini (ATmega168 5V)|○|同上|
-|AVR_PRO_168_3_3V|Arduino Pro or Pro Mini (ATmega168 3.3V)|○|同上|
-|AVR_NG_168|Arduino NG (ATmega168)|||
-|AVR_NG_8|Arduino NG (ATmega8)|||
-|AVR_ROBOT_CONTROL|Arduino Robot Control|||
-|AVR_ROBOT_MOTOR|Arduino Robot Motor|||
-|AVR_GEMMA|Arduino Gemma|○||
-|AVR_CIRCUITPLAY|Arduino Circuit play|||
-|AVR_YUNMINI|Arduino Yun Mini|||
-|AVR_INDUSTRIAL101|Arduino Industrial101|||
-|AVR_LININO_ONE|Arduino Lilino One|||
-|AVR_UNO_WIFI_DEV_ED|Arduino Uno Wifi Developer Edition|||
+|ARDUINO_YUN|Arduino Yun|○||
+|ARDUINO_UNO|Arduino Uno|○||
+|ARDUINO_DUEMILANOVE_328P|Arduino Duemilanove (ATmega328P搭載)|○||
+|ARDUINO_DUEMILANOVE_168|Arduino Duemilanove (ATmega168搭載)|○||
+|ARDUINO_NANO_328P|Arduino Nano (ATmega328P搭載)|○||
+|ARDUINO_NANO_168|Arduino Nano (ATmega168搭載)|○||
+|ARDUINO_MEGA2560|Arduino Mega2560|○||
+|ARDUINO_MEGA|Arduino Mega|○||
+|ARDUINO_MEGA_ADK|Arduino ADK|○||
+|ARDUINO_LEONARDO|Arduino Leonardo|○||
+|ARDUINO_LEONARDO_ETH|Arduino Leonardo Ethernet|○||
+|ARDUINO_MICRO|Arduino Micro|○||
+|ARDUINO_ESPLORA|Arduino Esplora|△|I2Cのピンが不明|
+|ARDUINO_MINI_328P|Arduino Mini  (ATmega328P搭載)|○||
+|ARDUINO_MINI_168|Arduino Mini (ATmega168搭載)|○||
+|ARDUINO_ETHERNET|Arduino Ethernet|○||
+|ARDUINO_FIO|Arduino Fio|○||
+|ARDUINO_BT_328P|Arduino BT (ATmega328P)|○||
+|ARDUINO_BT_168|Arduino BT (ATmega168)|○||
+|ARDUINO_LILYPAD_USB|LilyPad Arduino USB|▲||
+|ARDUINO_LILYPAD_328P|LilyPad Arduino (ATmega328P)|▲||
+|ARDUINO_LILYPAD_168|LilyPad Arduino (ATmega168)|▲||
+|ARDUINO_PRO_328P_5V|Arduino Pro or Pro Mini (ATmega328P 5V)|○|ピン等はPro miniに合わせてます|
+|ARDUINO_PRO_328P_3_3V|Arduino Pro or Pro Mini (ATmega328P 3.3V)|○|同上|
+|ARDUINO_PRO_168_5V|Arduino Pro or Pro Mini (ATmega168 5V)|○|同上|
+|ARDUINO_PRO_168_3_3V|Arduino Pro or Pro Mini (ATmega168 3.3V)|○|同上|
+|ARDUINO_NG_168|Arduino NG (ATmega168)|▲||
+|ARDUINO_NG_8|Arduino NG (ATmega8)|▲||
+|ARDUINO_ROBOT_CONTROL|Arduino Robot Control|▲||
+|ARDUINO_ROBOT_MOTOR|Arduino Robot Motor|▲||
+|ARDUINO_GEMMA|Arduino Gemma|○||
+|ARDUINO_CIRCUIT_PLAY|Arduino Circuit play|▲||
+|ARDUINO_YUN_MINI|Arduino Yun Mini|▲||
+|ARDUINO_INDUSTRIAL101|Arduino Industrial101|▲||
+|ARDUINO_LININO_ONE|Arduino Lilino One|▲||
+|ARDUINO_UNO_WIFI_DEV_ED|Arduino Uno Wifi Developer Edition|▲||
 
 ### SAM系統
-|定義される定数|機種|対応状況|
-|:---|:---|:---:|
-|SAM_DUE|Arduino Due|○|
+|定義される定数|機種|対応状況|備考|
+|:---|:---|:---:|:---|
+|ARDUINO_DUE|Arduino Due|○||
 
 ### SAMD系統
-|定義される定数|機種|対応状況|
-|:---|:---|:---:|
-|SAMD_ZERO|Arduino Zero||
-|SAMD_MKR1000|Arduino/Genuino MKR1000||
-|SAMD_MKRZERO|Arduino MKRZero||
-|SAMD_MKRFox1200|Arduino MKRFox1200||
-|SAMD_MKRGSM1400|Arduino MKR GSM 1400||
-|SAMD_MKRWAN1300|Arduino MKR WAN 1300||
-|SAMD_MKRWIFI1010|Arduino MKR WiFi 1010||
-|SAMD_CIRCUITPLAYGROUND_EXPRESS|Adafruit Circuit Playground M0||
-|SAM_ZERO|M0 pro / M0|○|
-|SAMD_TIAN|Arduino Tian||
+|定義される定数|機種|対応状況|備考|
+|:---|:---|:---:|:---|
+|ARDUINO_ZERO|Arduino Zero|▲||
+|ARDUINO_MKR1000|Arduino/Genuino MKR1000|▲||
+|ARDUINO_MKRZERO|Arduino MKRZero|▲||
+|ARDUINO_MKRWIFI1010|Arduino MKR WiFi 1010|▲||
+|ARDUINO_NANO_33_IOT|Arduino NANO 33 IoT|▲||
+|ARDUINO_MKRFOX1200|Arduino MKRFox1200|▲||
+|ARDUINO_MKRGSM1400|Arduino MKR GSM 1400|▲||
+|ARDUINO_MKRWAN1300|Arduino MKR WAN 1300|▲||
+|ARDUINO_MKRWAN1310|Arduino MKR WAN 1310|▲||
+|ARDUINO_MKRNB1500|Arduino MKR NB 1500|▲||
+|ARDUINO_MKRVIDOR4000|Arduino MKR Vidor 4000|▲||
+|ARDUINO_CIRCUITPLAYGROUND_EXPRESS|Adafruit Circuit Playground M0|▲||
+|ARDUINO_TIAN|Arduino Tian|▲||
+|ARDUINO_M0|M0 pro / M0|○||
 
 ### ESP8266系統
-|定義される定数|機種|対応状況|
-|:---|:---|:---:|
-|ESP8266_GENERIC|ESP8266 Generic / Invent One / XinaBox CW01||
-|ESP8285_GENERIC|Generic ESP8265||
-|ESP8266_ESPDUINO|ESPDuino (ESP-13 Module) / ThaiEasyElec's ESPino||
-|ESP8266_ESPINO|Adafruit Feather HUZZAH ESP8266 /ESPino (ESP-12 Module) / WifInfo||
-|ESP8266_WIFINFO|||
-|ESP8266_WIFINFO2|||
-|ESP8266_ESPRESSO_LITE_V1|ESPresso Lite 1.0||
-|ESP8266_ESPRESSO_LITE_V2|ESPresso Lite 2.0||
-|ESP8266_PHOENIX_V1|Phoenix 1.0||
-|ESP8266_PHOENIX_V2|Phoenix 2.0||
-|ESP8266_NODEMCU|NodeMCU 0.9 (ESP-12 Module) / NodeMCU 1.0 (ESP-12E Module) / nodemcuv2||
-|ESP8266_MOD_WIFI|Olimex MOD-WIFI-ESP8266(-DEV)||
-|ESP8266_THING|SparkFun ESP8266 Thing||
-|ESP8266_THING_DEV|SparkFun ESP8266 Thing Dev||
-|ESP8266_ESP210|SweetPea ESP-210||
-|ESP8266_WEMOS_D1MINI|LOLIN(WEMOS) D1 R2 & mini||
-|ESP8266_WEMOS_D1MINIPRO|LOLIN(WEMOS) D1 mini Pro||
-|ESP8266_WEMOS_D1MINILITE|LOLIN(WEMOS) D1 mini Lite||
-|ESP8266_WEMOS_D1R1|WeMos D1 R1||
-|ESP8266_STAR_OTTO|Arduino (esp8266)||
-|ESP8266_UNOWIFI|||
-|ESP8266_ARDUINO|||
-|ESP8266_PRIMO|||
-|ESP8266_GEN4_IOD|4D Systems gen4 IoD Range||
-|ESP8266_OAK|Digistump Oak||
-|ESP8266_WIFIDUINO|WiFiduino||
-|ESP8266_AMPERKA_WIFI_SLOT|Amperka WiFi Slot||
-|ESP8266_WIO_LINK|Seeed Wio Link||
-|ESP8266_ESPECTRO_CORE|ESPectro Core||
+|定義される定数|機種|対応状況|備考|
+|:---|:---|:---:|:---|
+| AMPERKA_WIFI_SLOT | Amperka WiFi Slot | ▲ |  |
+| ESP8266_ADAFRUIT_HUZZAH | Adafruit Feather HUZZAH ESP8266 | ▲ |  |
+| ESP8266_AGRUMINO_LEMON_V4 | Lifely Agrumino Lemon v4 | ▲ |  |
+| ESP8285_GENERIC | Generic ESP8285 Module | ▲ |  |
+| DOIT_ESP_MX_DEV_KIT | DOIT ESP-Mx DevKit (ESP8285) | ▲ |  |
+| ESP8266_ESPDUINO | ESPDuino (ESP-13 Module) | ▲ |  |
+| ESP8266_ESP210 | SweetPea ESP-210 | ▲ |  |
+| ESP8266_ESPECTRO_CORE | ESPectro Core | ▲ |  |
+| ESP8266_ESPINO_ESP12 | ESPino (ESP-12 Module) | ▲ |  |
+| ESP8266_ESPINO_ESP13 | ThaiEasyElec's ESPino | ▲ |  |
+| ESP8266_ESPRESSO_LITE_V1 | ESPresso Lite 1.0 | ▲ |  |
+| ESP8266_ESPRESSO_LITE_V2 | ESPresso Lite 2.0 | ▲ |  |
+| ESP8266_GENERIC | Generic ESP8266 Module | ▲ |  |
+| ESP8266_INVENT_ONE | Invent One | ▲ |  |
+| ESP8266_NODEMCU_ESP12 | NodeMCU 0.9 (ESP-12 Module) | ▲ |  |
+| ESP8266_NODEMCU_ESP12E | NodeMCU 1.0 (ESP-12E Module) | ▲ |  |
+| ESP8266_OAK | Digistump Oak | ▲ |  |
+| ESP8266_PHOENIX_V1 | Phoenix 1.0 | ▲ |  |
+| ESP8266_PHOENIX_V2 | Phoenix 2.0 | ▲ |  |
+| ESP8266_SCHIRMILABS_EDUINO_WIFI | Schirmilabs Eduino WiFi | ▲ |  |
+| ESP8266_THING_DEV | SparkFun ESP8266 Thing Dev | ▲ |  |
+| ESP8266_WEMOS_D1MINILITE | LOLIN(WEMOS) D1 mini Lite | ▲ |  |
+| ESP8266_WEMOS_D1MINIPRO | LOLIN(WEMOS) D1 mini Pro | ▲ |  |
+| ESP8266_WEMOS_D1R1 | LOLIN(WeMos) D1 R1 | ▲ |  |
+| ESP8266_XINABOX_CW01 | XinaBox CW01 | ▲ |  |
+| ESP8266_GEN4_IOD | 4D Systems gen4 IoD Range | ▲ |  |
+| MOD_WIFI_ESP8266 | Olimex MOD-WIFI-ESP8266(-DEV) | ▲ |  |
+| WIFI_KIT_8 | WiFi Kit 8 | ▲ |  |
+| WIFIDUINO_ESP8266 | WiFiduino | ▲ |  |
+| ESP8266_THING | SparkFun ESP8266 Thing / Blynk Board | × | 2機種のいずれかまでは判定できない |
+| ESP8266_WEMOS_D1MINI | LOLIN(WEMOS) D1 R2 & mini / D1 mini (clone) | × | 2機種のいずれかまでは判定できない |
+
+
+機種を絞りきれないものは以下の表の通り．
+|定義される定数|機種|
+|:---|:---|
+| ESP8266_THING | SparkFun ESP8266 Thing |
+|  | Blynk Board |
+| ESP8266_WEMOS_D1MINI | LOLIN(WEMOS) D1 R2 & mini |
+|  | D1 mini (clone) |
+
+機種判定もできない機種
+- WifInfo
+- Arduino
+- ITEAD Sonoff
+- Seeed Wio Link
+
 
 ### ESP32系統
-|定義される定数|機種|対応状況|
-|:---|:---|:---:|
-|ESP32_GENERIC|ESP32 Generic (ESP32 Dev Module / Wrover Module / XinaBox CW02 / FireBeetle-ESP32 / DOIT ESP32 DEVKIT V1 ||
-|ESP32_PICO|Pico Kit / Turta IoT Node||
-|ESP32_TTGO_LoRa32_V1|TTGO LoRa32-OLED V1||
-|ESP32_THING|SparkFun ESP32 Thing||
-|ESP32_UBLOX_NINA_W10|u-blox NINA-W10||
-|ESP32_WIDORA_AIR|Widora AIR||
-|ESP32_ESP320|Electronic SweetPeas - ESP320||
-|ESP32_NANO32|Nano320||
-|ESP32_LOLIN_D32|Lolin D32||
-|ESP32_LOLIN_D32_PRO|Lolin D32 Pro||
-|ESP32_LOLIN32|Wemos Lolin32||
-|ESP32_Pocket32|Dongsen Tech Pocket 32 / WeMos WiFi&Bluetooth Battery||
-|ESP32_ESPea32|ESPea32||
-|ESP32_QUANTUM|Noduino Quantum||
-|ESP32_Node32s|Node32s||
-|ESP32_HORNBILL_DEV|Hornbill32dev||
-|ESP32_HORNBILL_MINIMA|Hornbill ESP32 Minima||
-|ESP32_INTOROBOT_DEV|IntoRobot Fig||
-|ESP32_ONEHORSE_DEV|Onehorse ESP32 Dev Module||
-|ESP32_FEATHER|Adafruit ESP32 Feather||
-|ESP32_NodeMCU_32S|NodeMCU-32S||
-|ESP32_MH_ET_LIVE_DEVKIT|MH ET LIVE ESP32DevKIT||
-|ESP32_MH_ET_LIVE_MINIKIT|MH ET LIVE ESP32MiniKit||
-|ESP32_vn_iot_uno|ESP32vn IoT Uno||
-|ESP32_EVB|OLIMEX ESP32-EVB||
-|ESP32_GATEWAY|OLIMEX ESP32-GATEWAY||
-|ESP32_POE|OLIMEX ESP32-PoE||
-|ESP32_ESPino32|ThaiEasyElec's ESPino32||
-|ESP32_M5Stack_Core|M5Stack-Core-ESP32||
-|ESP32_M5STACK_FIRE|M5Stack-FIRE||
-|ESP32_M5Stick_C|M5Stick-C||
-|ESP32_ODROID|ODROID ESP32||
-|ESP32_HELTEC_WIFI_KIT_32|Heltec WiFi Kit 32||
-|ESP32_Heltec_WIFI_LoRa_32|Heltec WiFi LoRa 32||
-|ESP32_Heltec_WIFI_LoRa_32_V2|Heltec Wireless Stick||
-|ESP32_ESPECTRO32|ESPectro32||
-|ESP32_CoreESP32|Microduino-CoreESP32||
-|ESP32_ALKS|ALKS ESP32||
-|ESP32_WIPY3|WiPy3||
-|ESP32_WESP32|Silicognition wESP32||
-|ESP32_LoPy|lopy||
-|ESP32_LoPy4|lopy4||
-|ESP32_OROCA_EDUBOT|oroca_edubot||
-|ESP32_FROG_BOARD|Frog Board ESP32||
+|定義される定数|機種|対応状況|備考|
+|:---|:---|:---:|:---|
+| ADAFRUIT_FEATHER_ESP32S2_NOPSRAM | Adafruit Feather ESP32-S2 (no PSRAM) | ▲ |  |
+| ALKS | ALKS ESP32 | ▲ |  |
+| ATMEGA_ZERO_ESP32_S2 | ATMegaZero ESP32-S2 | ▲ |  |
+| BPI_BIT | BPI-BIT | ▲ |  |
+| MICRODUINO_CORE_ESP32 | Microduino-CoreESP32 | ▲ |  |
+| D_DUINO_32 | D-duino-32 | ▲ |  |
+| WEMOS_D1_MINI32 | WEMOS D1 MINI ESP32 | ▲ |  |
+| DYDK | Deneyap Kart | ▲ |  |
+| DYM | Deneyap Mini | ▲ |  |
+| ESP32_DEVKIT_LIPO | OLIMEX ESP32-DevKit-LiPo | ▲ |  |
+| ESP32_EVB | OLIMEX ESP32-EVB | ▲ |  |
+| ESP32_GATEWAY | OLIMEX ESP32-GATEWAY | ▲ |  |
+| ESP32_POE | OLIMEX ESP32-PoE | ▲ |  |
+| ESP32_POE_ISO | OLIMEX ESP32-PoE-ISO | ▲ |  |
+| ESP32_THING | SparkFun ESP32 Thing | ▲ |  |
+| ESP32_THING_PLUS | SparkFun ESP32 Thing Plus | ▲ |  |
+| ESP32_WROVER_KIT | ESP32 Wrover Kit (all versions) | ▲ |  |
+| ESP320 | Electronic SweetPeas - ESP320 | ▲ |  |
+| ESP32C3_DEV | ESP32C3 Dev Module | ▲ |  |
+| ESP32S2_DEV | ESP32S2 Dev Module | ▲ |  |
+| ESP32S2_THING_PLUS | SparkFun ESP32-S2 Thing Plus | ▲ |  |
+| ESP32S2_USB | ESP32S2 Native USB | ▲ |  |
+| ESP32VN_IOT_UNO | ESP32vn IoT Uno | ▲ |  |
+| ESPEA32 | ESPea32 | ▲ |  |
+| ESPECTRO32 | ESPectro32 | ▲ |  |
+| ESPINO32 | ThaiEasyElec's ESPino32 | ▲ |  |
+| FEATHER_ESP32 | Adafruit ESP32 Feather | ▲ |  |
+| FEATHER_S2 | UM FeatherS2 | ▲ |  |
+| FEATHER_S2_NEO | UM FeatherS2 Neo | ▲ |  |
+| FM_DEV_KIT | ESP32 FM DevKit | ▲ |  |
+| FRANZININHO_WIFI | Franzininho WiFi | ▲ |  |
+| FRANZININHO_WIFI_MSC | Franzininho WiFi MSC | ▲ |  |
+| FROG_ESP32 | Frog Board ESP32 | ▲ |  |
+| FUNHOUSE_ESP32S2 | Adafruit FunHouse | ▲ |  |
+| HEALTHYPI_4 | ProtoCentral HealthyPi 4 | ▲ |  |
+| HELTEC_WIFI_KIT_32 | Heltec WiFi Kit 32 | ▲ |  |
+| HELTEC_WIFI_LORA_32 | Heltec WiFi LoRa 32 | ▲ |  |
+| HELTEC_WIFI_LORA_32_V2 | Heltec WiFi LoRa 32(V2) | ▲ |  |
+| HELTEC_WIRELESS_STICK | Heltec Wireless Stick | ▲ |  |
+| HELTEC_WIRELESS_STICK_LITE | Heltec Wireless Stick Lite | ▲ |  |
+| HONEY_LEMON | HONEYLemon | ▲ |  |
+| HORNBILL_ESP32_DEV | Hornbill ESP32 Dev | ▲ |  |
+| HORNBILL_ESP32_MINIMA | Hornbill ESP32 Minima | ▲ |  |
+| IMBRIOS_LOGSENS_V1P1 | IMBRIOS LOGSENS_V1P1 | ▲ |  |
+| INTOROBOT_ESP32_DEV | IntoRobot Fig | ▲ |  |
+| LOLIN_D32 | LOLIN D32 | ▲ |  |
+| LOLIN_D32_PRO | LOLIN D32 PRO | ▲ |  |
+| LOLIN32 | WEMOS LOLIN32 | ▲ |  |
+| LOLIN32_LITE | WEMOS LOLIN32 Lite | ▲ |  |
+| LOPY | LoPy | ▲ |  |
+| LOPY4 | LoPy4 | ▲ |  |
+| M5STACK_ATOM | M5Stack-ATOM | ▲ |  |
+| M5STACK_CORE_ESP32 | M5Stack-Core-ESP32 | ▲ |  |
+| M5STACK_CORE2 | M5Stack-Core2 | ▲ |  |
+| M5STACK_CORE_INK | M5Stack-CoreInk | ▲ |  |
+| M5STACK_FIRE | M5Stack-FIRE | ▲ |  |
+| M5STACK_C | M5Stick-C | ▲ |  |
+| MAG_TAG29_ESP32_S2 | Adafruit MagTag 2.9 | ▲ |  |
+| METRO_ESP32 | Metro ESP-32 | ▲ |  |
+| METRO_ESP32_S2 | Adafruit Metro ESP32-S2 | ▲ |  |
+| MGBOT_IOTIK32A | MGBOT IOTIK 32A | ▲ |  |
+| MGBOT_IOTIK32B | MGBOT IOTIK 32B | ▲ |  |
+| MH_ET_LIVE_ESP32_DEV_KIT | MH ET LIVE ESP32DevKIT | ▲ |  |
+| MH_ET_LIVE_ESP32_MINI_KIT | MH ET LIVE ESP32MiniKit | ▲ |  |
+| MICRO_S2 | microS2 | ▲ |  |
+| NANO32 | Nano32 | ▲ |  |
+| NODE_32S | Node32s | ▲ |  |
+| NODE_MCU_32S | NodeMCU-32S | ▲ |  |
+| ODROID_ESP32 | ODROID ESP32 | ▲ |  |
+| ONEHORSE_ESP32_DEV | Onehorse ESP32 Dev Module | ▲ |  |
+| OPEN_KB | INEX OpenKB | ▲ |  |
+| OROCA_EDUBOT | OROCA EduBot | ▲ |  |
+| PIRANHA | Piranha ESP-32 | ▲ |  |
+| PYCOM_GPY | Pycom GPy | ▲ |  |
+| NODUINO_QUANTUM | Noduino Quantum | ▲ |  |
+| SENSES_IOT_WEIZEN | Senses's WEIZEN | ▲ |  |
+| T_BEAM | T-Beam | ▲ |  |
+| TINY_PICO | UM TinyPICO | ▲ |  |
+| TINY_S2 | UM TinyS2 | ▲ |  |
+| TRUEVERIT_ESP32_UNIVERSAL_IOT_DRIVER | Trueverit ESP32 Universal IoT Driver | ▲ |  |
+| TRUEVERIT_ESP32_UNIVERSAL_IOT_DRIVER_MK2 | Trueverit ESP32 Universal IoT Driver MK II | ▲ |  |
+| TTGO_LORA32_V1 | TTGO LoRa32-OLED V1 | ▲ |  |
+| TTGO_LORA32_V21_NEW | TTGO LoRa32-OLED v2.1.6 | ▲ |  |
+| TTGO_T1 | TTGO T1 | ▲ |  |
+| TTGO_T7_V13_MINI_32 | TTGO T7 V1.3 Mini32 | ▲ |  |
+| TTGO_T7_V14_MINI_32 | TTGO T7 V1.4 Mini32 | ▲ |  |
+| TWATCH | TTGO T-Watch | ▲ |  |
+| UBLOX_NINA_W10 | u-blox NINA-W10 series (ESP32) | ▲ |  |
+| UPESY_WROOM | uPesy ESP32 Wroom DevKit | ▲ |  |
+| UPESY_WROVER | uPesy ESP32 Wrover DevKit | ▲ |  |
+| WESP32 | Silicognition wESP32 | ▲ |  |
+| WIDORA_AIR | Widora AIR | ▲ |  |
+| WIFIDUINO_32 | WiFiduino32 | ▲ |  |
+| WIPY3 | WiPy 3.0 | ▲ |  |
+| POCKET_32 | Dongsen Tech Pocket 32 / WeMos WiFi&Bluetooth Battery | × | 2機種のうちいずれかまでは判別不可 |
+| ESP32_PICO | ESP32_PICO ( three kinds of board) | × | 3機種のうちいずれかまでは判別不可 |
+| ESP32_DEV | ESP32 Dev Modules (twelve kinds of board) | × | 12機種のうちいずれかまでは判別不可 |
 
-### 対応していないボード
-|定義される定数|機種|対応状況|
-|:---|:---|:---:|
-|ESP32_BPI-BIT|BPI-BIT||
-|ESP32_T-Beam|T-Beam||
-|ESP32_D-duino-32|d-duino-32||
-|ESP32_fm-devkit|ESP32 FM devkit||
+機種を絞りきれないものは以下の表の通り．
+|定義される定数|機種|
+|:---|:---|
+| POCKET_32 | Dongsen Tech Pocket 32 |
+|  | WeMos WiFi&Bluetooth Battery |
+| ESP32_PICO | ESP32 PICO-D4 |
+|  | Turta IoT Node |
+|  | KITS ESP32 EDU |
+| ESP32_DEV | ESP32 Wrover Module |
+|  | AI Thinker ESP32-CAM |
+|  | ESP32 Dev Module |
+|  | S.ODI Ultra v1 |
+|  | MagicBit |
+|  | XinaBox CW02 |
+|  | SparkFun LoRa Gateway 1-Channel |
+|  | FireBeetle-ESP32 |
+|  | DOIT ESP32 DEVKIT V1 |
+|  | DOIT ESPduino32 |
+|  | VintLabs ESP32 Devkit |
+|  | Labplus mPython |
 
+機種判定もできない機種
+- Denky
+- KB32-FT
+- SparkFun ESP32 MicroMod
+- ET-Board
+- M5Stack-Timer-CAM
 
 
 ## サンプルプログラム
+examplesディレクトリのサンプルプログラムは本ヘッダファイルで対応している機種で識別できた
+内容をdumpするプログラムになっています．
+
 ```
 #include "detectArduinoHardware.h"
 
@@ -324,14 +428,21 @@ String pmwPort(void) {
   return val;
 }
 
+String HardwareDefinitionString(int hardType){
+  
+}
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+  //delay(5000);
   waitForSerial();
 
   Serial.print("Name                      : ");Serial.println(HARDWARE_NAME);
   Serial.print("Voltage                   : ");Serial.println(HARDWARE_VDD);
   Serial.print("AREF                      : ");Serial.println(HARDWARE_AREF);
+  Serial.print("CPU_ARCH                  : ");Serial.println(CPU_ARCH);
+  Serial.print("CPU_TYPE                  : ");Serial.println(CPU_TYPE);
   Serial.print("num of Serial             : ");Serial.println(MAX_SERIAL);
   Serial.print("num of digital            : ");Serial.println(MAX_DIGITAL);
   Serial.print("num of analog             : ");Serial.println(MAX_ANALOG);
