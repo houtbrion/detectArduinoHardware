@@ -50,3 +50,4 @@ void HardwareHelper::SerialWait(void) {
   return;
 #endif
 }
+
