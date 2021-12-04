@@ -10,31 +10,229 @@
 # Methods and Functions (KEYWORD2)
 #######################################
 
-HARDWARE_TYPE KEYWORD2
-HARDWARE_NAME KEYWORD2
-HARDWARE_VOLTAGE KEYWORD2
-MAX_SERIAL KEYWORD2
-MAX_DIGITAL KEYWORD2
-MAX_ANALOG KEYWORD2
-PMW_PORTS KEYWORD2
-I2C_SDA KEYWORD2
-I2C_SCL KEYWORD2
-SPI_MOSI KEYWORD2
-SPI_MISO KEYWORD2
-SPI_SCK KEYWORD2
-SPI_SS KEYWORD2
-ONBOARD_LED KEYWORD2
-CPU_ARCH KEYWORD2
-CHIPSET KEYWORD2
-CHIP KEYWORD2
-
-
-
+# bar KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
 #######################################
 
+AVR_ARCH         LITERAL1
+SAM_ARCH         LITERAL1
+SAMD_ARCH         LITERAL1
+XTENSA_LX106_ARCH         LITERAL1
+XTENSA_LX6_ARCH         LITERAL1
+
+# AVR arch
+ARDUINO_YUN LITERAL1
+ARDUINO_UNO LITERAL1
+ARDUINO_DUEMILANOVE_328P LITERAL1
+ARDUINO_DUEMILANOVE_168 LITERAL1
+ARDUINO_NANO_328P LITERAL1
+ARDUINO_NANO_168 LITERAL1
+ARDUINO_MEGA2560 LITERAL1
+ARDUINO_MEGA LITERAL1
+ARDUINO_MEGA_ADK LITERAL1
+ARDUINO_LEONARDO LITERAL1
+ARDUINO_LEONARDO_ETH
+ARDUINO_MICRO LITERAL1
+ARDUINO_ESPLORA LITERAL1
+ARDUINO_MINI_328P LITERAL1
+ARDUINO_MINI_168 LITERAL1
+ARDUINO_ETHERNET LITERAL1
+ARDUINO_FIO LITERAL1
+ARDUINO_BT_328P LITERAL1
+ARDUINO_BT_168 LITERAL1
+ARDUINO_LILYPAD_USB LITERAL1
+ARDUINO_LILYPAD_328P LITERAL1
+ARDUINO_LILYPAD_168 LITERAL1
+ARDUINO_NG_168 LITERAL1
+ARDUINO_NG_8 LITERAL1
+ARDUINO_ROBOT_CONTROL LITERAL1
+ARDUINO_ROBOT_MOTOR LITERAL1
+ARDUINO_GEMMA LITERAL1
+ARDUINO_CIRCUIT_PLAY LITERAL1
+ARDUINO_YUN_MINI LITERAL1
+ARDUINO_INDUSTRIAL101 LITERAL1
+ARDUINO_LININO_ONE LITERAL1
+ARDUINO_UNO_WIFI_DEV_ED LITERAL1
+ARDUINO_PRO_328P_5V LITERAL1
+ARDUINO_PRO_328P_3_3V LITERAL1
+ARDUINO_PRO_168_5V LITERAL1
+ARDUINO_PRO_168_3_3V LITERAL1
+
+# SAM arch
+ARDUINO_DUE LITERAL1
+
+# SAMD arch
+ARDUINO_ZERO LITERAL1
+ARDUINO_MKR1000 LITERAL1
+ARDUINO_MKRZERO LITERAL1
+ARDUINO_MKRWIFI1010 LITERAL1
+ARDUINO_NANO_33_IOT LITERAL1
+ARDUINO_MKRFOX1200 LITERAL1
+ARDUINO_MKRWAN1300 LITERAL1
+ARDUINO_MKRWAN1310 LITERAL1
+ARDUINO_MKRGSM1400 LITERAL1
+ARDUINO_MKRNB1500 LITERAL1
+ARDUINO_MKRVIDOR4000 LITERAL1
+ARDUINO_CIRCUITPLAYGROUND_EXPRESS         LITERAL1
+ARDUINO_TIAN                              LITERAL1
+ARDUINO_M0                                LITERAL1
+
+# ESP8266
+AMPERKA_WIFI_SLOT                         LITERAL1
+ESP8266_ADAFRUIT_HUZZAH                   LITERAL1
+ESP8266_AGRUMINO_LEMON_V4                 LITERAL1
+ESP8285_GENERIC                           LITERAL1
+DOIT_ESP_MX_DEV_KIT                       LITERAL1
+ESP8266_ESPDUINO                          LITERAL1
+ESP8266_ESP210                            LITERAL1
+ESP8266_ESPECTRO_CORE                     LITERAL1
+ESP8266_ESPINO_ESP12                      LITERAL1
+ESP8266_ESPINO_ESP13                      LITERAL1
+ESP8266_ESPRESSO_LITE_V1                  LITERAL1
+ESP8266_ESPRESSO_LITE_V2                  LITERAL1
+ESP8266_GENERIC                           LITERAL1
+ESP8266_INVENT_ONE                        LITERAL1
+ESP8266_NODEMCU_ESP12                     LITERAL1
+ESP8266_NODEMCU_ESP12E                    LITERAL1
+ESP8266_OAK                               LITERAL1
+ESP8266_PHOENIX_V1                        LITERAL1
+ESP8266_PHOENIX_V2                        LITERAL1
+ESP8266_SCHIRMILABS_EDUINO_WIFI           LITERAL1
+ESP8266_THING_DEV                         LITERAL1
+ESP8266_WEMOS_D1MINILITE                  LITERAL1
+ESP8266_WEMOS_D1MINIPRO                   LITERAL1
+ESP8266_WEMOS_D1R1                        LITERAL1
+ESP8266_XINABOX_CW01                      LITERAL1
+ESP8266_GEN4_IOD                          LITERAL1
+MOD_WIFI_ESP8266                          LITERAL1
+WIFI_KIT_8                                LITERAL1
+WIFIDUINO_ESP8266                         LITERAL1
+ESP8266_THING                             LITERAL1
+ESP8266_WEMOS_D1MINI                      LITERAL1
+
+# ESP32
+ADAFRUIT_FEATHER_ESP32S2_NOPSRAM          LITERAL1
+ALKS                                      LITERAL1
+ATMEGA_ZERO_ESP32_S2                      LITERAL1
+BPI_BIT                                   LITERAL1
+MICRODUINO_CORE_ESP32                     LITERAL1
+D_DUINO_32                                LITERAL1
+WEMOS_D1_MINI32                           LITERAL1
+DYDK                                      LITERAL1
+DYM                                       LITERAL1
+ESP32_DEVKIT_LIPO                         LITERAL1
+ESP32_EVB                                 LITERAL1
+ESP32_GATEWAY                             LITERAL1
+ESP32_POE                                 LITERAL1
+ESP32_POE_ISO                             LITERAL1
+ESP32_THING                               LITERAL1
+ESP32_THING_PLUS                          LITERAL1
+ESP32_WROVER_KIT                          LITERAL1
+ESP320                                    LITERAL1
+ESP32C3_DEV                               LITERAL1
+ESP32S2_DEV                               LITERAL1
+ESP32S2_THING_PLUS                        LITERAL1
+ESP32S2_USB                               LITERAL1
+ESP32VN_IOT_UNO                           LITERAL1
+ESPEA32                                   LITERAL1
+ESPECTRO32                                LITERAL1
+ESPINO32                                  LITERAL1
+FEATHER_ESP32                             LITERAL1
+FEATHER_S2                                LITERAL1
+FEATHER_S2_NEO                            LITERAL1
+FM_DEV_KIT                                LITERAL1
+FRANZININHO_WIFI                          LITERAL1
+FRANZININHO_WIFI_MSC                      LITERAL1
+FROG_ESP32                                LITERAL1
+FUNHOUSE_ESP32S2                          LITERAL1
+HEALTHYPI_4                               LITERAL1
+HELTEC_WIFI_KIT_32                        LITERAL1
+HELTEC_WIFI_LORA_32                       LITERAL1
+HELTEC_WIFI_LORA_32_V2                    LITERAL1
+HELTEC_WIRELESS_STICK                     LITERAL1
+HELTEC_WIRELESS_STICK_LITE                LITERAL1
+HONEY_LEMON                               LITERAL1
+HORNBILL_ESP32_DEV                        LITERAL1
+HORNBILL_ESP32_MINIMA                     LITERAL1
+IMBRIOS_LOGSENS_V1P1                      LITERAL1
+INTOROBOT_ESP32_DEV                       LITERAL1
+LOLIN_D32                                 LITERAL1
+LOLIN_D32_PRO                             LITERAL1
+LOLIN32                                   LITERAL1
+LOLIN32_LITE                              LITERAL1
+LOPY                                      LITERAL1
+LOPY4                                     LITERAL1
+M5STACK_ATOM                              LITERAL1
+M5STACK_CORE_ESP32                        LITERAL1
+M5STACK_CORE2                             LITERAL1
+M5STACK_CORE_INK                          LITERAL1
+M5STACK_FIRE                              LITERAL1
+M5STACK_C                                 LITERAL1
+MAG_TAG29_ESP32_S2                        LITERAL1
+METRO_ESP32                               LITERAL1
+METRO_ESP32_S2                            LITERAL1
+MGBOT_IOTIK32A                            LITERAL1
+MGBOT_IOTIK32B                            LITERAL1
+MH_ET_LIVE_ESP32_DEV_KIT                  LITERAL1
+MH_ET_LIVE_ESP32_MINI_KIT                 LITERAL1
+MICRO_S2                                  LITERAL1
+NANO32                                    LITERAL1
+NODE_32S                                  LITERAL1
+NODE_MCU_32S                              LITERAL1
+ODROID_ESP32                              LITERAL1
+ONEHORSE_ESP32_DEV                        LITERAL1
+OPEN_KB                                   LITERAL1
+OROCA_EDUBOT                              LITERAL1
+PIRANHA                                   LITERAL1
+PYCOM_GPY                                 LITERAL1
+NODUINO_QUANTUM                           LITERAL1
+SENSES_IOT_WEIZEN                         LITERAL1
+T_BEAM                                    LITERAL1
+TINY_PICO                                 LITERAL1
+TINY_S2                                   LITERAL1
+TRUEVERIT_ESP32_UNIVERSAL_IOT_DRIVER      LITERAL1
+TRUEVERIT_ESP32_UNIVERSAL_IOT_DRIVER_MK2  LITERAL1
+TTGO_LORA32_V1                            LITERAL1
+TTGO_LORA32_V21_NEW                       LITERAL1
+TTGO_T1                                   LITERAL1
+TTGO_T7_V13_MINI_32                       LITERAL1
+TTGO_T7_V14_MINI_32                       LITERAL1
+TWATCH                                    LITERAL1
+UBLOX_NINA_W10                            LITERAL1
+UPESY_WROOM                               LITERAL1
+UPESY_WROVER                              LITERAL1
+WESP32                                    LITERAL1
+WIDORA_AIR                                LITERAL1
+WIFIDUINO_32                              LITERAL1
+WIPY3                                     LITERAL1
+POCKET_32                                 LITERAL1
+ESP32_PICO                                LITERAL1
+ESP32_DEV                                 LITERAL1
+
+
+HARDWARE_TYPE                             LITERAL1
+CPU_ARCH                                  LITERAL1
+CPU_TYPE                                  LITERAL1
+HARDWARE_NAME                             LITERAL1
+HARDWARE_VDD                              LITERAL1
+HARDWARE_AREF                             LITERAL1
+MAX_SERIAL                                LITERAL1
+MAX_DIGITAL                               LITERAL1
+MAX_ANALOG                                LITERAL1
+PMW_PORTS                                 LITERAL1
+I2C_SDA                                   LITERAL1
+I2C_SCL                                   LITERAL1
+ONBOARD_LED                               LITERAL1
+SERIAL_RESET                              LITERAL1
+UNKNOWN_VAL                               LITERAL1
+
+
+SPI_MOSI LITERAL1
+SPI_MISO LITERAL1
+SPI_SCK LITERAL1
+SPI_SS LITERAL1
 A0	LITERAL1
 A1	LITERAL1
 A2	LITERAL1
