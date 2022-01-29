@@ -213,7 +213,11 @@
 #define ESP32_DEV                                497  /* ESP32 Dev Modules (eleven kinds of board)             */
 
 
-#define HARDWARE_SERIAL_TYPE	HardwareSerial
+#define SERIAL_TYPE_NORMAL 0
+#define SERIAL_TYPE_MKR    1
+#define SERIAL_TYPE_AVR    2
+
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_NORMAL
 #define NO_NETWORK     0
 #define ETHERNET_W5XXX 1
 #define WIFI_NORMAL    2
@@ -255,7 +259,7 @@
 #define ONBOARD_LED 13
 #define SERIAL_RESET true
 #undef HARDWARE_SERIAL_TYPE
-#define HARDWARE_SERIAL_TYPE	Serial_
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_AVR
 #endif /* Arduino Yun */
 
 /*
@@ -525,7 +529,7 @@
 #define ONBOARD_LED 13
 #define SERIAL_RESET false
 #undef HARDWARE_SERIAL_TYPE
-#define HARDWARE_SERIAL_TYPE	Serial_
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_AVR
 #endif /* Arduino Leonardo */
 
 #if defined( ARDUINO_AVR_LEONARDO_ETH ) && defined( __AVR_ATmega32U4__ )
@@ -544,7 +548,7 @@
 #define ONBOARD_LED 13
 #define SERIAL_RESET false
 #undef HARDWARE_SERIAL_TYPE
-#define HARDWARE_SERIAL_TYPE	Serial_
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_AVR
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK ETHERNET_W5XXX
 #endif /* Arduino Leonardo ETH */
@@ -582,7 +586,7 @@
 #define ONBOARD_LED 13
 #define SERIAL_RESET true
 #undef HARDWARE_SERIAL_TYPE
-#define HARDWARE_SERIAL_TYPE	Serial_
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_AVR
 #endif /* Arduino Micro */
 
 /*
@@ -919,7 +923,7 @@
 #define CPU_TYPE TYPE_ATmega32U4
 #define HARDWARE_NAME "Arduino Yun Mini"
 #undef HARDWARE_SERIAL_TYPE
-#define HARDWARE_SERIAL_TYPE	Serial_
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_AVR
 #endif /* Arduino Yun Mini */
 
 #if defined( ARDUINO_AVR_INDUSTRIAL101 ) && defined( __AVR_ATmega32U4__ )
@@ -928,7 +932,7 @@
 #define CPU_TYPE TYPE_ATmega32U4
 #define HARDWARE_NAME "Arduino Industrial 101"
 #undef HARDWARE_SERIAL_TYPE
-#define HARDWARE_SERIAL_TYPE	Serial_
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_AVR
 #endif /* Arduino Industrial 101 */
 
 #if defined( ARDUINO_AVR_LININO_ONE ) && defined( __AVR_ATmega32U4__ )
@@ -1096,7 +1100,7 @@
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKR1000"
 #undef HARDWARE_SERIAL_TYPE
-#define HARDWARE_SERIAL_TYPE	Serial_
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
 #endif /* Arduino MKR1000 */
 
 #if defined( ARDUINO_SAMD_MKRZERO ) && defined( __SAMD21G18A__ )
@@ -1105,7 +1109,7 @@
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKRZero"
 #undef HARDWARE_SERIAL_TYPE
-#define HARDWARE_SERIAL_TYPE	Serial_
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
 #endif /* Arduino MKRZero */
 
 #if defined( ARDUINO_SAMD_MKRWIFI1010 ) && defined( __SAMD21G18A__ )
@@ -1114,7 +1118,7 @@
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKR WiFi 1010"
 #undef HARDWARE_SERIAL_TYPE
-#define HARDWARE_SERIAL_TYPE	Serial_
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NINA
 #endif /* Arduino MKR WiFi 1010 */
@@ -1125,7 +1129,7 @@
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino NANO 33 IoT"
 #undef HARDWARE_SERIAL_TYPE
-#define HARDWARE_SERIAL_TYPE	Serial_
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NINA
 #endif /* Arduino NANO 33 IoT */
@@ -1136,7 +1140,7 @@
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKR FOX 1200"
 #undef HARDWARE_SERIAL_TYPE
-#define HARDWARE_SERIAL_TYPE	Serial_
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
 #endif /* Arduino MKR FOX 1200 */
 
 #if defined( ARDUINO_SAMD_MKRWAN1300 ) && defined( __SAMD21G18A__ )
@@ -1145,7 +1149,7 @@
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKR WAN 1300"
 #undef HARDWARE_SERIAL_TYPE
-#define HARDWARE_SERIAL_TYPE	Serial_
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
 #endif /* Arduino MKR WAN 1300 */
 
 #if defined( ARDUINO_SAMD_MKRWAN1310 ) && defined( __SAMD21G18A__ )
@@ -1154,7 +1158,7 @@
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKR WAN 1310"
 #undef HARDWARE_SERIAL_TYPE
-#define HARDWARE_SERIAL_TYPE	Serial_
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
 #endif /* Arduino MKR WAN 1310 */
 
 #if defined( ARDUINO_SAMD_MKRGSM1400 ) && defined( __SAMD21G18A__ )
@@ -1163,7 +1167,7 @@
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKR GSM 1400"
 #undef HARDWARE_SERIAL_TYPE
-#define HARDWARE_SERIAL_TYPE	Serial_
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
 #endif /* Arduino MKR GSM 1400 */
 
 #if defined( ARDUINO_SAMD_MKRNB1500 ) && defined( __SAMD21G18A__ )
@@ -1172,7 +1176,7 @@
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKR NB 1500"
 #undef HARDWARE_SERIAL_TYPE
-#define HARDWARE_SERIAL_TYPE	Serial_
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
 #endif /* Arduino MKR NB 1500 */
 
 #if defined( ARDUINO_SAMD_MKRVIDOR4000 ) && defined( __SAMD21G18A__ )
@@ -1181,7 +1185,7 @@
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKR Vidor 4000"
 #undef HARDWARE_SERIAL_TYPE
-#define HARDWARE_SERIAL_TYPE	Serial_
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NINA
 #endif /* Arduino MKR Vidor 4000 */
