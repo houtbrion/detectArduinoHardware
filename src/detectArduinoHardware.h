@@ -22,7 +22,6 @@
 #define TYPE_ESP8266    10
 #define TYPE_ESP32      11
 
-
 /* AVR系統 */
 #define ARDUINO_YUN                         1 /* Arduino Yun                           */
 #define ARDUINO_UNO                         2 /* Arduino Uno                           */
@@ -214,7 +213,12 @@
 #define ESP32_DEV                                497  /* ESP32 Dev Modules (eleven kinds of board)             */
 
 
-
+#define HARDWARE_SERIAL_TYPE	HardwareSerial
+#define NO_NETWORK     0
+#define ETHERNET_W5XXX 1
+#define WIFI_NORMAL    2
+#define WIFI_NINA      3
+#define EMBEDED_NETWORK NO_NETWORK
 
 /* AVR系統 */
 
@@ -250,6 +254,8 @@
 #define I2C_SCL 3
 #define ONBOARD_LED 13
 #define SERIAL_RESET true
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	Serial_
 #endif /* Arduino Yun */
 
 /*
@@ -518,6 +524,8 @@
 #define I2C_SCL 3
 #define ONBOARD_LED 13
 #define SERIAL_RESET false
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	Serial_
 #endif /* Arduino Leonardo */
 
 #if defined( ARDUINO_AVR_LEONARDO_ETH ) && defined( __AVR_ATmega32U4__ )
@@ -535,6 +543,10 @@
 #define I2C_SCL 3
 #define ONBOARD_LED 13
 #define SERIAL_RESET false
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	Serial_
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK ETHERNET_W5XXX
 #endif /* Arduino Leonardo ETH */
 
 /*
@@ -569,6 +581,8 @@
 #define I2C_SCL 3
 #define ONBOARD_LED 13
 #define SERIAL_RESET true
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	Serial_
 #endif /* Arduino Micro */
 
 /*
@@ -701,6 +715,8 @@
 #define SPI_SS 10
 #define ONBOARD_LED 13
 #define SERIAL_RESET true
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK ETHERNET_W5XXX
 #endif /* Arduino Ethernet */
 
 /*
@@ -902,6 +918,8 @@
 #define CPU_ARCH AVR_ARCH
 #define CPU_TYPE TYPE_ATmega32U4
 #define HARDWARE_NAME "Arduino Yun Mini"
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	Serial_
 #endif /* Arduino Yun Mini */
 
 #if defined( ARDUINO_AVR_INDUSTRIAL101 ) && defined( __AVR_ATmega32U4__ )
@@ -909,6 +927,8 @@
 #define CPU_ARCH AVR_ARCH
 #define CPU_TYPE TYPE_ATmega32U4
 #define HARDWARE_NAME "Arduino Industrial 101"
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	Serial_
 #endif /* Arduino Industrial 101 */
 
 #if defined( ARDUINO_AVR_LININO_ONE ) && defined( __AVR_ATmega32U4__ )
@@ -923,6 +943,8 @@
 #define CPU_ARCH AVR_ARCH
 #define CPU_TYPE TYPE_ATmega328P
 #define HARDWARE_NAME "Arduino Uno WiFi"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NINA
 #endif /* Arduino Uno WiFi */
 
 /*
@@ -1073,6 +1095,8 @@
 #define CPU_ARCH SAMD_ARCH
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKR1000"
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	Serial_
 #endif /* Arduino MKR1000 */
 
 #if defined( ARDUINO_SAMD_MKRZERO ) && defined( __SAMD21G18A__ )
@@ -1080,6 +1104,8 @@
 #define CPU_ARCH SAMD_ARCH
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKRZero"
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	Serial_
 #endif /* Arduino MKRZero */
 
 #if defined( ARDUINO_SAMD_MKRWIFI1010 ) && defined( __SAMD21G18A__ )
@@ -1087,6 +1113,10 @@
 #define CPU_ARCH SAMD_ARCH
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKR WiFi 1010"
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	Serial_
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NINA
 #endif /* Arduino MKR WiFi 1010 */
 
 #if defined( ARDUINO_SAMD_NANO_33_IOT ) && defined( __SAMD21G18A__ )
@@ -1094,6 +1124,10 @@
 #define CPU_ARCH SAMD_ARCH
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino NANO 33 IoT"
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	Serial_
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NINA
 #endif /* Arduino NANO 33 IoT */
 
 #if defined( ARDUINO_SAMD_MKRFox1200 ) && defined( __SAMD21G18A__ )
@@ -1101,6 +1135,8 @@
 #define CPU_ARCH SAMD_ARCH
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKR FOX 1200"
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	Serial_
 #endif /* Arduino MKR FOX 1200 */
 
 #if defined( ARDUINO_SAMD_MKRWAN1300 ) && defined( __SAMD21G18A__ )
@@ -1108,6 +1144,8 @@
 #define CPU_ARCH SAMD_ARCH
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKR WAN 1300"
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	Serial_
 #endif /* Arduino MKR WAN 1300 */
 
 #if defined( ARDUINO_SAMD_MKRWAN1310 ) && defined( __SAMD21G18A__ )
@@ -1115,6 +1153,8 @@
 #define CPU_ARCH SAMD_ARCH
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKR WAN 1310"
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	Serial_
 #endif /* Arduino MKR WAN 1310 */
 
 #if defined( ARDUINO_SAMD_MKRGSM1400 ) && defined( __SAMD21G18A__ )
@@ -1122,6 +1162,8 @@
 #define CPU_ARCH SAMD_ARCH
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKR GSM 1400"
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	Serial_
 #endif /* Arduino MKR GSM 1400 */
 
 #if defined( ARDUINO_SAMD_MKRNB1500 ) && defined( __SAMD21G18A__ )
@@ -1129,6 +1171,8 @@
 #define CPU_ARCH SAMD_ARCH
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKR NB 1500"
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	Serial_
 #endif /* Arduino MKR NB 1500 */
 
 #if defined( ARDUINO_SAMD_MKRVIDOR4000 ) && defined( __SAMD21G18A__ )
@@ -1136,6 +1180,10 @@
 #define CPU_ARCH SAMD_ARCH
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino MKR Vidor 4000"
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	Serial_
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NINA
 #endif /* Arduino MKR Vidor 4000 */
 
 #if defined( ARDUINO_SAMD_CIRCUITPLAYGROUND_EXPRESS ) && defined( __SAMD21G18A__ )
@@ -1198,6 +1246,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "Amperka WiFi Slot"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  Amperka WiFi Slot  */
 
 /*  Adafruit Feather HUZZAH ESP8266  */
@@ -1206,6 +1256,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "Adafruit Feather HUZZAH ESP8266"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  Adafruit Feather HUZZAH ESP8266  */
 
 /*  Lifely Agrumino Lemon v4  */
@@ -1214,6 +1266,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "Lifely Agrumino Lemon v4"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  Lifely Agrumino Lemon v4  */
 
 /*  Generic ESP8285 Module  */
@@ -1222,6 +1276,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "Generic ESP8285 Module"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  Generic ESP8285 Module  */
 
 /*  DOIT ESP-Mx DevKit (ESP8285)  */
@@ -1230,6 +1286,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "DOIT ESP-Mx DevKit (ESP8285)"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  DOIT ESP-Mx DevKit (ESP8285)  */
 
 /*  ESPDuino (ESP-13 Module)  */
@@ -1238,6 +1296,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "ESPDuino (ESP-13 Module)"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  ESPDuino (ESP-13 Module)  */
 
 /*  SweetPea ESP-210  */
@@ -1246,6 +1306,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "SweetPea ESP-210"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  SweetPea ESP-210  */
 
 /*  ESPectro Core  */
@@ -1254,6 +1316,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "ESPectro Core"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  ESPectro Core  */
 
 /*  ESPino (ESP-12 Module)  */
@@ -1262,6 +1326,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "ESPino (ESP-12 Module)"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  ESPino (ESP-12 Module)  */
 
 /*  ThaiEasyElec's ESPino  */
@@ -1270,6 +1336,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "ThaiEasyElec's ESPino"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  ThaiEasyElec's ESPino  */
 
 /*  ESPresso Lite 1.0  */
@@ -1278,6 +1346,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "ESPresso Lite 1.0"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  ESPresso Lite 1.0  */
 
 /*  ESPresso Lite 2.0  */
@@ -1286,6 +1356,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "ESPresso Lite 2.0"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  ESPresso Lite 2.0  */
 
 /*  Generic ESP8266 Module  */
@@ -1294,6 +1366,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "Generic ESP8266 Module"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  Generic ESP8266 Module  */
 
 /*  Invent One  */
@@ -1302,6 +1376,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "Invent One"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  Invent One  */
 
 /*  NodeMCU 0.9 (ESP-12 Module)  */
@@ -1310,6 +1386,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "NodeMCU 0.9 (ESP-12 Module)"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  NodeMCU 0.9 (ESP-12 Module)  */
 
 /*  NodeMCU 1.0 (ESP-12E Module)  */
@@ -1318,6 +1396,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "NodeMCU 1.0 (ESP-12E Module)"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  NodeMCU 1.0 (ESP-12E Module)  */
 
 /*  Digistump Oak  */
@@ -1326,6 +1406,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "Digistump Oak"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  Digistump Oak  */
 
 /*  Phoenix 1.0  */
@@ -1334,6 +1416,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "Phoenix 1.0"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  Phoenix 1.0  */
 
 /*  Phoenix 2.0  */
@@ -1342,6 +1426,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "Phoenix 2.0"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  Phoenix 2.0  */
 
 /*  Schirmilabs Eduino WiFi  */
@@ -1350,6 +1436,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "Schirmilabs Eduino WiFi"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  Schirmilabs Eduino WiFi  */
 
 /*  SparkFun ESP8266 Thing Dev  */
@@ -1358,6 +1446,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "SparkFun ESP8266 Thing Dev"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  SparkFun ESP8266 Thing Dev  */
 
 /*  LOLIN(WEMOS) D1 mini Lite  */
@@ -1366,6 +1456,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "LOLIN(WEMOS) D1 mini Lite"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  LOLIN(WEMOS) D1 mini Lite  */
 
 /*  LOLIN(WEMOS) D1 mini Pro  */
@@ -1374,6 +1466,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "LOLIN(WEMOS) D1 mini Pro"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  LOLIN(WEMOS) D1 mini Pro  */
 
 /*  LOLIN(WeMos) D1 R1  */
@@ -1382,6 +1476,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "LOLIN(WeMos) D1 R1"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  LOLIN(WeMos) D1 R1  */
 
 /*  XinaBox CW01  */
@@ -1390,6 +1486,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "XinaBox CW01"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  XinaBox CW01  */
 
 /*  4D Systems gen4 IoD Range  */
@@ -1398,6 +1496,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "4D Systems gen4 IoD Range"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  4D Systems gen4 IoD Range  */
 
 /*  Olimex MOD-WIFI-ESP8266(-DEV)  */
@@ -1406,6 +1506,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "Olimex MOD-WIFI-ESP8266(-DEV)"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  Olimex MOD-WIFI-ESP8266(-DEV)  */
 
 /*  WiFi Kit 8  */
@@ -1414,6 +1516,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "WiFi Kit 8"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  WiFi Kit 8  */
 
 /*  WiFiduino  */
@@ -1422,6 +1526,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "WiFiduino"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  WiFiduino  */
 
 /*  SparkFun ESP8266 Thing / Blynk Board  */
@@ -1430,6 +1536,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "SparkFun ESP8266 Thing / Blynk Board"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  SparkFun ESP8266 Thing / Blynk Board  */
 
 /*  LOLIN(WEMOS) D1 R2 & mini / D1 mini (clone)  */
@@ -1438,6 +1546,8 @@
 #define CPU_ARCH XTENSA_LX106_ARCH
 #define CPU_TYPE TYPE_ESP8266
 #define HARDWARE_NAME "LOLIN(WEMOS) D1 R2 & mini / D1 mini (clone)"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /*  LOLIN(WEMOS) D1 R2 & mini / D1 mini (clone)  */
 
 /* Adafruit Feather ESP32-S2 (no PSRAM) */
@@ -1446,6 +1556,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Adafruit Feather ESP32-S2 (no PSRAM)"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Adafruit Feather ESP32-S2 (no PSRAM) */
 
 /* ALKS ESP32 */
@@ -1454,6 +1566,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "ALKS ESP32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* ALKS ESP32 */
 
 /* ATMegaZero ESP32-S2 */
@@ -1462,6 +1576,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "ATMegaZero ESP32-S2"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* ATMegaZero ESP32-S2 */
 
 /* BPI-BIT */
@@ -1470,6 +1586,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "BPI-BIT"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* BPI-BIT */
 
 /* Microduino-CoreESP32 */
@@ -1478,6 +1596,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Microduino-CoreESP32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Microduino-CoreESP32 */
 
 /* D-duino-32 */
@@ -1486,6 +1606,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "D-duino-32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* D-duino-32 */
 
 /* WEMOS D1 MINI ESP32 */
@@ -1494,6 +1616,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "WEMOS D1 MINI ESP32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* WEMOS D1 MINI ESP32 */
 
 /* Deneyap Kart */
@@ -1502,6 +1626,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Deneyap Kart"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Deneyap Kart */
 
 /* Deneyap Mini */
@@ -1510,6 +1636,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Deneyap Mini"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Deneyap Mini */
 
 /* OLIMEX ESP32-DevKit-LiPo */
@@ -1518,6 +1646,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "OLIMEX ESP32-DevKit-LiPo"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* OLIMEX ESP32-DevKit-LiPo */
 
 /* OLIMEX ESP32-EVB */
@@ -1526,6 +1656,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "OLIMEX ESP32-EVB"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* OLIMEX ESP32-EVB */
 
 /* OLIMEX ESP32-GATEWAY */
@@ -1534,6 +1666,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "OLIMEX ESP32-GATEWAY"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* OLIMEX ESP32-GATEWAY */
 
 /* OLIMEX ESP32-PoE */
@@ -1542,6 +1676,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "OLIMEX ESP32-PoE"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* OLIMEX ESP32-PoE */
 
 /* OLIMEX ESP32-PoE-ISO */
@@ -1550,6 +1686,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "OLIMEX ESP32-PoE-ISO"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* OLIMEX ESP32-PoE-ISO */
 
 /* SparkFun ESP32 Thing */
@@ -1558,6 +1696,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "SparkFun ESP32 Thing"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* SparkFun ESP32 Thing */
 
 /* SparkFun ESP32 Thing Plus */
@@ -1566,6 +1706,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "SparkFun ESP32 Thing Plus"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* SparkFun ESP32 Thing Plus */
 
 /* ESP32 Wrover Kit (all versions) */
@@ -1574,6 +1716,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "ESP32 Wrover Kit"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* ESP32 Wrover Kit (all versions) */
 
 /* Electronic SweetPeas - ESP320 */
@@ -1582,6 +1726,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Electronic SweetPeas - ESP320"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Electronic SweetPeas - ESP320 */
 
 /* ESP32C3 Dev Module */
@@ -1590,6 +1736,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "ESP32C3 Dev Module"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* ESP32C3 Dev Module */
 
 /* ESP32S2 Dev Module */
@@ -1598,6 +1746,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "ESP32S2 Dev Module"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* ESP32S2 Dev Module */
 
 /* SparkFun ESP32-S2 Thing Plus */
@@ -1606,6 +1756,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "SparkFun ESP32-S2 Thing Plus"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* SparkFun ESP32-S2 Thing Plus */
 
 /* ESP32S2 Native USB */
@@ -1614,6 +1766,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "ESP32S2 Native USB"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* ESP32S2 Native USB */
 
 /* ESP32vn IoT Uno */
@@ -1622,6 +1776,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "ESP32vn IoT Uno"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* ESP32vn IoT Uno */
 
 /* ESPea32 */
@@ -1630,6 +1786,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "ESPea32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* ESPea32 */
 
 /* ESPectro32 */
@@ -1638,6 +1796,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "ESPectro32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* ESPectro32 */
 
 /* ThaiEasyElec's ESPino32 */
@@ -1646,6 +1806,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "ThaiEasyElec ESPino32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* ThaiEasyElec's ESPino32 */
 
 /* Adafruit ESP32 Feather */
@@ -1654,6 +1816,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Adafruit ESP32 Feather"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Adafruit ESP32 Feather */
 
 /* UM FeatherS2 */
@@ -1662,6 +1826,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "UM FeatherS2"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* UM FeatherS2 */
 
 /* UM FeatherS2 Neo */
@@ -1670,6 +1836,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "UM FeatherS2 Neo"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* UM FeatherS2 Neo */
 
 /* ESP32 FM DevKit */
@@ -1678,6 +1846,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "ESP32 FM DevKit"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* ESP32 FM DevKit */
 
 /* Franzininho WiFi */
@@ -1686,6 +1856,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Franzininho WiFi"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Franzininho WiFi */
 
 /* Franzininho WiFi MSC */
@@ -1694,6 +1866,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Franzininho WiFi MSC"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Franzininho WiFi MSC */
 
 /* Frog Board ESP32 */
@@ -1702,6 +1876,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Frog Board ESP32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Frog Board ESP32 */
 
 /* Adafruit FunHouse */
@@ -1710,6 +1886,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Adafruit FunHouse"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Adafruit FunHouse */
 
 /* ProtoCentral HealthyPi 4 */
@@ -1718,6 +1896,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "ProtoCentral HealthyPi 4"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* ProtoCentral HealthyPi 4 */
 
 /* Heltec WiFi Kit 32 */
@@ -1726,6 +1906,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Heltec WiFi Kit 32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Heltec WiFi Kit 32 */
 
 /* Heltec WiFi LoRa 32 */
@@ -1734,6 +1916,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Heltec WiFi LoRa 32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Heltec WiFi LoRa 32 */
 
 /* Heltec WiFi LoRa 32(V2) */
@@ -1742,6 +1926,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Heltec WiFi LoRa 32(V2)"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Heltec WiFi LoRa 32(V2) */
 
 /* Heltec Wireless Stick */
@@ -1750,6 +1936,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Heltec Wireless Stick"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Heltec Wireless Stick */
 
 /* Heltec Wireless Stick Lite */
@@ -1758,6 +1946,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Heltec Wireless Stick Lite"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Heltec Wireless Stick Lite */
 
 /* HONEYLemon */
@@ -1766,6 +1956,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "HONEYLemon"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* HONEYLemon */
 
 /* Hornbill ESP32 Dev */
@@ -1774,6 +1966,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Hornbill ESP32 Dev"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Hornbill ESP32 Dev */
 
 /* Hornbill ESP32 Minima */
@@ -1782,6 +1976,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Hornbill ESP32 Minima"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Hornbill ESP32 Minima */
 
 /* IMBRIOS LOGSENS_V1P1 */
@@ -1790,6 +1986,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "IMBRIOS LOGSENS_V1P1"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* IMBRIOS LOGSENS_V1P1 */
 
 /* IntoRobot Fig */
@@ -1798,6 +1996,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "IntoRobot Fig"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* IntoRobot Fig */
 
 /* LOLIN D32 */
@@ -1806,6 +2006,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "LOLIN D32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* LOLIN D32 */
 
 /* LOLIN D32 PRO */
@@ -1814,6 +2016,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "LOLIN D32 PRO"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* LOLIN D32 PRO */
 
 /* WEMOS LOLIN32 */
@@ -1822,6 +2026,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "WEMOS LOLIN32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* WEMOS LOLIN32 */
 
 /* WEMOS LOLIN32 Lite */
@@ -1830,6 +2036,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "WEMOS LOLIN32 Lite"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* WEMOS LOLIN32 Lite */
 
 /* LoPy */
@@ -1838,6 +2046,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "LoPy"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* LoPy */
 
 /* LoPy4 */
@@ -1846,6 +2056,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "LoPy4"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* LoPy4 */
 
 /* M5Stack-ATOM */
@@ -1854,6 +2066,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "M5Stack-ATOM"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* M5Stack-ATOM */
 
 /* M5Stack-Core-ESP32 */
@@ -1862,6 +2076,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "M5Stack-Core-ESP32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* M5Stack-Core-ESP32 */
 
 /* M5Stack-Core2 */
@@ -1870,6 +2086,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "M5Stack-Core2"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* M5Stack-Core2 */
 
 /* M5Stack-CoreInk */
@@ -1878,6 +2096,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "M5Stack-CoreInk"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* M5Stack-CoreInk */
 
 /* M5Stack-FIRE */
@@ -1886,6 +2106,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "M5Stack-FIRE"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* M5Stack-FIRE */
 
 /* M5Stick-C */
@@ -1894,6 +2116,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "M5Stick-C"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* M5Stick-C */
 
 /* Adafruit MagTag 2.9 */
@@ -1902,6 +2126,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Adafruit MagTag 2.9"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Adafruit MagTag 2.9 */
 
 /* Metro ESP-32 */
@@ -1910,6 +2136,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Metro ESP-32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Metro ESP-32 */
 
 /* Adafruit Metro ESP32-S2 */
@@ -1918,6 +2146,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Adafruit Metro ESP32-S2"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Adafruit Metro ESP32-S2 */
 
 /* MGBOT IOTIK 32A */
@@ -1926,6 +2156,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "MGBOT IOTIK 32A"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* MGBOT IOTIK 32A */
 
 /* MGBOT IOTIK 32B */
@@ -1934,6 +2166,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "MGBOT IOTIK 32B"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* MGBOT IOTIK 32B */
 
 /* MH ET LIVE ESP32DevKIT */
@@ -1942,6 +2176,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "MH ET LIVE ESP32DevKIT"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* MH ET LIVE ESP32DevKIT */
 
 /* MH ET LIVE ESP32MiniKit */
@@ -1950,6 +2186,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "MH ET LIVE ESP32MiniKit"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* MH ET LIVE ESP32MiniKit */
 
 /* microS2 */
@@ -1958,6 +2196,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "microS2"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* microS2 */
 
 /* Nano32 */
@@ -1966,6 +2206,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Nano32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Nano32 */
 
 /* Node32s */
@@ -1974,6 +2216,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Node32s"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Node32s */
 
 /* NodeMCU-32S */
@@ -1982,6 +2226,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "NodeMCU-32S"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* NodeMCU-32S */
 
 /* ODROID ESP32 */
@@ -1990,6 +2236,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "ODROID ESP32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* ODROID ESP32 */
 
 /* Onehorse ESP32 Dev Module */
@@ -1998,6 +2246,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Onehorse ESP32 Dev Module"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Onehorse ESP32 Dev Module */
 
 /* INEX OpenKB */
@@ -2006,6 +2256,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "INEX OpenKB"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* INEX OpenKB */
 
 /* OROCA EduBot */
@@ -2014,6 +2266,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "OROCA EduBot"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* OROCA EduBot */
 
 /* Piranha ESP-32 */
@@ -2022,6 +2276,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Piranha ESP-32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Piranha ESP-32 */
 
 /* Pycom GPy */
@@ -2030,6 +2286,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Pycom GPy"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Pycom GPy */
 
 /* Noduino Quantum */
@@ -2038,6 +2296,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Noduino Quantum"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Noduino Quantum */
 
 /* Senses's WEIZEN */
@@ -2046,6 +2306,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Senses WEIZEN"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Senses's WEIZEN */
 
 /* T-Beam */
@@ -2054,6 +2316,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "T-Beam"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* T-Beam */
 
 /* UM TinyPICO */
@@ -2062,6 +2326,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "UM TinyPICO"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* UM TinyPICO */
 
 /* UM TinyS2 */
@@ -2070,6 +2336,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "UM TinyS2"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* UM TinyS2 */
 
 /* Trueverit ESP32 Universal IoT Driver */
@@ -2078,6 +2346,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Trueverit ESP32 Universal IoT Driver"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Trueverit ESP32 Universal IoT Driver */
 
 /* Trueverit ESP32 Universal IoT Driver MK II */
@@ -2086,6 +2356,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Trueverit ESP32 Universal IoT Driver MK II"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Trueverit ESP32 Universal IoT Driver MK II */
 
 /* TTGO LoRa32-OLED V1 */
@@ -2094,6 +2366,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "TTGO LoRa32-OLED V1"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* TTGO LoRa32-OLED V1 */
 
 /* TTGO LoRa32-OLED v2.1.6 */
@@ -2102,6 +2376,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "TTGO LoRa32-OLED v2.1.6"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* TTGO LoRa32-OLED v2.1.6 */
 
 /* TTGO T1 */
@@ -2110,6 +2386,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "TTGO T1"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* TTGO T1 */
 
 /* TTGO T7 V1.3 Mini32 */
@@ -2118,6 +2396,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "TTGO T7 V1.3 Mini32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* TTGO T7 V1.3 Mini32 */
 
 /* TTGO T7 V1.4 Mini32 */
@@ -2126,6 +2406,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "TTGO T7 V1.4 Mini32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* TTGO T7 V1.4 Mini32 */
 
 /* TTGO T-Watch */
@@ -2134,6 +2416,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "TTGO T-Watch"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* TTGO T-Watch */
 
 /* u-blox NINA-W10 series (ESP32) */
@@ -2142,6 +2426,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "u-blox NINA-W10 series (ESP32)"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* u-blox NINA-W10 series (ESP32) */
 
 /* uPesy ESP32 Wroom DevKit */
@@ -2150,6 +2436,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "uPesy ESP32 Wroom DevKit"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* uPesy ESP32 Wroom DevKit */
 
 /* uPesy ESP32 Wrover DevKit */
@@ -2158,6 +2446,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "uPesy ESP32 Wrover DevKit"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* uPesy ESP32 Wrover DevKit */
 
 /* Silicognition wESP32 */
@@ -2166,6 +2456,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Silicognition wESP32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Silicognition wESP32 */
 
 /* Widora AIR */
@@ -2174,6 +2466,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Widora AIR"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Widora AIR */
 
 /* WiFiduino32 */
@@ -2182,6 +2476,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "WiFiduino32"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* WiFiduino32 */
 
 /* WiPy 3.0 */
@@ -2190,6 +2486,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "WiPy 3.0"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* WiPy 3.0 */
 
 /* Dongsen Tech Pocket 32 / WeMos WiFi&Bluetooth Battery */
@@ -2198,6 +2496,8 @@
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "Dongsen Tech Pocket 32 / WeMos WiFi&Bluetooth Battery"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* Dongsen Tech Pocket 32 / WeMos WiFi&Bluetooth Battery */
 
 /* ESP32_PICO
@@ -2210,6 +2510,8 @@ KITS ESP32 EDU
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "ESP32_PICO"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* ESP32_PICO  */
 
 /* ESP32 Dev Modules
@@ -2230,6 +2532,8 @@ Labplus mPython
 #define CPU_ARCH XTENSA_LX6_ARCH
 #define CPU_TYPE TYPE_ESP32
 #define HARDWARE_NAME "ESP32 Dev Modules"
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
 #endif /* ESP32 Dev Modules  */
 
 
