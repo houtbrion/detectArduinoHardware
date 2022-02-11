@@ -222,6 +222,7 @@
 #define ETHERNET_W5XXX 1
 #define WIFI_NORMAL    2
 #define WIFI_NINA      3
+#define WIFI_WINC1500  4
 #define EMBEDED_NETWORK NO_NETWORK
 
 /* AVR系統 */
@@ -1101,6 +1102,8 @@
 #define HARDWARE_NAME "Arduino MKR1000"
 #undef HARDWARE_SERIAL_TYPE
 #define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_WINC1500
 #endif /* Arduino MKR1000 */
 
 #if defined( ARDUINO_SAMD_MKRZERO ) && defined( __SAMD21G18A__ )
