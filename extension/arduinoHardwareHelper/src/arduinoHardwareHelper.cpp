@@ -35,6 +35,8 @@ void HardwareHelper::SoftwareReset(void) {
 #define AIRCR          (*(uint32_t*)0xe000ed0cUL) // fixed arch-defined address
 #define REQUEST_EXTERNAL_RESET (AIRCR=(AIRCR&VECTKEY_MASK)|VECTKEY|SYSRESETREQ)
   REQUEST_EXTERNAL_RESET;
+#elif CPU_ARCH==RA4_ARCH
+  NVIC_SystemReset();
 #else
 #error "unkown cpu type"
 #endif

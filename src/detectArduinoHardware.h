@@ -9,6 +9,8 @@
 #define SAMD_ARCH         3
 #define XTENSA_LX106_ARCH 4 /* ESP8266 */
 #define XTENSA_LX6_ARCH   5 /* ESP32 */
+#define RA4_ARCH          6 /* Renesas */
+
 
 #define TYPE_ATmega32U4  1
 #define TYPE_ATmega328P  2
@@ -21,6 +23,7 @@
 #define TYPE_SAMD21G18A  9
 #define TYPE_ESP8266    10
 #define TYPE_ESP32      11
+#define TYPE_RA4M1      12
 
 /* AVR系統 */
 #define ARDUINO_YUN                         1 /* Arduino Yun                           */
@@ -212,10 +215,16 @@
 #define ESP32_PICO                               496  /* ESP32_PICO ( three kinds of board)                    */
 #define ESP32_DEV                                497  /* ESP32 Dev Modules (eleven kinds of board)             */
 
+#define ARDUINO_NANO_ESP32_S3                    498
+
+/* Renesas RA4系列 */
+#define ARDUINO_UNO_R4_MINIMA                    601 /* Arduino Uno R4 Minima */
+#define ARDUINO_UNO_R4_WIFI                      602 /* Arduino Uno R4 WiFi */
 
 #define SERIAL_TYPE_NORMAL 0
 #define SERIAL_TYPE_MKR    1
 #define SERIAL_TYPE_AVR    2
+#define SERIAL_TYPE_USBCDC 3
 
 #define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_NORMAL
 #define NO_NETWORK     0
@@ -830,6 +839,7 @@
 #define CPU_ARCH AVR_ARCH
 #define CPU_TYPE TYPE_ATmega32U4
 #define HARDWARE_NAME "LilyPad Arduino USB"
+#define SERIAL_RESET false
 #endif /* LilyPad Arduino USB */
 
 #if defined( ARDUINO_AVR_LILYPAD ) && defined( __AVR_ATmega328P__ )
@@ -837,6 +847,7 @@
 #define CPU_ARCH AVR_ARCH
 #define CPU_TYPE TYPE_ATmega328P
 #define HARDWARE_NAME "LilyPad Arduino 328P"
+#define SERIAL_RESET false
 #endif /* LilyPad Arduino 328P */
 
 #if defined( ARDUINO_AVR_LILYPAD ) && defined( __AVR_ATmega168__ )
@@ -844,6 +855,7 @@
 #define CPU_ARCH AVR_ARCH
 #define CPU_TYPE TYPE_ATmega168
 #define HARDWARE_NAME "LilyPad Arduino 168"
+#define SERIAL_RESET false
 #endif /* LilyPad Arduino 168 */
 
 #if defined( ARDUINO_AVR_NG ) && defined( __AVR_ATmega168__ )
@@ -851,6 +863,7 @@
 #define CPU_ARCH AVR_ARCH
 #define CPU_TYPE TYPE_ATmega168
 #define HARDWARE_NAME "Arduino NG or older 168"
+#define SERIAL_RESET false
 #endif /* Arduino NG or older 168 */
 
 #if defined( ARDUINO_AVR_NG ) && defined( __AVR_ATmega8__ )
@@ -858,6 +871,7 @@
 #define CPU_ARCH AVR_ARCH
 #define CPU_TYPE TYPE_ATmega8
 #define HARDWARE_NAME "Arduino NG or older 8"
+#define SERIAL_RESET false
 #endif /* Arduino NG or older 8 */
 
 #if defined( ARDUINO_AVR_ROBOT_CONTROL ) && defined( __AVR_ATmega32U4__ )
@@ -865,6 +879,7 @@
 #define CPU_ARCH AVR_ARCH
 #define CPU_TYPE TYPE_ATmega32U4
 #define HARDWARE_NAME "Arduino Robot Control"
+#define SERIAL_RESET false
 #endif /* Arduino Robot Control */
 
 #if defined( ARDUINO_AVR_ROBOT_MOTOR ) && defined( __AVR_ATmega32U4__ )
@@ -872,6 +887,7 @@
 #define CPU_ARCH AVR_ARCH
 #define CPU_TYPE TYPE_ATmega32U4
 #define HARDWARE_NAME "Arduino Robot Motor"
+#define SERIAL_RESET false
 #endif /* Arduino Robot Motor */
 
 /*
@@ -916,6 +932,7 @@
 #define CPU_ARCH AVR_ARCH
 #define CPU_TYPE TYPE_ATmega32U4
 #define HARDWARE_NAME "Adafruit Circuit Playground"
+#define SERIAL_RESET false
 #endif /* Adafruit Circuit Playground */
 
 #if defined( ARDUINO_AVR_YUNMINI ) && defined( __AVR_ATmega32U4__ )
@@ -925,6 +942,7 @@
 #define HARDWARE_NAME "Arduino Yun Mini"
 #undef HARDWARE_SERIAL_TYPE
 #define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_AVR
+#define SERIAL_RESET false
 #endif /* Arduino Yun Mini */
 
 #if defined( ARDUINO_AVR_INDUSTRIAL101 ) && defined( __AVR_ATmega32U4__ )
@@ -934,6 +952,7 @@
 #define HARDWARE_NAME "Arduino Industrial 101"
 #undef HARDWARE_SERIAL_TYPE
 #define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_AVR
+#define SERIAL_RESET false
 #endif /* Arduino Industrial 101 */
 
 #if defined( ARDUINO_AVR_LININO_ONE ) && defined( __AVR_ATmega32U4__ )
@@ -941,6 +960,7 @@
 #define CPU_ARCH AVR_ARCH
 #define CPU_TYPE TYPE_ATmega32U4
 #define HARDWARE_NAME "Linino One"
+#define SERIAL_RESET false
 #endif /* Linino One */
 
 #if defined( ARDUINO_AVR_UNO_WIFI_DEV_ED ) && defined( __AVR_ATmega328P__ )
@@ -950,6 +970,7 @@
 #define HARDWARE_NAME "Arduino Uno WiFi"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NINA
+#define SERIAL_RESET false
 #endif /* Arduino Uno WiFi */
 
 /*
@@ -1093,6 +1114,7 @@
 #define CPU_ARCH SAMD_ARCH
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino Zero"
+#define SERIAL_RESET false
 #endif /* Arduino Zero */
 
 #if defined( ARDUINO_SAMD_MKR1000 ) && defined( __SAMD21G18A__ )
@@ -1104,6 +1126,7 @@
 #define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_WINC1500
+#define SERIAL_RESET false
 #endif /* Arduino MKR1000 */
 
 #if defined( ARDUINO_SAMD_MKRZERO ) && defined( __SAMD21G18A__ )
@@ -1113,6 +1136,7 @@
 #define HARDWARE_NAME "Arduino MKRZero"
 #undef HARDWARE_SERIAL_TYPE
 #define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
+#define SERIAL_RESET false
 #endif /* Arduino MKRZero */
 
 #if defined( ARDUINO_SAMD_MKRWIFI1010 ) && defined( __SAMD21G18A__ )
@@ -1124,6 +1148,7 @@
 #define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NINA
+#define SERIAL_RESET false
 #endif /* Arduino MKR WiFi 1010 */
 
 #if defined( ARDUINO_SAMD_NANO_33_IOT ) && defined( __SAMD21G18A__ )
@@ -1135,6 +1160,7 @@
 #define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NINA
+#define SERIAL_RESET false
 #endif /* Arduino NANO 33 IoT */
 
 #if defined( ARDUINO_SAMD_MKRFox1200 ) && defined( __SAMD21G18A__ )
@@ -1144,6 +1170,7 @@
 #define HARDWARE_NAME "Arduino MKR FOX 1200"
 #undef HARDWARE_SERIAL_TYPE
 #define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
+#define SERIAL_RESET false
 #endif /* Arduino MKR FOX 1200 */
 
 #if defined( ARDUINO_SAMD_MKRWAN1300 ) && defined( __SAMD21G18A__ )
@@ -1153,6 +1180,7 @@
 #define HARDWARE_NAME "Arduino MKR WAN 1300"
 #undef HARDWARE_SERIAL_TYPE
 #define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
+#define SERIAL_RESET false
 #endif /* Arduino MKR WAN 1300 */
 
 #if defined( ARDUINO_SAMD_MKRWAN1310 ) && defined( __SAMD21G18A__ )
@@ -1162,6 +1190,7 @@
 #define HARDWARE_NAME "Arduino MKR WAN 1310"
 #undef HARDWARE_SERIAL_TYPE
 #define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
+#define SERIAL_RESET false
 #endif /* Arduino MKR WAN 1310 */
 
 #if defined( ARDUINO_SAMD_MKRGSM1400 ) && defined( __SAMD21G18A__ )
@@ -1171,6 +1200,7 @@
 #define HARDWARE_NAME "Arduino MKR GSM 1400"
 #undef HARDWARE_SERIAL_TYPE
 #define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
+#define SERIAL_RESET false
 #endif /* Arduino MKR GSM 1400 */
 
 #if defined( ARDUINO_SAMD_MKRNB1500 ) && defined( __SAMD21G18A__ )
@@ -1180,6 +1210,7 @@
 #define HARDWARE_NAME "Arduino MKR NB 1500"
 #undef HARDWARE_SERIAL_TYPE
 #define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
+#define SERIAL_RESET false
 #endif /* Arduino MKR NB 1500 */
 
 #if defined( ARDUINO_SAMD_MKRVIDOR4000 ) && defined( __SAMD21G18A__ )
@@ -1191,6 +1222,7 @@
 #define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_MKR
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NINA
+#define SERIAL_RESET false
 #endif /* Arduino MKR Vidor 4000 */
 
 #if defined( ARDUINO_SAMD_CIRCUITPLAYGROUND_EXPRESS ) && defined( __SAMD21G18A__ )
@@ -1198,6 +1230,7 @@
 #define CPU_ARCH SAMD_ARCH
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Adafruit Circuit Playground M0"
+#define SERIAL_RESET false
 #endif /* Adafruit Circuit Playground M0 */
 
 #if defined( ARDUINO_SAMD_TIAN ) && defined( __SAMD21G18A__ )
@@ -1205,6 +1238,7 @@
 #define CPU_ARCH SAMD_ARCH
 #define CPU_TYPE TYPE_SAMD21G18A
 #define HARDWARE_NAME "Arduino Tian"
+#define SERIAL_RESET false
 #endif /* Arduino Tian */
 
 /*
@@ -1255,6 +1289,7 @@
 #define HARDWARE_NAME "Amperka WiFi Slot"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  Amperka WiFi Slot  */
 
 /*  Adafruit Feather HUZZAH ESP8266  */
@@ -1265,6 +1300,7 @@
 #define HARDWARE_NAME "Adafruit Feather HUZZAH ESP8266"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  Adafruit Feather HUZZAH ESP8266  */
 
 /*  Lifely Agrumino Lemon v4  */
@@ -1275,6 +1311,7 @@
 #define HARDWARE_NAME "Lifely Agrumino Lemon v4"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  Lifely Agrumino Lemon v4  */
 
 /*  Generic ESP8285 Module  */
@@ -1285,6 +1322,7 @@
 #define HARDWARE_NAME "Generic ESP8285 Module"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  Generic ESP8285 Module  */
 
 /*  DOIT ESP-Mx DevKit (ESP8285)  */
@@ -1295,6 +1333,7 @@
 #define HARDWARE_NAME "DOIT ESP-Mx DevKit (ESP8285)"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  DOIT ESP-Mx DevKit (ESP8285)  */
 
 /*  ESPDuino (ESP-13 Module)  */
@@ -1305,6 +1344,7 @@
 #define HARDWARE_NAME "ESPDuino (ESP-13 Module)"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  ESPDuino (ESP-13 Module)  */
 
 /*  SweetPea ESP-210  */
@@ -1315,6 +1355,7 @@
 #define HARDWARE_NAME "SweetPea ESP-210"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  SweetPea ESP-210  */
 
 /*  ESPectro Core  */
@@ -1325,6 +1366,7 @@
 #define HARDWARE_NAME "ESPectro Core"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  ESPectro Core  */
 
 /*  ESPino (ESP-12 Module)  */
@@ -1335,6 +1377,7 @@
 #define HARDWARE_NAME "ESPino (ESP-12 Module)"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  ESPino (ESP-12 Module)  */
 
 /*  ThaiEasyElec's ESPino  */
@@ -1345,6 +1388,7 @@
 #define HARDWARE_NAME "ThaiEasyElec's ESPino"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  ThaiEasyElec's ESPino  */
 
 /*  ESPresso Lite 1.0  */
@@ -1355,6 +1399,7 @@
 #define HARDWARE_NAME "ESPresso Lite 1.0"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  ESPresso Lite 1.0  */
 
 /*  ESPresso Lite 2.0  */
@@ -1365,6 +1410,7 @@
 #define HARDWARE_NAME "ESPresso Lite 2.0"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  ESPresso Lite 2.0  */
 
 /*  Generic ESP8266 Module  */
@@ -1375,6 +1421,7 @@
 #define HARDWARE_NAME "Generic ESP8266 Module"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  Generic ESP8266 Module  */
 
 /*  Invent One  */
@@ -1385,6 +1432,7 @@
 #define HARDWARE_NAME "Invent One"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  Invent One  */
 
 /*  NodeMCU 0.9 (ESP-12 Module)  */
@@ -1395,6 +1443,7 @@
 #define HARDWARE_NAME "NodeMCU 0.9 (ESP-12 Module)"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  NodeMCU 0.9 (ESP-12 Module)  */
 
 /*  NodeMCU 1.0 (ESP-12E Module)  */
@@ -1405,6 +1454,7 @@
 #define HARDWARE_NAME "NodeMCU 1.0 (ESP-12E Module)"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  NodeMCU 1.0 (ESP-12E Module)  */
 
 /*  Digistump Oak  */
@@ -1415,6 +1465,7 @@
 #define HARDWARE_NAME "Digistump Oak"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  Digistump Oak  */
 
 /*  Phoenix 1.0  */
@@ -1425,6 +1476,7 @@
 #define HARDWARE_NAME "Phoenix 1.0"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  Phoenix 1.0  */
 
 /*  Phoenix 2.0  */
@@ -1435,6 +1487,7 @@
 #define HARDWARE_NAME "Phoenix 2.0"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  Phoenix 2.0  */
 
 /*  Schirmilabs Eduino WiFi  */
@@ -1445,6 +1498,7 @@
 #define HARDWARE_NAME "Schirmilabs Eduino WiFi"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  Schirmilabs Eduino WiFi  */
 
 /*  SparkFun ESP8266 Thing Dev  */
@@ -1455,6 +1509,7 @@
 #define HARDWARE_NAME "SparkFun ESP8266 Thing Dev"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  SparkFun ESP8266 Thing Dev  */
 
 /*  LOLIN(WEMOS) D1 mini Lite  */
@@ -1465,6 +1520,7 @@
 #define HARDWARE_NAME "LOLIN(WEMOS) D1 mini Lite"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  LOLIN(WEMOS) D1 mini Lite  */
 
 /*  LOLIN(WEMOS) D1 mini Pro  */
@@ -1475,6 +1531,7 @@
 #define HARDWARE_NAME "LOLIN(WEMOS) D1 mini Pro"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  LOLIN(WEMOS) D1 mini Pro  */
 
 /*  LOLIN(WeMos) D1 R1  */
@@ -1485,6 +1542,7 @@
 #define HARDWARE_NAME "LOLIN(WeMos) D1 R1"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  LOLIN(WeMos) D1 R1  */
 
 /*  XinaBox CW01  */
@@ -1495,6 +1553,7 @@
 #define HARDWARE_NAME "XinaBox CW01"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  XinaBox CW01  */
 
 /*  4D Systems gen4 IoD Range  */
@@ -1505,6 +1564,7 @@
 #define HARDWARE_NAME "4D Systems gen4 IoD Range"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  4D Systems gen4 IoD Range  */
 
 /*  Olimex MOD-WIFI-ESP8266(-DEV)  */
@@ -1515,6 +1575,7 @@
 #define HARDWARE_NAME "Olimex MOD-WIFI-ESP8266(-DEV)"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  Olimex MOD-WIFI-ESP8266(-DEV)  */
 
 /*  WiFi Kit 8  */
@@ -1525,6 +1586,7 @@
 #define HARDWARE_NAME "WiFi Kit 8"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  WiFi Kit 8  */
 
 /*  WiFiduino  */
@@ -1535,6 +1597,7 @@
 #define HARDWARE_NAME "WiFiduino"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  WiFiduino  */
 
 /*  SparkFun ESP8266 Thing / Blynk Board  */
@@ -1545,6 +1608,7 @@
 #define HARDWARE_NAME "SparkFun ESP8266 Thing / Blynk Board"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  SparkFun ESP8266 Thing / Blynk Board  */
 
 /*  LOLIN(WEMOS) D1 R2 & mini / D1 mini (clone)  */
@@ -1555,6 +1619,7 @@
 #define HARDWARE_NAME "LOLIN(WEMOS) D1 R2 & mini / D1 mini (clone)"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /*  LOLIN(WEMOS) D1 R2 & mini / D1 mini (clone)  */
 
 /* Adafruit Feather ESP32-S2 (no PSRAM) */
@@ -1565,6 +1630,7 @@
 #define HARDWARE_NAME "Adafruit Feather ESP32-S2 (no PSRAM)"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Adafruit Feather ESP32-S2 (no PSRAM) */
 
 /* ALKS ESP32 */
@@ -1575,6 +1641,7 @@
 #define HARDWARE_NAME "ALKS ESP32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* ALKS ESP32 */
 
 /* ATMegaZero ESP32-S2 */
@@ -1585,6 +1652,7 @@
 #define HARDWARE_NAME "ATMegaZero ESP32-S2"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* ATMegaZero ESP32-S2 */
 
 /* BPI-BIT */
@@ -1595,6 +1663,7 @@
 #define HARDWARE_NAME "BPI-BIT"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* BPI-BIT */
 
 /* Microduino-CoreESP32 */
@@ -1605,6 +1674,7 @@
 #define HARDWARE_NAME "Microduino-CoreESP32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Microduino-CoreESP32 */
 
 /* D-duino-32 */
@@ -1615,6 +1685,7 @@
 #define HARDWARE_NAME "D-duino-32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* D-duino-32 */
 
 /* WEMOS D1 MINI ESP32 */
@@ -1625,6 +1696,7 @@
 #define HARDWARE_NAME "WEMOS D1 MINI ESP32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* WEMOS D1 MINI ESP32 */
 
 /* Deneyap Kart */
@@ -1635,6 +1707,7 @@
 #define HARDWARE_NAME "Deneyap Kart"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Deneyap Kart */
 
 /* Deneyap Mini */
@@ -1645,6 +1718,7 @@
 #define HARDWARE_NAME "Deneyap Mini"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Deneyap Mini */
 
 /* OLIMEX ESP32-DevKit-LiPo */
@@ -1655,6 +1729,7 @@
 #define HARDWARE_NAME "OLIMEX ESP32-DevKit-LiPo"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* OLIMEX ESP32-DevKit-LiPo */
 
 /* OLIMEX ESP32-EVB */
@@ -1665,6 +1740,7 @@
 #define HARDWARE_NAME "OLIMEX ESP32-EVB"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* OLIMEX ESP32-EVB */
 
 /* OLIMEX ESP32-GATEWAY */
@@ -1675,6 +1751,7 @@
 #define HARDWARE_NAME "OLIMEX ESP32-GATEWAY"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* OLIMEX ESP32-GATEWAY */
 
 /* OLIMEX ESP32-PoE */
@@ -1685,6 +1762,7 @@
 #define HARDWARE_NAME "OLIMEX ESP32-PoE"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* OLIMEX ESP32-PoE */
 
 /* OLIMEX ESP32-PoE-ISO */
@@ -1695,6 +1773,7 @@
 #define HARDWARE_NAME "OLIMEX ESP32-PoE-ISO"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* OLIMEX ESP32-PoE-ISO */
 
 /* SparkFun ESP32 Thing */
@@ -1705,6 +1784,7 @@
 #define HARDWARE_NAME "SparkFun ESP32 Thing"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* SparkFun ESP32 Thing */
 
 /* SparkFun ESP32 Thing Plus */
@@ -1715,6 +1795,7 @@
 #define HARDWARE_NAME "SparkFun ESP32 Thing Plus"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* SparkFun ESP32 Thing Plus */
 
 /* ESP32 Wrover Kit (all versions) */
@@ -1725,6 +1806,7 @@
 #define HARDWARE_NAME "ESP32 Wrover Kit"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* ESP32 Wrover Kit (all versions) */
 
 /* Electronic SweetPeas - ESP320 */
@@ -1735,6 +1817,7 @@
 #define HARDWARE_NAME "Electronic SweetPeas - ESP320"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Electronic SweetPeas - ESP320 */
 
 /* ESP32C3 Dev Module */
@@ -1745,6 +1828,7 @@
 #define HARDWARE_NAME "ESP32C3 Dev Module"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* ESP32C3 Dev Module */
 
 /* ESP32S2 Dev Module */
@@ -1755,6 +1839,7 @@
 #define HARDWARE_NAME "ESP32S2 Dev Module"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* ESP32S2 Dev Module */
 
 /* SparkFun ESP32-S2 Thing Plus */
@@ -1765,6 +1850,7 @@
 #define HARDWARE_NAME "SparkFun ESP32-S2 Thing Plus"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* SparkFun ESP32-S2 Thing Plus */
 
 /* ESP32S2 Native USB */
@@ -1775,6 +1861,7 @@
 #define HARDWARE_NAME "ESP32S2 Native USB"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* ESP32S2 Native USB */
 
 /* ESP32vn IoT Uno */
@@ -1785,6 +1872,7 @@
 #define HARDWARE_NAME "ESP32vn IoT Uno"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* ESP32vn IoT Uno */
 
 /* ESPea32 */
@@ -1795,6 +1883,7 @@
 #define HARDWARE_NAME "ESPea32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* ESPea32 */
 
 /* ESPectro32 */
@@ -1805,6 +1894,7 @@
 #define HARDWARE_NAME "ESPectro32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* ESPectro32 */
 
 /* ThaiEasyElec's ESPino32 */
@@ -1815,6 +1905,7 @@
 #define HARDWARE_NAME "ThaiEasyElec ESPino32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* ThaiEasyElec's ESPino32 */
 
 /* Adafruit ESP32 Feather */
@@ -1825,6 +1916,7 @@
 #define HARDWARE_NAME "Adafruit ESP32 Feather"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Adafruit ESP32 Feather */
 
 /* UM FeatherS2 */
@@ -1835,6 +1927,7 @@
 #define HARDWARE_NAME "UM FeatherS2"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* UM FeatherS2 */
 
 /* UM FeatherS2 Neo */
@@ -1845,6 +1938,7 @@
 #define HARDWARE_NAME "UM FeatherS2 Neo"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* UM FeatherS2 Neo */
 
 /* ESP32 FM DevKit */
@@ -1855,6 +1949,7 @@
 #define HARDWARE_NAME "ESP32 FM DevKit"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* ESP32 FM DevKit */
 
 /* Franzininho WiFi */
@@ -1865,6 +1960,7 @@
 #define HARDWARE_NAME "Franzininho WiFi"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Franzininho WiFi */
 
 /* Franzininho WiFi MSC */
@@ -1875,6 +1971,7 @@
 #define HARDWARE_NAME "Franzininho WiFi MSC"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Franzininho WiFi MSC */
 
 /* Frog Board ESP32 */
@@ -1885,6 +1982,7 @@
 #define HARDWARE_NAME "Frog Board ESP32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Frog Board ESP32 */
 
 /* Adafruit FunHouse */
@@ -1895,6 +1993,7 @@
 #define HARDWARE_NAME "Adafruit FunHouse"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Adafruit FunHouse */
 
 /* ProtoCentral HealthyPi 4 */
@@ -1905,6 +2004,7 @@
 #define HARDWARE_NAME "ProtoCentral HealthyPi 4"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* ProtoCentral HealthyPi 4 */
 
 /* Heltec WiFi Kit 32 */
@@ -1915,6 +2015,7 @@
 #define HARDWARE_NAME "Heltec WiFi Kit 32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Heltec WiFi Kit 32 */
 
 /* Heltec WiFi LoRa 32 */
@@ -1925,6 +2026,7 @@
 #define HARDWARE_NAME "Heltec WiFi LoRa 32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Heltec WiFi LoRa 32 */
 
 /* Heltec WiFi LoRa 32(V2) */
@@ -1935,6 +2037,7 @@
 #define HARDWARE_NAME "Heltec WiFi LoRa 32(V2)"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Heltec WiFi LoRa 32(V2) */
 
 /* Heltec Wireless Stick */
@@ -1945,6 +2048,7 @@
 #define HARDWARE_NAME "Heltec Wireless Stick"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Heltec Wireless Stick */
 
 /* Heltec Wireless Stick Lite */
@@ -1955,6 +2059,7 @@
 #define HARDWARE_NAME "Heltec Wireless Stick Lite"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Heltec Wireless Stick Lite */
 
 /* HONEYLemon */
@@ -1965,6 +2070,7 @@
 #define HARDWARE_NAME "HONEYLemon"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* HONEYLemon */
 
 /* Hornbill ESP32 Dev */
@@ -1975,6 +2081,7 @@
 #define HARDWARE_NAME "Hornbill ESP32 Dev"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Hornbill ESP32 Dev */
 
 /* Hornbill ESP32 Minima */
@@ -1985,6 +2092,7 @@
 #define HARDWARE_NAME "Hornbill ESP32 Minima"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Hornbill ESP32 Minima */
 
 /* IMBRIOS LOGSENS_V1P1 */
@@ -1995,6 +2103,7 @@
 #define HARDWARE_NAME "IMBRIOS LOGSENS_V1P1"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* IMBRIOS LOGSENS_V1P1 */
 
 /* IntoRobot Fig */
@@ -2005,6 +2114,7 @@
 #define HARDWARE_NAME "IntoRobot Fig"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* IntoRobot Fig */
 
 /* LOLIN D32 */
@@ -2015,6 +2125,7 @@
 #define HARDWARE_NAME "LOLIN D32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* LOLIN D32 */
 
 /* LOLIN D32 PRO */
@@ -2025,6 +2136,7 @@
 #define HARDWARE_NAME "LOLIN D32 PRO"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* LOLIN D32 PRO */
 
 /* WEMOS LOLIN32 */
@@ -2035,6 +2147,7 @@
 #define HARDWARE_NAME "WEMOS LOLIN32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* WEMOS LOLIN32 */
 
 /* WEMOS LOLIN32 Lite */
@@ -2045,6 +2158,7 @@
 #define HARDWARE_NAME "WEMOS LOLIN32 Lite"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* WEMOS LOLIN32 Lite */
 
 /* LoPy */
@@ -2055,6 +2169,7 @@
 #define HARDWARE_NAME "LoPy"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* LoPy */
 
 /* LoPy4 */
@@ -2065,6 +2180,7 @@
 #define HARDWARE_NAME "LoPy4"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* LoPy4 */
 
 /* M5Stack-ATOM */
@@ -2075,6 +2191,7 @@
 #define HARDWARE_NAME "M5Stack-ATOM"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* M5Stack-ATOM */
 
 /* M5Stack-Core-ESP32 */
@@ -2085,6 +2202,7 @@
 #define HARDWARE_NAME "M5Stack-Core-ESP32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* M5Stack-Core-ESP32 */
 
 /* M5Stack-Core2 */
@@ -2095,6 +2213,7 @@
 #define HARDWARE_NAME "M5Stack-Core2"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* M5Stack-Core2 */
 
 /* M5Stack-CoreInk */
@@ -2105,6 +2224,7 @@
 #define HARDWARE_NAME "M5Stack-CoreInk"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* M5Stack-CoreInk */
 
 /* M5Stack-FIRE */
@@ -2115,6 +2235,7 @@
 #define HARDWARE_NAME "M5Stack-FIRE"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* M5Stack-FIRE */
 
 /* M5Stick-C */
@@ -2125,6 +2246,7 @@
 #define HARDWARE_NAME "M5Stick-C"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* M5Stick-C */
 
 /* Adafruit MagTag 2.9 */
@@ -2135,6 +2257,7 @@
 #define HARDWARE_NAME "Adafruit MagTag 2.9"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Adafruit MagTag 2.9 */
 
 /* Metro ESP-32 */
@@ -2145,6 +2268,7 @@
 #define HARDWARE_NAME "Metro ESP-32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Metro ESP-32 */
 
 /* Adafruit Metro ESP32-S2 */
@@ -2155,6 +2279,7 @@
 #define HARDWARE_NAME "Adafruit Metro ESP32-S2"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Adafruit Metro ESP32-S2 */
 
 /* MGBOT IOTIK 32A */
@@ -2165,6 +2290,7 @@
 #define HARDWARE_NAME "MGBOT IOTIK 32A"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* MGBOT IOTIK 32A */
 
 /* MGBOT IOTIK 32B */
@@ -2175,6 +2301,7 @@
 #define HARDWARE_NAME "MGBOT IOTIK 32B"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* MGBOT IOTIK 32B */
 
 /* MH ET LIVE ESP32DevKIT */
@@ -2185,6 +2312,7 @@
 #define HARDWARE_NAME "MH ET LIVE ESP32DevKIT"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* MH ET LIVE ESP32DevKIT */
 
 /* MH ET LIVE ESP32MiniKit */
@@ -2195,6 +2323,7 @@
 #define HARDWARE_NAME "MH ET LIVE ESP32MiniKit"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* MH ET LIVE ESP32MiniKit */
 
 /* microS2 */
@@ -2205,6 +2334,7 @@
 #define HARDWARE_NAME "microS2"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* microS2 */
 
 /* Nano32 */
@@ -2215,6 +2345,7 @@
 #define HARDWARE_NAME "Nano32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Nano32 */
 
 /* Node32s */
@@ -2225,6 +2356,7 @@
 #define HARDWARE_NAME "Node32s"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Node32s */
 
 /* NodeMCU-32S */
@@ -2235,6 +2367,7 @@
 #define HARDWARE_NAME "NodeMCU-32S"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* NodeMCU-32S */
 
 /* ODROID ESP32 */
@@ -2245,6 +2378,7 @@
 #define HARDWARE_NAME "ODROID ESP32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* ODROID ESP32 */
 
 /* Onehorse ESP32 Dev Module */
@@ -2255,6 +2389,7 @@
 #define HARDWARE_NAME "Onehorse ESP32 Dev Module"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Onehorse ESP32 Dev Module */
 
 /* INEX OpenKB */
@@ -2265,6 +2400,7 @@
 #define HARDWARE_NAME "INEX OpenKB"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* INEX OpenKB */
 
 /* OROCA EduBot */
@@ -2275,6 +2411,7 @@
 #define HARDWARE_NAME "OROCA EduBot"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* OROCA EduBot */
 
 /* Piranha ESP-32 */
@@ -2285,6 +2422,7 @@
 #define HARDWARE_NAME "Piranha ESP-32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Piranha ESP-32 */
 
 /* Pycom GPy */
@@ -2295,6 +2433,7 @@
 #define HARDWARE_NAME "Pycom GPy"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Pycom GPy */
 
 /* Noduino Quantum */
@@ -2305,6 +2444,7 @@
 #define HARDWARE_NAME "Noduino Quantum"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Noduino Quantum */
 
 /* Senses's WEIZEN */
@@ -2315,6 +2455,7 @@
 #define HARDWARE_NAME "Senses WEIZEN"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Senses's WEIZEN */
 
 /* T-Beam */
@@ -2325,6 +2466,7 @@
 #define HARDWARE_NAME "T-Beam"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* T-Beam */
 
 /* UM TinyPICO */
@@ -2335,6 +2477,7 @@
 #define HARDWARE_NAME "UM TinyPICO"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* UM TinyPICO */
 
 /* UM TinyS2 */
@@ -2345,6 +2488,7 @@
 #define HARDWARE_NAME "UM TinyS2"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* UM TinyS2 */
 
 /* Trueverit ESP32 Universal IoT Driver */
@@ -2355,6 +2499,7 @@
 #define HARDWARE_NAME "Trueverit ESP32 Universal IoT Driver"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Trueverit ESP32 Universal IoT Driver */
 
 /* Trueverit ESP32 Universal IoT Driver MK II */
@@ -2365,6 +2510,7 @@
 #define HARDWARE_NAME "Trueverit ESP32 Universal IoT Driver MK II"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Trueverit ESP32 Universal IoT Driver MK II */
 
 /* TTGO LoRa32-OLED V1 */
@@ -2375,6 +2521,7 @@
 #define HARDWARE_NAME "TTGO LoRa32-OLED V1"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* TTGO LoRa32-OLED V1 */
 
 /* TTGO LoRa32-OLED v2.1.6 */
@@ -2385,6 +2532,7 @@
 #define HARDWARE_NAME "TTGO LoRa32-OLED v2.1.6"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* TTGO LoRa32-OLED v2.1.6 */
 
 /* TTGO T1 */
@@ -2395,6 +2543,7 @@
 #define HARDWARE_NAME "TTGO T1"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* TTGO T1 */
 
 /* TTGO T7 V1.3 Mini32 */
@@ -2405,6 +2554,7 @@
 #define HARDWARE_NAME "TTGO T7 V1.3 Mini32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* TTGO T7 V1.3 Mini32 */
 
 /* TTGO T7 V1.4 Mini32 */
@@ -2415,6 +2565,7 @@
 #define HARDWARE_NAME "TTGO T7 V1.4 Mini32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* TTGO T7 V1.4 Mini32 */
 
 /* TTGO T-Watch */
@@ -2425,6 +2576,7 @@
 #define HARDWARE_NAME "TTGO T-Watch"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* TTGO T-Watch */
 
 /* u-blox NINA-W10 series (ESP32) */
@@ -2435,6 +2587,7 @@
 #define HARDWARE_NAME "u-blox NINA-W10 series (ESP32)"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* u-blox NINA-W10 series (ESP32) */
 
 /* uPesy ESP32 Wroom DevKit */
@@ -2445,6 +2598,7 @@
 #define HARDWARE_NAME "uPesy ESP32 Wroom DevKit"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* uPesy ESP32 Wroom DevKit */
 
 /* uPesy ESP32 Wrover DevKit */
@@ -2455,6 +2609,7 @@
 #define HARDWARE_NAME "uPesy ESP32 Wrover DevKit"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* uPesy ESP32 Wrover DevKit */
 
 /* Silicognition wESP32 */
@@ -2465,6 +2620,7 @@
 #define HARDWARE_NAME "Silicognition wESP32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Silicognition wESP32 */
 
 /* Widora AIR */
@@ -2475,6 +2631,7 @@
 #define HARDWARE_NAME "Widora AIR"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Widora AIR */
 
 /* WiFiduino32 */
@@ -2485,6 +2642,7 @@
 #define HARDWARE_NAME "WiFiduino32"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* WiFiduino32 */
 
 /* WiPy 3.0 */
@@ -2495,6 +2653,7 @@
 #define HARDWARE_NAME "WiPy 3.0"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* WiPy 3.0 */
 
 /* Dongsen Tech Pocket 32 / WeMos WiFi&Bluetooth Battery */
@@ -2505,6 +2664,7 @@
 #define HARDWARE_NAME "Dongsen Tech Pocket 32 / WeMos WiFi&Bluetooth Battery"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* Dongsen Tech Pocket 32 / WeMos WiFi&Bluetooth Battery */
 
 /* ESP32_PICO
@@ -2519,6 +2679,7 @@ KITS ESP32 EDU
 #define HARDWARE_NAME "ESP32_PICO"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* ESP32_PICO  */
 
 /* ESP32 Dev Modules
@@ -2541,9 +2702,108 @@ Labplus mPython
 #define HARDWARE_NAME "ESP32 Dev Modules"
 #undef  EMBEDED_NETWORK
 #define EMBEDED_NETWORK WIFI_NORMAL
+#define SERIAL_RESET false
 #endif /* ESP32 Dev Modules  */
 
+/*
+ * Nano esp32
+ * 動作電圧    : 3.3V
+ * MAX_SERIAL  : 1
+ * MAX_DIGITAL : 22
+ * MAX_ANALOG  : 8
+ * PMW         : 不明
+ * I2C SDA     : A4
+ * I2C SCL     : A5
+ * SPI MOSI    : D11
+ * SPI MISO    : D12
+ * SPI SCK     : D13
+ * SPI SS      : D10
+ * 内蔵LED     : D13
+ */
+#if defined( ARDUINO_NANO_ESP32 )
+#define HARDWARE_TYPE ARDUINO_NANO_ESP32_S3
+#define CPU_ARCH XTENSA_LX6_ARCH
+#define CPU_TYPE TYPE_ESP32
+#define HARDWARE_NAME "ARDUINO Nano 328P"
+#define HARDWARE_VDD 33
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 1
+#define MAX_DIGITAL 22
+#define MAX_ANALOG 8
+//#define PMW_PORTS {3,5,6,9,10,11}
+#define I2C_SDA A4
+#define I2C_SCL A5
+#define SPI_MOSI 11
+#define SPI_MISO 12
+#define SPI_SCK 13
+#define SPI_SS 10
+#define ONBOARD_LED 13
+#define SERIAL_RESET false
+//#define SERIAL_RESET true
+#undef HARDWARE_SERIAL_TYPE
+#define HARDWARE_SERIAL_TYPE	SERIAL_TYPE_USBCDC
+#undef  EMBEDED_NETWORK
+#define EMBEDED_NETWORK WIFI_NORMAL
+#endif /* Arduino Nano 328P */
 
+/* Arduino Uno R4 Minima
+ * 動作電圧(VDD)      : 5V
+ * アナログ端子の電圧 : VDDと同じ
+ * MAX_SERIAL         : 1
+ * MAX_DIGITAL        : 20
+ * MAX_ANALOG         : 6
+ * PMW                : D3,D5,D6,D9,D10,D11
+ * I2C SDA            : A4
+ * I2C SCL            : A5
+ * SPI MOSI           : D11
+ * SPI MISO           : D12
+ * SPI SCK            : D13
+ * SPI SS             : D10
+ * 内蔵LED            : D13
+ * IDEのシリアルコンソールでリセットするか : true
+ */
+#ifdef ARDUINO_UNOR4_MINIMA
+#define HARDWARE_TYPE ARDUINO_UNO_R4_MINIMA
+#define CPU_ARCH RA4_ARCH
+#define CPU_TYPE TYPE_RA4M1
+#define HARDWARE_NAME "ARDUINO UNO R4 Minima"
+#define HARDWARE_VDD 50
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 1
+#define MAX_DIGITAL 20
+#define MAX_ANALOG 6
+#define PMW_PORTS {3,5,6,9,10,11}
+#define I2C_SDA A4
+#define I2C_SCL A5
+#define SPI_MOSI 11
+#define SPI_MISO 12
+#define SPI_SCK 13
+#define SPI_SS 10
+#define ONBOARD_LED 13
+#define SERIAL_RESET true
+#endif /* ARDUINO_UNOR4_MINIMA */
+
+/* Arduino Uno R4 WiFi */
+#ifdef ARDUINO_UNOR4_WIFI
+#define HARDWARE_TYPE ARDUINO_UNO_R4_WIFI
+#define CPU_ARCH RA4_ARCH
+#define CPU_TYPE TYPE_RA4M1
+#define HARDWARE_NAME "ARDUINO UNO R4 WiFi"
+#define HARDWARE_VDD 50
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 1
+#define MAX_DIGITAL 20
+#define MAX_ANALOG 6
+#define PMW_PORTS {3,5,6,9,10,11}
+#define I2C_SDA A4
+#define I2C_SCL A5
+#define SPI_MOSI 11
+#define SPI_MISO 12
+#define SPI_SCK 13
+#define SPI_SS 10
+#define ONBOARD_LED 13
+#define SERIAL_RESET true
+#endif /* ARDUINO_UNOR4_WIFI */
 
 /*
  * 未定義を埋める操作
