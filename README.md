@@ -20,7 +20,7 @@ BSDライセンスにしときます．詳細はLICENCEファイルを見てく�
 各種の定数を定義してくれるので，自分の書くプログラムは，機種による切り替えを次のようなif文で行う．
 
 ```
-#if HARDWARE_TYPE == AVR_UNO
+#if HARDWARE_TYPE == ARDUINO_UNO
    Arduino Uno用のプログラム
 #endif
 ```
@@ -49,6 +49,12 @@ BSDライセンスにしときます．詳細はLICENCEファイルを見てく�
 |SPI_SS|デフォルトのSPIチップセレクトに用いるポート番号|10|
 |ONBOARD_LED|オンボードLEDがつながっているポート番号|13|
 |SERIAL_RESET|シリアルポートをオープンした場合にリセットされるか否か|bool値(true,false)|
+
+Arduino GigaはオンボードLEDがフルカラーだったり，CAN用のピンが存在するため，以下の
+- ONBOARD_FULL_LED (オンボードLEDがフルカラーの場合のみ定義されている)
+- HAVE_CAN (CANインターフェースが存在する場合のみ定義されている)
+- CAN_RX, CAN_TX (各々のピン番号を設定)
+
 
 ### HARDWARE_AREF
 一部の機種は，アナログ端子のAREFの電圧とVDD値が一致していないので，
@@ -173,6 +179,18 @@ Arduino IDEのボードマネージャから確認した手元の環境．
 |ARDUINO_TIAN|Arduino Tian|▲||
 |ARDUINO_M0|M0 pro / M0|○||
 
+### ルネサスチップ (Uno R4系列)
+|定義される定数|機種|対応状況|備考|
+|:---|:---|:---:|:---|
+|ARDUINO_UNO_R4_MINIMA|Arduino Uno R4 Minima|▲||
+|ARDUINO_UNO_R4_WIFI|Arduino Uno R4 WiFi|▲||
+
+### STマイクロチップ (Gaga R1)
+|定義される定数|機種|対応状況|備考|
+|:---|:---|:---:|:---|
+|ARDUINO_GIGA_WIFI_MAIN|Arduino Giga R1 メインコア(M7)|▲||
+|ARDUINO_GIGA_WIFI_SUB|Arduino Giga R1 サブコア(M4)|▲||
+
 ### ESP8266系統
 |定義される定数|機種|対応状況|備考|
 |:---|:---|:---:|:---|
@@ -227,6 +245,7 @@ Arduino IDEのボードマネージャから確認した手元の環境．
 ### ESP32系統
 |定義される定数|機種|対応状況|備考|
 |:---|:---|:---:|:---|
+| ARDUINO_NANO_ESP32_S3 | Arduino Nano ESP32 | ▲ |  |
 | ADAFRUIT_FEATHER_ESP32S2_NOPSRAM | Adafruit Feather ESP32-S2 (no PSRAM) | ▲ |  |
 | ALKS | ALKS ESP32 | ▲ |  |
 | ATMEGA_ZERO_ESP32_S2 | ATMegaZero ESP32-S2 | ▲ |  |

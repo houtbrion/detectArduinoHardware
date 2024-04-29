@@ -10,6 +10,8 @@
 #define XTENSA_LX106_ARCH 4 /* ESP8266 */
 #define XTENSA_LX6_ARCH   5 /* ESP32 */
 #define RA4_ARCH          6 /* Renesas */
+#define STM32_ARCH        7 /* STMicro */
+#define RP_ARCH       8 /* Raspberry Pi Pico */
 
 
 #define TYPE_ATmega32U4  1
@@ -24,6 +26,9 @@
 #define TYPE_ESP8266    10
 #define TYPE_ESP32      11
 #define TYPE_RA4M1      12
+#define TYPE_STM32H747xI_CM7    13
+#define TYPE_STM32H747xI_CM4    14
+#define TYPE_RP2040     15
 
 /* AVR系統 */
 #define ARDUINO_YUN                         1 /* Arduino Yun                           */
@@ -220,6 +225,14 @@
 /* Renesas RA4系列 */
 #define ARDUINO_UNO_R4_MINIMA                    601 /* Arduino Uno R4 Minima */
 #define ARDUINO_UNO_R4_WIFI                      602 /* Arduino Uno R4 WiFi */
+
+/* Gigaファミリ */
+#define ARDUINO_GIGA_WIFI_MAIN                   701 /* Arduino Giga R1 WiFi main Core*/
+#define ARDUINO_GIGA_WIFI_SUB                    702 /* Arduino Giga R1 WiFi sub Core*/
+
+/* Raspberry Pi Picoシリーズ*/
+#define PI_PICO                                  801 /* Raspberry Pi Pico */
+#define PI_PICO_W                                802 /* Raspberry Pi Pico W */
 
 #define SERIAL_TYPE_NORMAL 0
 #define SERIAL_TYPE_MKR    1
@@ -2804,6 +2817,112 @@ Labplus mPython
 #define ONBOARD_LED 13
 #define SERIAL_RESET true
 #endif /* ARDUINO_UNOR4_WIFI */
+
+/*
+ * Arduino Giga R1 WiFi
+ */
+
+/* Arduino Giga R1 WiFi Main core*/
+#if TARGET_NAME == GIGA && defined(CORE_CM7)
+#define HARDWARE_TYPE ARDUINO_GIGA_WIFI_MAIN
+#define CPU_ARCH STM32_ARCH
+#define CPU_TYPE TYPE_STM32H747xI_CM7
+#define HARDWARE_NAME "ARDUINO Giga R1 WiFi"
+#define HARDWARE_VDD 33
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 4
+#define MAX_DIGITAL 54
+#define MAX_ANALOG 8 /* pin map indicates 12 analog pin . But, compiler recognize only 8 pins. */
+#define PMW_PORTS {2,3,4,5,6,7,8,9,10,11,12,13}
+#define I2C_SDA 9
+#define I2C_SCL 8
+#define SPI_MOSI 11
+#define SPI_MISO 12
+#define SPI_SCK 13
+#define SPI_SS 10
+#define ONBOARD_FULL_LED /* on board led is full color */
+#define LED_RED 86
+#define LED_GREEN 87
+#define LED_BLUE 88
+#define ONBOARD_LED LED_RED
+#define HAVE_CAN /* Controller area network */
+#define CAN_RX 93
+#define CAN_TX 94
+#define SERIAL_RESET false
+#endif
+
+/* Arduino Giga R1 WiFi Sub core*/
+#if TARGET_NAME == GIGA && defined(CORE_CM4)
+#define HARDWARE_TYPE ARDUINO_GIGA_WIFI_SUB
+#define CPU_ARCH STM32_ARCH
+#define CPU_TYPE TYPE_STM32H747xI_CM4
+#define HARDWARE_NAME "ARDUINO Giga R1 WiFi"
+#define HARDWARE_VDD 33
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 0
+#define MAX_DIGITAL 54
+#define MAX_ANALOG 8 /* pin map indicates 12 analog pin . But, compiler recognize only 8 pins. */
+#define PMW_PORTS {2,3,4,5,6,7,8,9,10,11,12,13}
+#define I2C_SDA 9
+#define I2C_SCL 8
+#define SPI_MOSI 11
+#define SPI_MISO 12
+#define SPI_SCK 13
+#define SPI_SS 10
+#define ONBOARD_FULL_LED /* on board led is full color */
+#define LED_RED 86
+#define LED_GREEN 87
+#define LED_BLUE 88
+#define ONBOARD_LED LED_RED
+#define HAVE_CAN /* Controller area network */
+#define CAN_RX 93
+#define CAN_TX 94
+#define SERIAL_RESET false
+#endif
+
+
+#ifdef ARDUINO_RASPBERRY_PI_PICO_W
+#define HARDWARE_TYPE PI_PICO_W
+#define CPU_ARCH RP_ARCH
+#define CPU_TYPE TYPE_RP2040
+#define HARDWARE_NAME "Raspberry Pi Pico W"
+#define HARDWARE_VDD 33
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 1
+#define MAX_DIGITAL 28
+#define MAX_ANALOG 3
+#define PMW_PORTS {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28}
+#define I2C_SDA 6
+#define I2C_SCL 7
+#define SPI_MOSI 16
+#define SPI_MISO 19
+#define SPI_SCK 18
+#define SPI_SS 17
+#define ONBOARD_LED 25
+#define SERIAL_RESET false
+#endif
+
+#ifdef ARDUINO_RASPBERRY_PI_PICO
+#define HARDWARE_TYPE PI_PICO
+#define CPU_ARCH RP_ARCH
+#define CPU_TYPE TYPE_RP2040
+#define HARDWARE_NAME "Raspberry Pi Pico"
+#define HARDWARE_VDD 33
+#define HARDWARE_AREF HARDWARE_VDD
+#define MAX_SERIAL 1
+#define MAX_DIGITAL 28
+#define MAX_ANALOG 3
+#define PMW_PORTS {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28}
+#define I2C_SDA 6
+#define I2C_SCL 7
+#define SPI_MOSI 16
+#define SPI_MISO 19
+#define SPI_SCK 18
+#define SPI_SS 17
+#define ONBOARD_LED 25
+#define SERIAL_RESET false
+#endif
+
 
 /*
  * 未定義を埋める操作
