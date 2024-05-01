@@ -50,8 +50,9 @@ BSDライセンスにしときます．詳細はLICENCEファイルを見てく�
 |ONBOARD_LED|オンボードLEDがつながっているポート番号|13|
 |SERIAL_RESET|シリアルポートをオープンした場合にリセットされるか否か|bool値(true,false)|
 
-Arduino GigaはオンボードLEDがフルカラーだったり，CAN用のピンが存在するため，以下の
+Arduino GigaはオンボードLEDが3個(3色)存在し，CAN用のピンが存在するため，以下の定義を追加しています．
 - ONBOARD_FULL_LED (オンボードLEDがフルカラーの場合のみ定義されている)
+- LED_RED, LED_GREEN, LED_BLUE(値はピン番号)
 - HAVE_CAN (CANインターフェースが存在する場合のみ定義されている)
 - CAN_RX, CAN_TX (各々のピン番号を設定)
 
@@ -68,6 +69,10 @@ Arduino GigaはオンボードLEDがフルカラーだったり，CAN用のピ�
 Uno系のボードとMega系のボードでプログラムを共有する場合，ピン数の関係で
 接続する端子を変えたい場合，機種を列挙するのは面倒なので，ピン数で
 判断する際に利用する．
+
+MAX_ANALOGはIDE上で「A0, A1」などの定数でピン番号が指定されるものの数を示しており，
+現在のArduinoの開発環境では，pinmapに記載されているアナログ端子の数と
+「Aなんとか」で指定できるアナログ端子の数が一致していないため，注意が必要．
 
 ### SERIAL_RESET
 DEBUG目的でSerialポートにログを出力する場合，シリアルポートを開くまで
@@ -98,13 +103,23 @@ extensionディレクトリには本ライブラリを利用するこのヘッ�
 ## 対応しているボード
 Arduino IDEのボードマネージャから確認した手元の環境．
 
-|アーキ等|開発者|バージョン|
+|MCUアーキやチップ種別|開発者|バージョン|
 |:---|:---|:---|
 |Arduino AVR Boards Built-In|Arduino|1.8.16|
 |Arduino SAM Boards (32-bits ARM Cortex-M3)|Arduino|1.6.12|
 |Arduino SAMD Boards (32-bits ARM Cortex-M0+)|Arduino|1.8.11|
 |esp32|Espressif Systems|2.0.0|
 |esp8266|ESP8266 Community|3.0.2|
+|ルネサスRA4|Arduino公式|1.1.0|
+|STマイクロSTM32H747xI|Arduino公式|4.1.1|
+|Raspberry Pi RP2040|Arduino公式|4.1.1|
+|Raspberry Pi RP2040|下記を参照|3.8.0|
+
+上の表のRP2040のArduino公式でないものは，以下のURLで開発が進められてるもので，Arduinoの機種，Raspberry Pi Pico以外の
+RP2040を搭載したマイコンをサポートしており，ボランティア開発者以外に，
+RP2040搭載マイコンを販売するベンダも協力して，統合版のようなものになっている．
+
+- https://github.com/earlephilhower/arduino-pico
 
 上の環境でIDEがサポートしている機種の大部分は機種判定はできます．
 表の「対応状況」の「○,△,▲,×」の意味は以下の通り．
@@ -179,13 +194,13 @@ Arduino IDEのボードマネージャから確認した手元の環境．
 |ARDUINO_TIAN|Arduino Tian|▲||
 |ARDUINO_M0|M0 pro / M0|○||
 
-### ルネサスチップ (Uno R4系列)
+### ルネサス RA4 (Uno R4系列)
 |定義される定数|機種|対応状況|備考|
 |:---|:---|:---:|:---|
 |ARDUINO_UNO_R4_MINIMA|Arduino Uno R4 Minima|▲||
 |ARDUINO_UNO_R4_WIFI|Arduino Uno R4 WiFi|▲||
 
-### STマイクロチップ (Gaga R1)
+### STマイクロ STM32H747xI (Gaga R1)
 |定義される定数|機種|対応状況|備考|
 |:---|:---|:---:|:---|
 |ARDUINO_GIGA_WIFI_MAIN|Arduino Giga R1 メインコア(M7)|▲||
@@ -237,7 +252,6 @@ Arduino IDEのボードマネージャから確認した手元の環境．
 
 機種判定もできない機種
 - WifInfo
-- Arduino
 - ITEAD Sonoff
 - Seeed Wio Link
 
@@ -344,6 +358,7 @@ Arduino IDEのボードマネージャから確認した手元の環境．
 | ESP32_PICO | ESP32_PICO ( three kinds of board) | × | 3機種のうちいずれかまでは判別不可 |
 | ESP32_DEV | ESP32 Dev Modules (twelve kinds of board) | × | 12機種のうちいずれかまでは判別不可 |
 
+
 機種を絞りきれないものは以下の表の通り．
 |定義される定数|機種|
 |:---|:---|
@@ -372,6 +387,82 @@ Arduino IDEのボードマネージャから確認した手元の環境．
 - ET-Board
 - M5Stack-Timer-CAM
 
-
-
-
+### RP2040
+|定義される定数|機種|対応状況|備考|
+|:---|:---|:---:|:---|
+|	ARDUINO_NANO_RP2040_C	|	Arduino Nano RP2040 connect	|	◯	|		|
+|	PI_PICO	|	Raspberry Pi Pico	|	◯	|	L'atelier d'Arnoz DudesCabも同じ定義となる	|
+|	PI_PICO_W	|	Raspberry Pi Pico W	|	◯	|	公式環境ではPicoと区別できない	|
+|	ZERO_XCB_HELIOS	|	0xCB Helios	|	▲	|		|
+|	BRIDGETEK_IDM2040	|	BridgeTek IDM2040-7A	|	▲	|		|
+|	ADAFRUIT_FEATHER_RP2040	|	Adafruit Feather RP2040	|	▲	|		|
+|	ADAFRUIT_FEATHER_RP2040_SCORPIO	|	Adafruit Feather RP2040 SCORPIO	|	▲	|		|
+|	ADAFRUIT_FEATHER_RP2040_DVI	|	Adafruit Feather RP2040 DVI	|	▲	|		|
+|	ADAFRUIT_FEATHER_RP2040_RFM	|	Adafruit Feather RP2040 RFM	|	▲	|		|
+|	ADAFRUIT_FEATHER_RP2040_THINKINK	|	Adafruit Feather RP2040 ThinkINK	|	▲	|		|
+|	ADAFRUIT_FEATHER_RP2040_USB_HOST	|	Adafruit Feather RP2040 USB Host	|	▲	|		|
+|	ADAFRUIT_FEATHER_RP2040_CAN	|	Adafruit Feather RP2040 CAN	|	▲	|		|
+|	ADAFRUIT_FEATHER_RP2040_PROP_MAKER	|	Adafruit Feather RP2040 Prop-Maker	|	▲	|		|
+|	ADAFRUIT_ITSYBITSY_RP2040	|	Adafruit ItsyBitsy RP2040	|	▲	|		|
+|	ADAFRUIT_METRO_RP2040	|	Adafruit Metro RP2040	|	▲	|		|
+|	ADAFRUIT_QTPY_RP2040	|	Adafruit QT Py RP2040	|	▲	|		|
+|	ADAFRUIT_STEMMAFRIEND_RP2040	|	Adafruit STEMMA Friend RP2040	|	▲	|		|
+|	ADAFRUIT_TRINKEYQT_RP2040	|	Adafruit Trinkey RP2040 QT	|	▲	|		|
+|	ADAFRUIT_MACROPAD_RP2040	|	Adafruit MacroPad RP2040	|	▲	|		|
+|	ADAFRUIT_KB2040_RP2040	|	Adafruit KB2040	|	▲	|		|
+|	ARTRONSHOP_RP2_NANO	|	ArtronShop RP2 Nano	|	▲	|		|
+|	CYTRON_MAKER_NANO_RP2040	|	Cytron Maker Nano RP2040	|	▲	|		|
+|	CYTRON_MAKER_PI_RP2040	|	Cytron Maker Pi RP2040	|	▲	|		|
+|	CYTRON_MAKER_UNO_RP2040	|	Cytron Maker Uno RP2040	|	▲	|		|
+|	DATANOISETV_PICOADK	|	DatanoiseTV PicoADK	|	▲	|		|
+|	DEGZ_SUIBO_RP2040	|	Degz Robotics Suibo RP2040	|	▲	|		|
+|	FLYBOARD2040_CORE	|	DeRuiLab FlyBoard2040Core	|	▲	|		|
+|	DFROBOT_BEETLE_RP2040	|	DFRobot Beetle RP2040	|	▲	|		|
+|	ELECTRONICCATS_HUNTERCAT_NFC	|	ElectronicCats HunterCat NFC RP2040	|	▲	|		|
+|	EXTREMEELEXTRONICS_RC2040	|	ExtremeElectronics RC2040	|	▲	|		|
+|	CHALLENGER_2040_LTE_RP2040	|	iLabs Challenger 2040 LTE	|	▲	|		|
+|	CHALLENGER_2040_LORA_RP2040	|	iLabs Challenger 2040 LoRa	|	▲	|		|
+|	CHALLENGER_2040_SUBGHZ_RP2040	|	iLabs Challenger 2040 SubGHz	|	▲	|		|
+|	CHALLENGER_2040_WIFI_RP2040	|	iLabs Challenger 2040 WiFi	|	▲	|		|
+|	CHALLENGER_2040_WIFI_BLE_RP2040	|	iLabs Challenger 2040 WiFi/BLE	|	▲	|		|
+|	CHALLENGER_2040_WIFI6_BLE_RP2040	|	iLabs Challenger 2040 WiFi6/BLE	|	▲	|		|
+|	CHALLENGER_NB_2040_WIFI_RP2040	|	iLabs Challenger NB 2040 WiFi	|	▲	|		|
+|	CHALLENGER_2040_SDRTC_RP2040	|	iLabs Challenger 2040 SD/RTC	|	▲	|		|
+|	CHALLENGER_2040_NFC_RP2040	|	iLabs Challenger 2040 NFC	|	▲	|		|
+|	CHALLENGER_2040_UWB_RP2040	|	iLabs Challenger 2040 UWB	|	▲	|		|
+|	CONNECTIVITY_2040_LTE_WIFI_BLE_RP2040	|	iLabs Connectivity 2040 LTE/WiFi/BLE	|	▲	|		|
+|	ILABS_2040_RPICO32_RP2040	|	iLabs RPICO32	|	▲	|		|
+|	MELOPERO_COOKIE_RP2040	|	Melopero Cookie RP2040	|	▲	|		|
+|	MELOPERO_SHAKE_RP2040	|	Melopero Shake RP2040	|	▲	|		|
+|	NEKOSYSTEMS_BL2040_MINI	|	Neko Systems BL2040 Mini	|	▲	|		|
+|	NULLBITS_BIT_C_PRO	|	nullbits Bit-C PRO	|	▲	|		|
+|	OLIMEX_RP2040_PICO30_2MB	|	Olimex RP2040-Pico30 2MB	|	▲	|		|
+|	OLIMEX_RP2040_PICO30_16MB	|	Olimex RP2040-Pico30 16MB	|	▲	|		|
+|	PIMORONI_PGA2040	|	Pimoroni PGA2040	|	▲	|		|
+|	PIMORONI_PLASMA2040	|	Pimoroni Plasma2040	|	▲	|		|
+|	PIMORONI_TINY2040	|	Pimoroni Tiny2040	|	▲	|		|
+|	RAKWIRELESS_RAK11300	|	RAKwireless RAK11300	|	▲	|		|
+|	REDSCORP_RP2040_EINS	|	redscorp RP2040-Eins	|	▲	|		|
+|	REDSCORP_RP2040_PROMINI	|	redscorp RP2040-ProMini	|	▲	|		|
+|	SEA_PICRO	|	Generic Sea-Picro	|	▲	|		|
+|	SILICOGNITION_RP2040_SHIM	|	Silicognition RP2040-Shim	|	▲	|		|
+|	SOLDERPARTY_RP2040_STAMP	|	Solder Party RP2040 Stamp	|	▲	|		|
+|	SPARKFUN_MICROMOD_RP2040	|	SparkFun MicroMod RP2040	|	▲	|		|
+|	SPARKFUN_PROMICRO_RP2040	|	SparkFun ProMicro RP2040	|	▲	|		|
+|	SPARKFUN_THINGPLUS_RP2040	|	SparkFun Thing Plus RP2040	|	▲	|		|
+|	UPESY_RP2040_DEVKIT	|	uPesy RP2040 DevKit	|	▲	|		|
+|	SEEED_INDICATOR_RP2040	|	Seeed INDICATOR RP2040	|	▲	|		|
+|	SEEED_XIAO_RP2040	|	Seeed XIAO RP2040	|	▲	|		|
+|	YD_RP2040	|	VCC-GND YD RP2040	|	▲	|		|
+|	VIYALAB_MIZU_RP2040	|	Viyalab Mizu RP2040	|	▲	|		|
+|	WAVESHARE_RP2040_ZERO	|	Waveshare RP2040 Zero	|	▲	|		|
+|	WAVESHARE_RP2040_ONE	|	Waveshare RP2040 One	|	▲	|		|
+|	WAVESHARE_RP2040_MATRIX	|	Waveshare RP2040 Matrix	|	▲	|		|
+|	WAVESHARE_RP2040_PIZERO	|	Waveshare RP2040 PiZero	|	▲	|		|
+|	WAVESHARE_RP2040_PLUS	|	Waveshare RP2040 Plus 4MB/16MB	|	▲	|	IDE上では別機種扱いだが，開発環境内でストレージ容量による区別はできない	|
+|	WAVESHARE_RP2040_LCD_0_96	|	Waveshare RP2040 LCD 0.96	|	▲	|		|
+|	WAVESHARE_RP2040_LCD_1_28	|	Waveshare RP2040 LCD 1.28	|	▲	|		|
+|	WIZNET_5100S_EVB_PICO	|	WIZnet W5100S-EVB-Pico	|	▲	|		|
+|	WIZNET_WIZFI360_EVB_PICO	|	WIZnet WizFi360-EVB-Pico	|	▲	|		|
+|	WIZNET_5500_EVB_PICO	|	WIZnet W5500-EVB-Pico	|	▲	|		|
+|	GENERIC_RP2040	|	Generic RP2040	|	▲	|		|
