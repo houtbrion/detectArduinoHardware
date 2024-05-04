@@ -40,7 +40,8 @@ void HardwareHelper::SoftwareReset(void) {
 #elif CPU_ARCH==STM32_ARCH
   NVIC_SystemReset();
 #elif CPU_ARCH==RP_ARCH
-  rp2040.reboot();
+  //rp2040.reboot();
+  NVIC_SystemReset();
 #else
 #error "unkown cpu type"
 #endif
